@@ -1,5 +1,5 @@
 # lunatech-blog-engine
-The blog engine that powers blog.lunatech.com
+The blog engine that powers the future blog.lunatech.com
 
 This blog engine simply goes to github expect a repository with the following structure: 
 
