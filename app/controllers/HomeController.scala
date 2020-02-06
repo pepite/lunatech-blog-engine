@@ -72,7 +72,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
                   val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
                   r.body)
                   val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
-                  val x = getUser.map {
+                  val postWithAuthor = getUser.map {
                       case Left(e) => None
                       case Right(r) => {
                         val user = r.result
@@ -89,9 +89,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
                         Some((post, author))
                       }
                     }
-
-                  post
-                  x
+                  postWithAuthor
                 }
               posts
             }

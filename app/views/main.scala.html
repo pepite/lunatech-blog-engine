@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/custom.css")">
+        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/main.css")">
 
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:400,700" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,700" rel="stylesheet">
@@ -63,25 +64,33 @@
               </div>
                 <div class="row">
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                           <h3>Lunatech NL</h3>
                           <ul>
                           <li>Amsterdam</li>
                           <p class="footer-adress">Van Leijenberghlaan 197<br /><span>1082 EA Amstedam,<br /> The Netherlands</span></p>
                           <li>Rotterdam</li>
-                          <p class="footer-adress">Baan 74<br /><span>3011 CD Rotterdam,<br /> The Netherlands</span></p>
+                          <p class="footer-adress">Hofplein 20<br /><span>3032 AC Rotterdam,<br /> The Netherlands</span></p>
                           </ul>
 
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
 
                           <h3>Lunatech FR</h3>
                           <ul>
-                          <li>Paris</li>
+                          <li>Leuven</li>
                           <p class="footer-adress">3 Rue de la Galmy<br /><span>77700 Chessy,<br /> France</span></p>
                           </ul>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-3">
+
+                          <h3>Lunatech BE</h3>
+                          <ul>
+                          <li>Paris</li>
+                          <p class="footer-adress"><br /><span>Leuven,<br /> Belgium</span></p>
+                          </ul>
+                    </div>
+                    <div class="col-md-3">
                         <h3>Follow-us</h3>
                         <form class="form-inline validate" action="https://lunatech.us6.list-manage.com/subscribe/post?u=cf40d3fd9a5ebdb6782320c8d&amp;id=5af5a45e75" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" novalidate>
                             <i class="far fa-envelope-open i-nl"></i>
@@ -94,19 +103,11 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <p class="footer-reserved">2019 © Lunatech</p>
+                        <p class="footer-reserved">2020 © Lunatech</p>
                     </div>
                 </div>
             </div>
         </footer>
-
-        <script>
-            // This is necessary for the edit button
-            window.prismic = {
-                endpoint: '//lunatech.prismic.io/api' // replace by your repository's endpoint
-            };
-        </script>
-        <script src="//static.cdn.prismic.io/prismic.min.js"></script>
         <script>
             (function (i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
@@ -138,21 +139,6 @@
             });
         </script>
 
-        <!-- BURGER MENU -->
-        <script>
-            $(document).ready(() => {
-                $('#menu-button').click(() => {
-                    let isShown = $('#aside').attr('class').split(' ').includes('aside-show');
-                    if(isShown){
-                        $('#aside').addClass('aside-hide');
-                        $('#aside').removeClass('aside-show');
-                    }
-                    else{
-                        $('#aside').removeClass('aside-hide');
-                        $('#aside').addClass('aside-show');
-                    }
-                })
-            })
-        </script>
+
     </body>
 </html>
