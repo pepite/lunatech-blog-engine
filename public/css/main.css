@@ -1,0 +1,7 @@
+.blog-content img, .blog-content img[alt="\{in-between-width\}"] {
+  max-width: 100%
+}
+
+#target .blog-section div.row {
+  background: #000;
+}
