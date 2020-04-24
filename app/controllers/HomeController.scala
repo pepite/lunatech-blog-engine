@@ -38,12 +38,11 @@ import scala.concurrent.ExecutionContext
 class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configuration: Configuration) extends AbstractController(cc) {
 
 
-  val accessToken = configuration.getString("accessToken")
-  val organization = configuration.getString("github_organisation").getOrElse("")
-  val repository = configuration.getString("github_repository").getOrElse("")
-  val branch = configuration.getString("github_branch")
-  val background = configuration.getString("background").getOrElse("https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg")
-
+  val accessToken = configuration.get[String]("github.accessToken")
+  val organization = configuration.get[String]("github.organisation")
+  val repository = configuration.get[String]("github.repository")
+  val branch = configuration.get[String]("github.branch")
+  val background = configuration.get[String]("background")
 
   /**
    * Create an Action to render an HTML page.
@@ -54,7 +53,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
 
-      val getContents = Github(accessToken).repos.getContents(organization, repository, "posts", branch).execFuture[HttpResponse[String]]()
+      val getContents = Github(Some(accessToken)).repos.getContents(organization, repository, "posts", Some(branch)).execFuture[HttpResponse[String]]()
 
       val x = getContents.flatMap { repo =>
           repo match {
@@ -69,9 +68,9 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
-                  val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+                  val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
                   r.body)
-                  val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
+                  val getUser = Github(Some(accessToken)).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
                       case Left(e) => None
                       case Right(r) => {
@@ -106,7 +105,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
 
     def media(post: String, name: String) = Action.async { implicit request: Request[AnyContent] =>
 
-      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/$post/$name")
+      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/$post/$name")
       // Make the request
       request.withMethod("GET").stream().map { response =>
       // Check that the response was successful
@@ -130,11 +129,11 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
   }
 
   def view(name: String) = Action.async { implicit request: Request[AnyContent] =>
-      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/posts/${name}.adoc")
+      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
       request.get().flatMap { r => {
-        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
         r.body)
-        val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
+        val getUser = Github(Some(accessToken)).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
         val x = getUser.map {
             case Left(e) => BadRequest(e.getMessage)
             case Right(r) => {
