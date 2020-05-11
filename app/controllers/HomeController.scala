@@ -25,10 +25,6 @@ import github4s.jvm.Implicits._
 import github4s.Github._
 import scalaj.http.HttpResponse
 
-import org.asciidoctor.Asciidoctor.Factory
-import org.asciidoctor.Asciidoctor
-import org.asciidoctor.ast.DocumentHeader
-
 import models._
 
 @Singleton
@@ -148,7 +144,6 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
 
   def listPosts() = Action.async { implicit request =>
 
-    val asciidoctor = Factory.create()
     val githubPostsUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
     val filesUrl = s"https://raw.githubusercontent.com/$organization/$repository/$branch/posts"
 
@@ -158,14 +153,14 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
       }.flatMap { files: Seq[String] =>
         Future.sequence(
           files.map { file =>
-            ws.url(s"filesUrl/$file").get()
+            ws.url(s"$filesUrl/$file").get()
               .map { response =>
-                asciidoctor.readDocumentHeader(response.body).getDocumentTitle().getMain()
+                PostPreview.fromString(response.body)
               }
           }
         )
-      }.map { titles =>
-        Ok(titles.mkString("\r\n"))
+      }.map { previews =>
+        Ok(previews.map(_.title).mkString("\r\n"))
       }
   }
 }
