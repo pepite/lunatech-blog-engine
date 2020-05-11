@@ -1,27 +1,25 @@
 package controllers
 
 import javax.inject._
-import play.api._
-import play.api.mvc._
-import org.joda.time.{ DateTime, DateTimeZone }
-import models._
-import github4s.Github
-import github4s.jvm.Implicits._
+
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.Await
+
+import play.api._
+import play.api.mvc._
+import play.api.libs.json
+import play.api.libs.ws._
+import play.api.http.HttpEntity
+
+import org.joda.time.{ DateTime, DateTimeZone }
+import github4s.Github
+import github4s.jvm.Implicits._
 import github4s.Github._
 import scalaj.http.HttpResponse
 
 import javax.inject.Inject
-import scala.concurrent.Future
-import scala.concurrent.duration._
-
-import play.api.mvc._
-import play.api.libs.ws._
-import play.api.http.HttpEntity
-
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl._
@@ -29,11 +27,8 @@ import akka.util.ByteString
 
 import scala.concurrent.ExecutionContext
 
+import models._
 
-/**
- * This controller creates an `Action` to handle HTTP requests to the
- * application's home page.
- */
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configuration: Configuration) extends AbstractController(cc) {
 
@@ -42,15 +37,9 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
   val organization = configuration.get[String]("github.organisation")
   val repository = configuration.get[String]("github.repository")
   val branch = configuration.getOptional[String]("github.branch").getOrElse("master")
+  val postsSHA = configuration.get[String]("github.posts.sha")
   val background = configuration.get[String]("background")
 
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
   def index() = Action.async { implicit request: Request[AnyContent] =>
 
       val getContents = Github(accessToken).repos.getContents(organization, repository, "posts", Some(branch)).execFuture[HttpResponse[String]]()
@@ -60,7 +49,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
             case Left(e) => {
               Future(BadRequest(e.getMessage))
             }
-            // Those are our blog post
+            // Those are our blog posts
             case Right(r) => {
               // Build our posts
               val posts = r.result.map { d =>
@@ -101,13 +90,12 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
     x
   }
 
-    // read the blog post
+  // read the blog post
+  def media(post: String, name: String) = Action.async { implicit request: Request[AnyContent] =>
 
-    def media(post: String, name: String) = Action.async { implicit request: Request[AnyContent] =>
-
-      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/$post/$name")
-      // Make the request
-      request.withMethod("GET").stream().map { response =>
+    val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/$post/$name")
+    // Make the request
+    request.withMethod("GET").stream().map { response =>
       // Check that the response was successful
       if (response.status == 200) {
 
@@ -129,7 +117,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
   }
 
   def view(name: String) = Action.async { implicit request: Request[AnyContent] =>
-      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
+    val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
       request.get().flatMap { r => {
         val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
         r.body)
@@ -153,6 +141,16 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
         }
         x
       }
+    }
+  }
+
+  def posts() = Action.async { implicit request =>
+
+    val githubUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
+    ws.url(githubUrl).get().map { response =>
+      val json = response.json
+      val files: Seq[String] = (json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
+      Ok(files(0))
     }
   }
 }
