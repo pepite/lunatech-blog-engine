@@ -160,7 +160,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
           }
         )
       }.map { previews =>
-        Ok(previews.map(_.title).mkString("\r\n"))
+        Ok(previews.sortBy(- _.date.getMillis()).map(_.title).mkString("\r\n"))
       }
   }
 }
