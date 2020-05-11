@@ -144,10 +144,11 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
 
   def listPosts() = Action.async { implicit request =>
 
-    val githubPostsUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
+    val postsUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
     val filesUrl = s"https://raw.githubusercontent.com/$organization/$repository/$branch/posts"
+    val imageUrl = s"https://raw.githubusercontent.com/$organization/$repository/$branch/media"
 
-    ws.url(githubPostsUrl).get()
+    ws.url(postsUrl).get()
       .map { response =>
         (response.json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
       }.flatMap { files: Seq[String] =>
@@ -155,12 +156,13 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
           files.map { file =>
             ws.url(s"$filesUrl/$file").get()
               .map { response =>
-                PostPreview.fromString(response.body)
+                val name = file.dropRight(5) // ".adoc"
+                PostPreview.from(response.body, s"$imageUrl/$name/background.png", name)
               }
           }
-        )
+        ).map(_.sortBy(- _.date.getMillis()))
       }.map { previews =>
-        Ok(previews.sortBy(- _.date.getMillis()).map(_.title).mkString("\r\n"))
+        Ok(views.html.listPosts(background, previews))
       }
   }
 }
