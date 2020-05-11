@@ -1,11 +1,17 @@
 package controllers
 
 import javax.inject._
+import javax.inject.Inject
+import akka.actor.ActorSystem
+import akka.stream.ActorMaterializer
+import akka.stream.scaladsl._
+import akka.util.ByteString
 
 import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 import scala.concurrent.Await
+import scala.concurrent.ExecutionContext
 
 import play.api._
 import play.api.mvc._
@@ -19,13 +25,9 @@ import github4s.jvm.Implicits._
 import github4s.Github._
 import scalaj.http.HttpResponse
 
-import javax.inject.Inject
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
-import akka.stream.scaladsl._
-import akka.util.ByteString
-
-import scala.concurrent.ExecutionContext
+import org.asciidoctor.Asciidoctor.Factory
+import org.asciidoctor.Asciidoctor
+import org.asciidoctor.ast.DocumentHeader
 
 import models._
 
@@ -144,13 +146,26 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
     }
   }
 
-  def posts() = Action.async { implicit request =>
+  def listPosts() = Action.async { implicit request =>
 
-    val githubUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
-    ws.url(githubUrl).get().map { response =>
-      val json = response.json
-      val files: Seq[String] = (json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
-      Ok(files(0))
-    }
+    val asciidoctor = Factory.create()
+    val githubPostsUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
+    val filesUrl = s"https://raw.githubusercontent.com/$organization/$repository/$branch/posts"
+
+    ws.url(githubPostsUrl).get()
+      .map { response =>
+        (response.json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
+      }.flatMap { files: Seq[String] =>
+        Future.sequence(
+          files.map { file =>
+            ws.url(s"filesUrl/$file").get()
+              .map { response =>
+                asciidoctor.readDocumentHeader(response.body).getDocumentTitle().getMain()
+              }
+          }
+        )
+      }.map { titles =>
+        Ok(titles.mkString("\r\n"))
+      }
   }
 }
