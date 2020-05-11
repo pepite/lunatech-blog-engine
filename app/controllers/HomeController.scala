@@ -98,7 +98,6 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
         }
       }
     }
-    x
   }
 
     // read the blog post
