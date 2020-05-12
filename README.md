@@ -21,6 +21,11 @@ You can modify the template in the `app/views/` directory.
 
 ## Starting the application 
 
-`sbt run` and go in your browser to `http:localhost:9000`
+`sbt run` and go in your browser to [http://localhost:9000](http://localhost:9000)
 
 
+## Docker
+
+    export GITHUB_ACCESS_TOKEN=<your GitHub API Token>
+    sbt docker:publishLocal
+    docker run -p 9000:9000 -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN lunatech-blog-engine:1.0-SNAPSHOT
