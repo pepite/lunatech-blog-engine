@@ -15,9 +15,5 @@ libraryDependencies += ws
 libraryDependencies += ehcache
 
 javaOptions in Universal ++= Seq("-Dconfig.file=conf/production.conf")
-
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "com.lunatech.blog.controllers._"
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.lunatech.blog.binders._"
+maintainer in Universal := "info@lunatech.com"
+packageName in Universal := "dist"
