@@ -5,7 +5,7 @@ RUN \
   dpkg -i sbt-1.3.8.deb && \
   rm sbt-1.3.8.deb && \
   apt-get update && \
-  apt-get install sbt unzip && \
+  apt-get install sbt && \
   sbt sbtVersion
 
 RUN mkdir -p /build/project
