@@ -14,6 +14,6 @@ libraryDependencies += "com.47deg" %% "github4s" % "0.20.1"
 libraryDependencies += ws
 libraryDependencies += ehcache
 
-javaOptions in Universal ++= Seq("-Dconfig.file=conf/production.conf")
+javaOptions in Universal ++= Seq("-Xms64m -Xmx512m -Dconfig.file=conf/production.conf")
 maintainer in Universal := "info@lunatech.com"
 packageName in Universal := "dist"
