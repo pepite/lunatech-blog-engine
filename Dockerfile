@@ -12,6 +12,7 @@ RUN mkdir -p /build/project
 ADD project /build/project
 ADD app /build/app
 ADD conf /build/conf
+ADD public /build/public
 ADD build.sbt /build/build.sbt
 
 WORKDIR /build
