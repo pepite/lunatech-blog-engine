@@ -41,55 +41,15 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
 
   val githubService = new GithubService(ws, configuration)
 
-  def index() = Action.async { implicit request: Request[AnyContent] =>
-
-      val getContents = Github(accessToken).repos.getContents(organization, repository, "posts", Some(branch)).execFuture[HttpResponse[String]]()
-
-      val x = getContents.flatMap { repo =>
-          repo match {
-            case Left(e) => {
-              Future(BadRequest(e.getMessage))
-            }
-            // Those are our blog posts
-            case Right(r) => {
-              // Build our posts
-              val posts = r.result.map { d =>
-                val url = d.download_url.get
-                val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
-                val request: WSRequest = ws.url(url)
-                val posts = request.get().flatMap { r =>
-                  val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-                  r.body)
-                  val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
-                  val postWithAuthor = getUser.map {
-                      case Left(e) => None
-                      case Right(r) => {
-                        val user = r.result
-                        val author = Author(user.login,
-                              user.avatar_url,
-                              user.html_url,
-                              user.name,
-                              user.email,
-                              user.company,
-                              user.blog,
-                              user.location,
-                              user.bio)
-
-                        Some((post, author))
-                      }
-                    }
-                  postWithAuthor
-                }
-              posts
-            }
-            Future.sequence(posts.toList).map { p =>
-              Ok(views.html.index(background, p.flatten))
-            }
-        }
+  def listPosts() = Action.async { implicit request =>
+    githubService
+      .listPosts
+      .map(_.sortBy(- _.date.getMillis()))
+      .map{ previews =>
+        Ok(views.html.listPosts(background, previews))
       }
-    }
-    x
   }
+
 
   // read the blog post
   def media(post: String, name: String) = Action.async { implicit request: Request[AnyContent] =>
@@ -145,12 +105,4 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
     }
   }
 
-  def listPosts() = Action.async { implicit request =>
-    githubService
-      .listPosts
-      .map(_.sortBy(- _.date.getMillis()))
-      .map{ previews =>
-        Ok(views.html.listPosts(background, previews))
-      }
-  }
 }
