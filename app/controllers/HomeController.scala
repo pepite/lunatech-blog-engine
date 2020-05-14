@@ -27,6 +27,10 @@ import scalaj.http.HttpResponse
 
 import models._
 
+import org.asciidoctor.Asciidoctor.Factory
+import org.asciidoctor.Asciidoctor
+import org.asciidoctor.ast.DocumentHeader
+
 @Singleton
 class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configuration: Configuration) extends AbstractController(cc) {
 
@@ -37,6 +41,8 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
   val branch = configuration.getOptional[String]("github.branch").getOrElse("master")
   val postsSHA = configuration.get[String]("github.posts.sha")
   val background = configuration.get[String]("background")
+
+  val asciidoctor = Factory.create()
 
   def index() = Action.async { implicit request: Request[AnyContent] =>
 
@@ -147,17 +153,24 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
     val postsUrl = s"https://api.github.com/repos/$organization/$repository/git/trees/$postsSHA"
     val filesUrl = s"https://raw.githubusercontent.com/$organization/$repository/$branch/posts"
     val imageUrl = s"https://raw.githubusercontent.com/$organization/$repository/$branch/media"
+    val authorUrl = s"https://api.github.com/users"
 
     ws.url(postsUrl).get()
-      .map { response =>
-        (response.json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
+      .map { postsUrlResponse =>
+        (postsUrlResponse.json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
       }.flatMap { files: Seq[String] =>
         Future.sequence(
           files.map { file =>
             ws.url(s"$filesUrl/$file").get()
-              .map { response =>
+              .flatMap { filesUrlResponse =>
+                val content = filesUrlResponse.body
                 val name = file.dropRight(5) // ".adoc"
-                PostPreview.from(response.body, s"$imageUrl/$name/background.png", name)
+                val githubAuthor = asciidoctor.readDocumentHeader(content).getAuthor().getFullName()
+                ws.url(s"$authorUrl/$githubAuthor").get()
+                  .map { authorUrlResponse =>
+                    val author = (authorUrlResponse.json \ "name").as[String]
+                    PostPreview.from(content, s"$imageUrl/$name/background.png", name, author)
+                  }
               }
           }
         ).map(_.sortBy(- _.date.getMillis()))
