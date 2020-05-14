@@ -12,14 +12,11 @@ object PostPreview {
 
   val asciidoctor = Factory.create()
 
-  def from(content: String, imageUrl: String, name: String, author: String): PostPreview = {
+  def from(file: String, content: String, imageUrl: String, author: String): PostPreview = {
     val header = asciidoctor.readDocumentHeader(content)
     val title = header.getDocumentTitle().getMain()
     val date = new DateTime(header.getRevisionInfo().getDate())
-    val slug = s"/posts/$name"
+    val slug = s"/posts/${file.dropRight(".adoc".length)}"
     PostPreview(title, author, date, imageUrl, slug)
   }
-
-
-
 }
