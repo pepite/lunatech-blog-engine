@@ -13,6 +13,8 @@ import org.asciidoctor.Asciidoctor.Factory
 import org.asciidoctor.Asciidoctor
 import org.asciidoctor.ast.DocumentHeader
 
+import models.PostPreview
+
 class GithubService (ws: WSClient, configuration: Configuration) {
 
   val accessToken = configuration.getOptional[String]("github.accessToken")
@@ -28,14 +30,14 @@ class GithubService (ws: WSClient, configuration: Configuration) {
 
   val asciidoctor = Factory.create()  
 
-  def listFiles: Future[Seq[String]] = {
+  private def listFiles: Future[Seq[String]] = {
     ws.url(postsUrl).get()
       .map { response =>
         (response.json \ "tree" \\ "path").map(_.as[String]).filter(_.endsWith(".adoc"))
       }
   }
 
-  def getAuthorFullName(content: String): Future[String] = {
+  private def getAuthorFullName(content: String): Future[String] = {
     val username = asciidoctor.readDocumentHeader(content).getAuthor().getFullName()
     ws.url(s"$authorUrl/$username").get()
       .map { response =>
@@ -43,11 +45,25 @@ class GithubService (ws: WSClient, configuration: Configuration) {
       }
   }
 
-  def getFileContent(file: String): Future[String] = {
+  private def getFileContent(file: String): Future[String] = {
     ws.url(s"$filesUrl/$file").get()
       .map(_.body)
   }
 
-  def imageUrl(file: String): String = s"""$imageUrl/${file.dropRight(".adoc".length)}/background.png""" 
+  private def imageUrl(file: String): String = s"""$imageUrl/${file.dropRight(".adoc".length)}/background.png""" 
 
+  def listPosts: Future[Seq[PostPreview]] = {
+    listFiles.flatMap { files: Seq[String] =>
+      Future.sequence (
+        files.map { file =>
+          for {
+            content <- getFileContent(file)
+            author <- getAuthorFullName(content)
+          } yield {
+            PostPreview.from(file, content, imageUrl(file), author)
+          }
+        }
+      )
+    }
+  }
 }

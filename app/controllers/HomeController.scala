@@ -146,18 +146,10 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
   }
 
   def listPosts() = Action.async { implicit request =>
-
-    githubService.listFiles.flatMap { files: Seq[String] =>
-      Future.sequence(
-        files.map { file =>
-          for {
-            content <- githubService.getFileContent(file)
-            author <- githubService.getAuthorFullName(content)
-          } yield {
-            PostPreview.from(file, content, githubService.imageUrl(file), author)
-          }
-        }).map(_.sortBy(- _.date.getMillis()))
-      }.map { previews =>
+    githubService
+      .listPosts
+      .map(_.sortBy(- _.date.getMillis()))
+      .map{ previews =>
         Ok(views.html.listPosts(background, previews))
       }
   }
