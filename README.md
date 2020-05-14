@@ -23,9 +23,22 @@ You can modify the template in the `app/views/` directory.
 
 `sbt run` and go in your browser to [http://localhost:9000](http://localhost:9000)
 
-
 ## Docker
+
+To try it locally, use `sbt`:
 
     export GITHUB_ACCESS_TOKEN=<your GitHub API Token>
     sbt docker:publishLocal
-    docker run -p 9000:9000 -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN lunatech-blog-engine:1.0-SNAPSHOT
+    docker run -p 9000:9000 -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN lunatech-blog-engine:latest
+
+The `Dockerfile` file at the root of this repo is needed for deployment. Yet, if you want to play with it:
+
+    docker build . -t lunatech.com/lunatech-blog-engine:latest
+	docker run -p 8080:8080 -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN lunatech.com/lunatech-blog-engine:latest
+	
+Note that the port 8080 is used instead of 9000, to map directly Clever Cloud's defaults.
+
+## Deployment
+
+Every commit or merge to the master branch is built and deployed on Clever Cloud.
+
