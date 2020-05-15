@@ -1,5 +1,5 @@
 {
   "deploy":{
-    "goal": "-Dconfig.file=conf/production.conf -J-Xms128m -J-Xmx512m"
+    "goal": "-Dconfig.file=conf/production.conf"
   }
 }
