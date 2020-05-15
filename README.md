@@ -8,28 +8,3 @@ In the `posts` directory a file with the following structure `yyyy-MM-dd-name-of
 In the `media` directory a directory `yyyy-MM-dd-name-of-the-blog` with at least a `background.png` file and all other assets files needed for the blog post.
 
 ## Configuration of the application
-```
-accessToken = your-secret-token
-github_organisation = lunatech-labs
-github_repository = lunatech-blog
-github_branch = master
-# The main background image
-background = "https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg"
-```
-
-You can modify the template in the `app/views/` directory.
-
-## Starting the application 
-
-`sbt run` and go in your browser to [http://localhost:9000](http://localhost:9000)
-
-## Docker
-
-To try it locally, use `sbt`:
-
-    export GITHUB_ACCESS_TOKEN=<your GitHub API Token>
-    sbt docker:publishLocal
-    docker run -p 9000:9000 -e GITHUB_ACCESS_TOKEN=$GITHUB_ACCESS_TOKEN lunatech-blog-engine:latest
-
-## Deployment
-
