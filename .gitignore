@@ -7,3 +7,5 @@ tech/ _site/
 tech/.sass-cache/
 tech/.jekyll-cache/
 tech/.jekyll-metadata
+
+venv
