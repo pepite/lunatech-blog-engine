@@ -3,9 +3,10 @@ project/target/
 target/
 logs/
 
-tech/ _site/
+tech/_site/
 tech/.sass-cache/
 tech/.jekyll-cache/
 tech/.jekyll-metadata
+tech/_posts/*.adoc
 
 venv
