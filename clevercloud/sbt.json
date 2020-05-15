@@ -1,5 +1,0 @@
-{
-  "deploy":{
-    "goal": "-Dconfig.file=conf/production.conf"
-  }
-}
