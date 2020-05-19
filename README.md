@@ -17,8 +17,6 @@ This blog engine goes to the [lunatech-blog](https://github.com/lunatech-labs/lu
 7. Run Jekyll: `cd tech && bundle exec jekyll serve`
 8. Visit [localhost:4000](localhost:4000)
 
-`bundle exec jekyll serve`
-
 ## Configuration of the application
 
 
