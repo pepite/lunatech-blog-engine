@@ -5,17 +5,20 @@ import org.asciidoctor.Asciidoctor.Factory;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.ast.DocumentHeader;
 
-case class Post(slug: String, mainImage: String, content: String) {
+object Post {
   val asciidoctor = Factory.create()
-  val header = asciidoctor.readDocumentHeader(content)
+}
 
+case class Post(slug: String, mainImage: String, content: String) {
+  
+  val header = Post.asciidoctor.readDocumentHeader(content)
   val pattern = "<p>(.*)</p>".r
 
-  def getFirstParagraph(): String = asciidoctor.convert(
+  def getFirstParagraph(): String = Post.asciidoctor.convert(
     content,
     new java.util.HashMap[String, Object]()).slice(0, 160) + "..."
 
-  def getContent(): String = asciidoctor.convert(
+  def getContent(): String = Post.asciidoctor.convert(
       content,
       new java.util.HashMap[String, Object]())
 
