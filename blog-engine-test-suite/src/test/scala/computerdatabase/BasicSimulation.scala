@@ -14,13 +14,14 @@ class BasicSimulation extends Simulation {
     .userAgentHeader("Mozilla/5.0 (Macintosh; Intel Mac OS X 10.8; rv:16.0) Gecko/20100101 Firefox/16.0")
 
   val scn = scenario("Scenario Name") // A scenario is a chain of requests and pauses
-    .exec(http("request_1")
+    .exec(http("index page")
       .get("/"))
-    .exec(http("addNewComputer")
+    .pause(5 seconds)
+    .exec(http("blog post details")
      .get("/posts/2020-10-02-the-tale-about-hibernate-and-temporal-tables"))
        
   setUp(scn.inject(
-    constantUsersPerSec(2) during(2 minute)
+    constantUsersPerSec(10) during(2 minute)
   ).protocols(httpProtocol)) 
   //setUp(scn.inject(atOnceUsers(1)).protocols(httpProtocol))
 }

@@ -116,10 +116,8 @@ class HomeController @Inject()(
 
     cache.get[Seq[(Post, Author)]]("posts") match {
       case None =>
-        println(s"cache miss")
         renderedPosts()
       case Some(result) =>
-        println(s"cache hit")
         Future.successful(Ok(views.html.index(background, result)))
     }
 
