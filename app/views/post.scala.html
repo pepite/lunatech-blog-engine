@@ -46,12 +46,13 @@
 
 
                         <p class="post-details-author" style="    position: absolute;
-    right: 168pt;
+    right: 120pt;
     top: unset;
     bottom: -16px;
     width: 25vh;
     display: block;
     height: 20vh;
+    z-index: 0;
     overflow: hidden;"><img class="author-thumb" style="overflow: hidden;
     width: 25vh;" src="@author.avatar_url" alt="Nicolas Leroux" nopin="nopin"> </p>
                         <p class="post-details-title"  style="color: #fff !important;position: absolute;right: 0;border: 0;top: unset;bottom: 20pt;font-size: 20pt !important;margin-left: 0;margin-right: 5pt;text-align: right;width:160pt;letter-spacing: 5px;line-height: 25pt !important;">
@@ -66,7 +67,7 @@
         <main id="target" class="bg-gray">
             <div class="container">
                 <div class="blog-content">
-                    @Html(post.getContent())
+                    @Html(post.htmlContent)
                 </div>
 
 
@@ -112,7 +113,7 @@
 
                         <h3>Lunatech FR</h3>
                         <ul>
-                        <li>Leuven</li>
+                        <li>Paris</li>
                         <p class="footer-adress">3 Rue de la Galmy<br /><span>77700 Chessy,<br /> France</span></p>
                         </ul>
                   </div>
@@ -120,8 +121,8 @@
 
                         <h3>Lunatech BE</h3>
                         <ul>
-                        <li>Paris</li>
-                        <p class="footer-adress"><br /><span>Leuven,<br /> Belgium</span></p>
+                        <li>Brussels</li>
+                        <p class="footer-adress"><br /><span>Brussels,<br /> Belgium</span></p>
                         </ul>
                   </div>
                     <div class="col-md-3">

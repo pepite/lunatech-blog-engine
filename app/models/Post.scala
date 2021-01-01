@@ -14,11 +14,7 @@ case class Post(slug: String, mainImage: String, content: String) {
   val header = Post.asciidoctor.readDocumentHeader(content)
   val pattern = "<p>(.*)</p>".r
 
-  def getFirstParagraph(): String = Post.asciidoctor.convert(
-    content,
-    new java.util.HashMap[String, Object]()).slice(0, 160) + "..."
-
-  def getContent(): String = Post.asciidoctor.convert(
+  val htmlContent: String = Post.asciidoctor.convert(
       content,
       new java.util.HashMap[String, Object]())
 

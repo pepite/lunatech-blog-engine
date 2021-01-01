@@ -609,7 +609,7 @@ author-meta a {
 }
 .header-page-left p {
   font-family: 'Fira Sans', sans-serif;
-  font-size: 55pt;
+  font-size: 3em;
   color: white;
   letter-spacing: 15px;
   font-weight: 700;
@@ -656,6 +656,7 @@ author-meta a {
   margin-bottom: 0;
 }
 .figure-image img {
+  height: 300px;
   width: 100%;
 }
 .figure-content {
@@ -1063,6 +1064,19 @@ table .thead-light th {
 }
 
 @media (max-width: 575.98px) {
+  .header-page-left p {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 2em;
+    color: white;
+    letter-spacing: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 50%;
+    margin-left: auto;
+    position: relative;
+    margin-right: auto;
+    text-align: center;
+  }
   .table-responsive-sm {
     display: block;
     width: 100%;
@@ -1076,6 +1090,23 @@ table .thead-light th {
 }
 
 @media (max-width: 767.98px) {
+  .header-page-left {
+    background-size: 100vh;
+  }
+
+  .header-page-left p {
+    font-family: 'Fira Sans', sans-serif;
+    font-size: 2em;
+    color: white;
+    letter-spacing: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 50%;
+    margin-left: auto;
+    position: relative;
+    margin-right: auto;
+    text-align: center;
+  }
   .table-responsive-md {
     display: block;
     width: 100%;
@@ -1218,4 +1249,7 @@ table .thead-light th {
 }
 .dark-blue {
   color: #26374C!important;
+}
+.col-sm-4 {
+  height: 300px
 }

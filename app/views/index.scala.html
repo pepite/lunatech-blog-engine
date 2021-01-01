@@ -9,7 +9,7 @@
               @**
                * TODO: Should be paginated
                **@
-            @posts.slice(0, 24).map { case (post, author) =>
+            @posts.map { case (post, author) =>
                 <div class="col-xs-12 col-sm-4 no-pad">
                     <div class="blog-section-info zoom">
                         <figure class="figure-image">
@@ -26,7 +26,8 @@
                             </div>
 
                             <div class="figure-content-overlay">
-                                @Html(post.getFirstParagraph())
+                                <h3>@post.getTitle</h3>
+
                                 <a class="btn btn-custom3" href="@post.slug" role="button">
                                     Read more</a>
                             </div>

@@ -73,7 +73,10 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
                   r.body)
                   val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
-                      case Left(e) => None
+                      case Left(e) => {
+                        Some((post, Author("","","")))
+                      }
+                  
                       case Right(r) => {
                         val user = r.result
                         val author = Author(user.login,
@@ -89,10 +92,12 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
                         Some((post, author))
                       }
                     }
+                    
                   postWithAuthor
                 }
               posts
             }
+             
             Future.sequence(posts.toList).map { p =>
               Ok(views.html.index(background, p.flatten))
             }
