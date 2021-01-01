@@ -1,14 +1,11 @@
-import Dependencies._
-
 enablePlugins(GatlingPlugin)
 
-lazy val root = (project in file("."))
-  .settings(
-    inThisBuild(List(
-      organization := "com.lunatech",
-      scalaVersion := "2.12.8",
-      version := "0.1.0-SNAPSHOT"
-    )),
-    name := "Blog Engine Test Suite",
-    libraryDependencies ++= gatling
-  )
+scalaVersion := "2.13.4"
+
+scalacOptions := Seq(
+  "-encoding", "UTF-8", "-target:jvm-1.8", "-deprecation",
+  "-feature", "-unchecked", "-language:implicitConversions", "-language:postfixOps")
+
+val gatlingVersion = "3.5.0"
+libraryDependencies += "io.gatling.highcharts" % "gatling-charts-highcharts" % gatlingVersion % "test,it"
+libraryDependencies += "io.gatling"            % "gatling-test-framework"    % gatlingVersion % "test,it"

@@ -6,7 +6,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>@post.getTitle()</title>
+        <title>@post.title</title>
         <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.ico")">
 
         <!-- Bootstrap CSS -->
@@ -36,9 +36,9 @@
                         <a href="/"><img src="/assets/images/logo-lunatech-france.png"></a>
 
                         <div class="title text-center mb-5">
-                            <p>@post.getTitle()
+                            <p>@post.title
                             <span class="red-line"></span></p>
-                            <p class="post-details-date">@post.getPublicationDate().toString("dd MMMM yyyy")</p>
+                            <p class="post-details-date">@post.publicationDate.toString("dd MMMM yyyy")</p>
 
                         </div>
 

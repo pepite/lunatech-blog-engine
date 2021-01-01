@@ -11,18 +11,17 @@ object Post {
 
 case class Post(slug: String, mainImage: String, content: String) {
   
-  val header = Post.asciidoctor.readDocumentHeader(content)
-  val pattern = "<p>(.*)</p>".r
-
   val htmlContent: String = Post.asciidoctor.convert(
       content,
       new java.util.HashMap[String, Object]())
 
-  def getAuthor(): String = header.getAuthor().getFullName()
+  val header = Post.asciidoctor.readDocumentHeader(content)
+  
+  val author: String = header.getAuthor().getFullName()
 
-  def getPublicationDate(): DateTime = new DateTime(header.getRevisionInfo().getDate())
+  val publicationDate: DateTime = new DateTime(header.getRevisionInfo().getDate())
 
-  def getTitle(): String = header.getDocumentTitle().getMain()
+  val title: String = header.getDocumentTitle().getMain()
 
-  def getTags() = header.getAttributes().get("tags")
+  val tags = header.getAttributes().get("tags")
 }

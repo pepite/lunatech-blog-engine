@@ -17,6 +17,7 @@ import scalaj.http.HttpResponse
 import javax.inject.Inject
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import play.api.cache.SyncCacheApi
 
 import play.api.mvc._
 import play.api.libs.ws._
@@ -35,14 +36,19 @@ import scala.concurrent.ExecutionContext
  * application's home page.
  */
 @Singleton
-class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configuration: Configuration) extends AbstractController(cc) {
-
+class HomeController @Inject()(
+  cc: ControllerComponents, 
+  ws: WSClient, 
+  configuration: Configuration,
+  cache: SyncCacheApi
+) extends AbstractController(cc) {
 
   val accessToken = configuration.getString("accessToken")
   val organization = configuration.getString("github_organisation").getOrElse("")
   val repository = configuration.getString("github_repository").getOrElse("")
   val branch = configuration.getString("github_branch")
   val background = configuration.getString("background").getOrElse("https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg")
+  val cacheTtl = configuration.get[Duration]("cacheTtl")
 
 
   /**
@@ -54,9 +60,9 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
 
-      val getContents = Github(accessToken).repos.getContents(organization, repository, "posts", branch).execFuture[HttpResponse[String]]()
+      def getContents() = Github(accessToken).repos.getContents(organization, repository, "posts", branch).execFuture[HttpResponse[String]]()
 
-      val x = getContents.flatMap { repo =>
+      def renderedPosts() = getContents().flatMap { repo =>
           repo match {
             case Left(e) => {
               Future(BadRequest(e.getMessage))
@@ -69,9 +75,10 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
+                
                   val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
                   r.body)
-                  val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
+                  val getUser = Github(accessToken).users.get(post.author).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
                       case Left(e) => {
                         Some((post, Author("","","")))
@@ -99,12 +106,24 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
             }
              
             Future.sequence(posts.toList).map { p =>
+              cache.set("posts", p.flatten, cacheTtl)
               Ok(views.html.index(background, p.flatten))
             }
         }
       }
     }
-    x
+    
+
+    cache.get[Seq[(Post, Author)]]("posts") match {
+      case None =>
+        println(s"cache miss")
+        renderedPosts()
+      case Some(result) =>
+        println(s"cache hit")
+        Future.successful(Ok(views.html.index(background, result)))
+    }
+
+     
   }
 
     // read the blog post
@@ -139,7 +158,7 @@ class HomeController @Inject()(cc: ControllerComponents, ws: WSClient, configura
       request.get().flatMap { r => {
         val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
         r.body)
-        val getUser = Github(accessToken).users.get(post.getAuthor).execFuture[HttpResponse[String]]()
+        val getUser = Github(accessToken).users.get(post.author).execFuture[HttpResponse[String]]()
         val x = getUser.map {
             case Left(e) => BadRequest(e.getMessage)
             case Right(r) => {

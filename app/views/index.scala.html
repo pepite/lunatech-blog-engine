@@ -17,16 +17,16 @@
                             <img src="@post.mainImage" alt=""/>
 
                             <div class="figure-content">
-                                <h3>@post.getTitle</h3>
+                                <h3>@post.title</h3>
 
-                                <p class="figure-content-date">@post.getPublicationDate.toString("dd MMM yyyy")</p>
+                                <p class="figure-content-date">@post.publicationDate.toString("dd MMM yyyy")</p>
                                 <p class="figure-content-author">
                                     by @author.name
                                 </p>
                             </div>
 
                             <div class="figure-content-overlay">
-                                <h3>@post.getTitle</h3>
+                                <h3>@post.title</h3>
 
                                 <a class="btn btn-custom3" href="@post.slug" role="button">
                                     Read more</a>
