@@ -30,6 +30,7 @@ import akka.util.ByteString
 
 import scala.concurrent.ExecutionContext
 
+import play.api.libs.json._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -49,23 +50,15 @@ class HomeController @Inject()(
   val branch = configuration.getString("githubBranch")
   val background = configuration.getString("blogBackground").getOrElse("https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg")
   val cacheTtl = configuration.get[Duration]("cacheTtl")
+  val perPage = configuration.get[Int]("blogsPerPage")
 
+  private def getContents() = Github(accessToken).repos.getContents(organization, repository, "posts", branch).execFuture[HttpResponse[String]]()
 
-  /**
-   * Create an Action to render an HTML page.
-   *
-   * The configuration in the `routes` file means that this method
-   * will be called when the application receives a `GET` request with
-   * a path of `/`.
-   */
-  def index() = Action.async { implicit request: Request[AnyContent] =>
-
-      def getContents() = Github(accessToken).repos.getContents(organization, repository, "posts", branch).execFuture[HttpResponse[String]]()
-
-      def renderedPosts() = getContents().flatMap { repo =>
+  private def getPosts(page: Int = 0):Future[Seq[Post]] = getContents().flatMap { repo =>
           repo match {
-            case Left(e) => {
-              Future(BadRequest(e.getMessage))
+            case Left(e) => { 
+              Future.successful(Seq.empty)
+              //Future(BadRequest(e.getMessage))
             }
             // Those are our blog post
             case Right(r) => {
@@ -75,17 +68,16 @@ class HomeController @Inject()(
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
-                
                   val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
-                  r.body)
-                  val getUser = Github(accessToken).users.get(post.author).execFuture[HttpResponse[String]]()
+                    r.body)
+                  val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
                       case Left(e) => {
-                        Some((post, Author("","","")))
+                        post
                       }
                   
-                      case Right(r) => {
-                        val user = r.result
+                      case Right(rUser) => {
+                        val user = rUser.result
                         val author = Author(user.login,
                               user.avatar_url,
                               user.html_url,
@@ -95,8 +87,9 @@ class HomeController @Inject()(
                               user.blog,
                               user.location,
                               user.bio)
-
-                        Some((post, author))
+                        val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+                           r.body, Some(author))
+                        post
                       }
                     }
                     
@@ -106,22 +99,41 @@ class HomeController @Inject()(
             }
              
             Future.sequence(posts.toList).map { p =>
-              cache.set("posts", p.flatten.reverse, cacheTtl)
-              Ok(views.html.index(background, p.flatten.reverse))
+              p.reverse.toSeq
             }
         }
       }
     }
-    
-
-    cache.get[Seq[(Post, Author)]]("posts") match {
+  
+  /**
+   * 
+   *
+   */
+  def index() = Action.async { implicit request: Request[AnyContent] =>
+   val page = 1
+    cache.get[Seq[Post]]("posts") match {
       case None =>
-        renderedPosts()
+        val fPosts = getPosts()
+        fPosts.map { posts => 
+          cache.set("posts", posts, cacheTtl)
+          Ok(views.html.index(background, posts.slice((page - 1) * perPage, page * perPage), perPage))
+        } 
       case Some(result) =>
-        Future.successful(Ok(views.html.index(background, result)))
+        Future.successful(Ok(views.html.index(background, result.slice((page - 1) * perPage, page * perPage), perPage)))
     }
+  }
 
-     
+  def posts(page: Int) = Action.async { implicit request: Request[AnyContent] =>
+      cache.get[Seq[Post]]("posts") match {
+      case None =>
+        val fPosts = getPosts()
+        fPosts.map { posts => 
+          cache.set("posts", posts, cacheTtl)
+          Ok(Json.toJson(posts.slice((page - 1) * perPage, page * perPage).map(_.toJson())))
+        } 
+      case Some(result) =>
+        Future.successful(Ok(Json.toJson(result.slice((page - 1) * perPage, page * perPage).map(_.toJson()))))
+    }
   }
 
     // read the blog post
@@ -156,11 +168,11 @@ class HomeController @Inject()(
       request.get().flatMap { r => {
         val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
         r.body)
-        val getUser = Github(accessToken).users.get(post.author).execFuture[HttpResponse[String]]()
+        val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
         val x = getUser.map {
-            case Left(e) => BadRequest(e.getMessage)
-            case Right(r) => {
-              val user = r.result
+            case Left(e) => Ok(views.html.post(post))
+            case Right(re) => {
+              val user = re.result
               val author = Author(user.login,
                     user.avatar_url,
                     user.html_url,
@@ -170,8 +182,9 @@ class HomeController @Inject()(
                     user.blog,
                     user.location,
                     user.bio)
-
-              Ok(views.html.post(post, author))
+              val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+                r.body, Some(author))
+              Ok(views.html.post(postWithAuthor))
           }
         }
         x

@@ -13,6 +13,7 @@ libraryDependencies += "org.asciidoctor" % "asciidoctorj" % "2.2.0"
 libraryDependencies += "com.47deg" %% "github4s" % "0.20.1"
 libraryDependencies += ws
 libraryDependencies += ehcache
+libraryDependencies += "com.typesafe.play" %% "play-json" % "2.7.0"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.lunatech.blog.controllers._"

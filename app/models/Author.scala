@@ -1,7 +1,11 @@
 package models
 
 import org.joda.time.{ DateTime, DateTimeZone }
+import play.api.libs.json._
 
+object Author {
+      implicit val authorWrites = Json.writes[Author]
+}
 case class Author(login: String,
       avatar_url: String,
       html_url: String,

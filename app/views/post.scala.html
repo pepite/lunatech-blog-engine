@@ -1,5 +1,5 @@
 @import models._
-@(post: Post, author: Author)
+@(post: Post)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -54,9 +54,9 @@
     height: 20vh;
     z-index: 0;
     overflow: hidden;"><img class="author-thumb" style="overflow: hidden;
-    width: 25vh;" src="@author.avatar_url" alt="Nicolas Leroux" nopin="nopin"> </p>
+    width: 25vh;" src="@post.author.map(_.avatar_url)" alt="@post.author.map(_.name)" nopin="nopin"> </p>
                         <p class="post-details-title"  style="color: #fff !important;position: absolute;right: 0;border: 0;top: unset;bottom: 20pt;font-size: 20pt !important;margin-left: 0;margin-right: 5pt;text-align: right;width:160pt;letter-spacing: 5px;line-height: 25pt !important;">
-                         by @author.name</p>
+                         by @post.author.map(_.name)</p>
 
 
                     </div>
@@ -75,13 +75,13 @@
 
 
             <figure class="author-image">
-                <a class="img" href="#" style="background-image: url(@author.avatar_url)"><span class="hidden">Nicolas Leroux's Picture</span></a>
+                <a class="img" href="#" style="background-image: url(@post.author.map(_.avatar_url))"><span class="hidden">@post.author.map(_.name)'s Picture</span></a>
             </figure>
 
             <section class="author">
-                <h4>By @author.name</h4>
+                <h4>By @post.author.map(_.name)</h4>
 
-                <p>@author.bio</p>
+                <p>@post.author.map(_.bio)</p>
 
             </section>
 
