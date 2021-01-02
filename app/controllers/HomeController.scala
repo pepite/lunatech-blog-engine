@@ -44,10 +44,10 @@ class HomeController @Inject()(
 ) extends AbstractController(cc) {
 
   val accessToken = configuration.getString("accessToken")
-  val organization = configuration.getString("github_organisation").getOrElse("")
-  val repository = configuration.getString("github_repository").getOrElse("")
-  val branch = configuration.getString("github_branch")
-  val background = configuration.getString("background").getOrElse("https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg")
+  val organization = configuration.getString("githubOrganisation").getOrElse("")
+  val repository = configuration.getString("githubRepository").getOrElse("")
+  val branch = configuration.getString("githubBranch")
+  val background = configuration.getString("blogBackground").getOrElse("https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg")
   val cacheTtl = configuration.get[Duration]("cacheTtl")
 
 
