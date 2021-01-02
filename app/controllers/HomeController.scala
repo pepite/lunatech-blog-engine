@@ -106,8 +106,8 @@ class HomeController @Inject()(
             }
              
             Future.sequence(posts.toList).map { p =>
-              cache.set("posts", p.flatten, cacheTtl)
-              Ok(views.html.index(background, p.flatten))
+              cache.set("posts", p.flatten.reverse, cacheTtl)
+              Ok(views.html.index(background, p.flatten.reverse))
             }
         }
       }
