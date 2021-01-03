@@ -11,14 +11,14 @@
                     <div class="blog-section-info zoom">
                         <figure class="figure-image">
                             <div class="blog-background"></div>
-                            <img src="@post.mainImage" alt=""/>
+                            <img src="@post.mainImage" onerror="imgError(this)" alt=""/>
 
                             <div class="figure-content">
                                 <h3>@post.title</h3>
 
                                 <p class="figure-content-date">@post.publicationDate.toString("dd MMM yyyy")</p>
                                 <p class="figure-content-author">
-                                    by @post.author.map(_.name)
+                                    by @post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)
                                 </p>
                             </div>
 
@@ -89,7 +89,7 @@
                 }
                 for (const post of posts) {
                     var more = '<div class="col-xs-12 col-sm-4 no-pad"><div class="blog-section-info zoom"><figure class="figure-image"><div class="blog-background"></div><img src="'+ post.image_url 
-                    + '" alt=""/> <div class="figure-content"><h3>'+ post.title +'</h3><p class="figure-content-date">'
+                    + '" onerror="imgError(this)" alt=""/> <div class="figure-content"><h3>'+ post.title +'</h3><p class="figure-content-date">'
                     + post.publication_date + '</p><p class="figure-content-author"> by ' + post.author + ' </p>  </div> <div class="figure-content-overlay"> <h3>' + post.title 
                     + '</h3> <a class="btn btn-custom3" href="' + post.slug + '" role="button">   Read more</a> </div></figure></div> </div>'
                     content.innerHTML += more
@@ -99,7 +99,12 @@
         
         }
       
-        // hook the scroll handler to scroll event
+        function imgError(image) {
+            image.onerror = "";
+            image.src = "@headerImageUrl";
+            return true;
+        }
+            // hook the scroll handler to scroll event
         addEvent(btn, "click", loadContent);
 
       </script>
