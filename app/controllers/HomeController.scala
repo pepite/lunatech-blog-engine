@@ -68,7 +68,7 @@ class HomeController @Inject()(
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
-                  val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+                  val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
                     r.body)
                   val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
@@ -87,7 +87,7 @@ class HomeController @Inject()(
                               user.blog,
                               user.location,
                               user.bio)
-                        val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+                        val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
                            r.body, Some(author))
                         post
                       }
@@ -166,7 +166,7 @@ class HomeController @Inject()(
   def view(name: String) = Action.async { implicit request: Request[AnyContent] =>
       val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/posts/${name}.adoc")
       request.get().flatMap { r => {
-        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
         r.body)
         val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
         val x = getUser.map {
@@ -182,7 +182,7 @@ class HomeController @Inject()(
                     user.blog,
                     user.location,
                     user.bio)
-              val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+              val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
                 r.body, Some(author))
               Ok(views.html.post(postWithAuthor))
           }
