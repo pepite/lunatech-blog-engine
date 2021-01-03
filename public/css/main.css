@@ -1,5 +1,9 @@
 .blog-content img, .blog-content img[alt="\{in-between-width\}"] {
-  max-width: 100%
+  max-width: 100%;
+  padding-bottom: 2.5em;
+  display: block;
+  text-align: center;
+  margin: auto;
 }
 
 #target .blog-section div.row {

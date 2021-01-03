@@ -1,6 +1,6 @@
 /* --------------------------------- GENERAL --------------------------------- */
 h4 {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   font-size: 24px;
   color: #26374C;
   line-height: 35px;
@@ -72,13 +72,13 @@ h4 {
   text-transform: uppercase;
   color: white;
   letter-spacing: 6px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   font-size: 20px;
 }
 .date {
   color: white;
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   text-align: right;
 }
 .date p:first-child {
@@ -106,7 +106,7 @@ h4 {
 }
 .cd-details {
   color: white;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   margin-right: 30px;
   text-align: center;
 }
@@ -239,9 +239,11 @@ h4 {
 }
 /* --------------------------------- CONTENT --------------------------------- */
 .header-page-right p, .bg-gray p, .bg-white p {
-  font-size: 18px;
-  color: #26374C;
-  line-height: 30px;
+  font-size: 1.0625rem;
+  color: rgba(0,0,0,.8);
+  font-weight: 400;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
 }
 .group {
   background: #F5F5F5;
@@ -250,13 +252,14 @@ h4 {
 .title {
 }
 h2 {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 20px;
   color: #26374C;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 8px;
-  margin-bottom: 0;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+  margin-top: 25px;
   display: inline-flex;
 }
 .red-line {
@@ -270,7 +273,7 @@ h2 {
   top: -5px;
 }
 .quote {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   font-size: 34px!important;
   color: #26374C!important;
   line-height: 50px;
@@ -282,7 +285,7 @@ h2 {
   font-weight: 700;
 }
 .text {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   font-size: 18px;
   color: #26374C;
   line-height: 30px;
@@ -297,7 +300,7 @@ h2 {
   color: #26374C;
   text-transform: uppercase;
   font-size: 16px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   border-radius: 0;
   height: 50px;
@@ -329,14 +332,14 @@ h2 {
 .contact {
   background: #F5F5F5;
   padding: 100px 0;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 .contact .quote {
   margin-bottom: 20px;
 }
 /* --------------------------------- FOOTER --------------------------------- */
 footer {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   border-top: 5px solid #EA212E;
   background: #252C33;
   padding: 100px 0 50px 0;
@@ -389,7 +392,7 @@ footer ul li a:hover {
   color: #74818e;
   text-transform: uppercase;
   font-size: 16px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   border-radius: 0;
   height: 50px;
@@ -582,9 +585,8 @@ author-meta a {
   color: #74818e;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100%;
+  background-size: 140%;
   padding-top: 50px;
-  padding-left: 50px;
   height: 100vh;
 }
 .overlay-header {
@@ -604,11 +606,14 @@ author-meta a {
 }
 .header-page-left p.post-details-date {
   margin-top:0;
-  font-size: 20pt;
+  font-size: 14pt;
   font-weight: 100;
+  float: left;
+  letter-spacing: 5px;
+  top: 100px;
 }
 .header-page-left p {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 3em;
   color: white;
   letter-spacing: 15px;
@@ -627,7 +632,7 @@ author-meta a {
   bottom: 0;
   width: 30vh;
   display: block;
-  height: 20vh;
+  height: 24vh;
 }
 .header-page-right {
   padding: 100px 180px 100px 100px;
@@ -636,7 +641,7 @@ author-meta a {
   overflow-x: hidden;
 }
 .text-header-page {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   font-size: 16px;
   color: #26374C;
   line-height: 30px;
@@ -644,7 +649,7 @@ author-meta a {
   overflow-x: hidden;
 }
 .bg-gray {
-  background: #F5F5F5;
+  background: #fff;
   padding: 100px 0;
 }
 .bg-white {
@@ -666,21 +671,21 @@ author-meta a {
   padding: 0 60px 50px 60px;
 }
 .figure-content h3 {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   color: white;
   font-size: 16px;
   letter-spacing: 8px;
   line-height: 24px;
 }
 .figure-content-date {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: white;
   font-size: 14px;
   font-weight: 300;
   margin-bottom: 0;
 }
 .figure-content-author {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   color: white;
   font-size: 14px;
   letter-spacing: 5px;
@@ -712,7 +717,7 @@ author-meta a {
   opacity: 1;
 }
 .figure-content-overlay p {
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   text-align: center;
   color: white;
   font-size: 16px;
@@ -732,7 +737,7 @@ author-meta a {
   color: white;
   text-transform: uppercase;
   font-size: 16px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-weight: 700;
   border-radius: 0;
   height: 50px;
@@ -749,7 +754,7 @@ author-meta a {
   box-shadow: none;
 }
 .post-details-date {
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   font-size: 20px;
   color: #26374C;
   font-weight: 700;
@@ -768,11 +773,12 @@ author-meta a {
   text-align: center;
 }
 .blog-content {
-  font-family: 'Fira Sans Condensed', sans-serif;
-  font-size: 18px;
-  color: #26374C;
-  line-height: 30px;
-  margin-bottom: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.0625rem;
+  color: rgba(0,0,0,.8);
+  font-weight: 400;
+  line-height: 1.6;
+  text-rendering: optimizeLegibility;
 }
 .block-img {
   background: #e2e2e2;
@@ -825,7 +831,7 @@ author-meta a {
 }
 .contact-subtitle {
   font-size: 16px;
-  font-family: 'Fira Sans', sans-serif;
+  font-family: 'Open Sans', sans-serif;
   color: #26374C;
   font-weight: 700;
 }
@@ -1065,7 +1071,7 @@ table .thead-light th {
 
 @media (max-width: 575.98px) {
   .header-page-left p {
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 2em;
     color: white;
     letter-spacing: 5px;
@@ -1095,7 +1101,7 @@ table .thead-light th {
   }
 
   .header-page-left p {
-    font-family: 'Fira Sans', sans-serif;
+    font-family: 'Open Sans', sans-serif;
     font-size: 2em;
     color: white;
     letter-spacing: 5px;
@@ -1216,7 +1222,7 @@ table .thead-light th {
   position: absolute;
   right: 0;
   text-align: center;
-  font-family: 'Fira Sans Condensed', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
 }
 .nav-custom ul {
   list-style: none;
