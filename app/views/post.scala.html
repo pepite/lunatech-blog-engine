@@ -15,8 +15,7 @@
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/custom.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/main.css")">
 
-        <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:400,700" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,700" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     </head>
     <body>
@@ -52,11 +51,11 @@
     bottom: -16px;
     max-width: 25vh;
     display: block;
-    height: 20vh;
+    height: 24vh;
     z-index: 0;
-    overflow: hidden;">@if(post.author.nonEmpty) {<img class="author-thumb" style="overflow: hidden;height: 100%; width: 100%
+    overflow: hidden;">@if(post.author.nonEmpty) {<img class="author-thumb" style="overflow: hidden; width: 100%
     " src="@post.author.map(_.avatar_url)" alt="@post.author.map(_.name)" nopin="nopin"> }</p>
-                        <p class="post-details-title"  style="color: #fff !important;position: absolute;right: 0;border: 0;top: unset;bottom: 20pt;font-size: 20pt !important;margin-left: 0;margin-right: 5pt;text-align: right;width:160pt;letter-spacing: 5px;line-height: 22pt !important;">
+                        <p class="post-details-title"  style="color: #fff !important;position: absolute;right: 0;border: 0;top: unset;bottom: 20pt;font-size: 20pt !important;margin-left: 0;margin-right: 5pt;text-align: right;width:160pt;letter-spacing: 1px;line-height: 22pt !important;">
                          by @post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</p>
 
 
