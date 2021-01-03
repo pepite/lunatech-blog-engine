@@ -182,7 +182,7 @@ class HomeController @Inject()(
                     user.blog,
                     user.location,
                     user.bio)
-              val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
+              val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
                 r.body, Some(author))
               Ok(views.html.post(postWithAuthor))
           }
