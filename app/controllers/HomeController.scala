@@ -168,26 +168,31 @@ class HomeController @Inject()(
       request.get().flatMap { r => {
         val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
         r.body)
-        val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
-        val x = getUser.map {
-            case Left(e) => Ok(views.html.post(post))
-            case Right(re) => {
-              val user = re.result
-              val author = Author(user.login,
-                    user.avatar_url,
-                    user.html_url,
-                    user.name,
-                    user.email,
-                    user.company,
-                    user.blog,
-                    user.location,
-                    user.bio)
-              val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
-                r.body, Some(author))
-              Ok(views.html.post(postWithAuthor))
+        // TODO Change me
+        if (post.header.getDocumentTitle() == null)  {
+            Future(NotFound)
+        } else {
+          val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
+          val x = getUser.map {
+              case Left(e) => Ok(views.html.post(post))
+              case Right(re) => {
+                val user = re.result
+                val author = Author(user.login,
+                      user.avatar_url,
+                      user.html_url,
+                      user.name,
+                      user.email,
+                      user.company,
+                      user.blog,
+                      user.location,
+                      user.bio)
+                val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
+                  r.body, Some(author))
+                Ok(views.html.post(postWithAuthor))
+            }
           }
+          x
         }
-        x
       }
     }
   }
