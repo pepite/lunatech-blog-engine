@@ -18,13 +18,13 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
       content,
       new java.util.HashMap[String, Object]())
 
-  lazy val header = Post.asciidoctor.readDocumentHeader(content)
+  val header = Post.asciidoctor.readDocumentHeader(content)
   
   lazy val authorName: String = header.getAuthor().getFullName()
 
   lazy val publicationDate: DateTime = new DateTime(header.getRevisionInfo().getDate())
 
-  lazy val title: String = header.getDocumentTitle().getMain()
+  val title: String = header.getDocumentTitle().getMain()
 
   lazy val tags = header.getAttributes().get("tags")
 

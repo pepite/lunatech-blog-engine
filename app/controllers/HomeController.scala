@@ -31,6 +31,7 @@ import akka.util.ByteString
 import scala.concurrent.ExecutionContext
 
 import play.api.libs.json._
+import scala.util.control.Exception._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -55,6 +56,7 @@ class HomeController @Inject()(
   private def getContents() = Github(accessToken).repos.getContents(organization, repository, "posts", branch).execFuture[HttpResponse[String]]()
 
   private def getPosts(page: Int = 0):Future[Seq[Post]] = getContents().flatMap { repo =>
+         
           repo match {
             case Left(e) => { 
               Future.successful(Seq.empty)
@@ -63,14 +65,16 @@ class HomeController @Inject()(
             // Those are our blog post
             case Right(r) => {
               // Build our posts
-              val posts = r.result.map { d =>
+               // get only the pageSize
+              val posts = r.result.toList.reverse.slice((page - 1) * perPage, page * perPage).map { d =>
                 val url = d.download_url.get
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
+                println(name)
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
-                  val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
-                    r.body)
-                  val getUser = Github(accessToken).users.get(post.authorName).execFuture[HttpResponse[String]]()
+                  val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
+                    r.body))
+                  val getUser = Github(accessToken).users.get(post.map(_.authorName).getOrElse("")).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
                       case Left(e) => {
                         post
@@ -87,8 +91,8 @@ class HomeController @Inject()(
                               user.blog,
                               user.location,
                               user.bio)
-                        val post = Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
-                           r.body, Some(author))
+                        val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
+                           r.body, Some(author)))
                         post
                       }
                     }
@@ -99,7 +103,7 @@ class HomeController @Inject()(
             }
              
             Future.sequence(posts.toList).map { p =>
-              p.reverse.toSeq
+              p.flatten.toSeq
             }
         }
       }
@@ -111,11 +115,11 @@ class HomeController @Inject()(
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
    val page = 1
-    cache.get[Seq[Post]]("posts") match {
+    cache.get[Seq[Post]]( s"posts-${(page - 1) * perPage}-${page * perPage}") match {
       case None =>
-        val fPosts = getPosts()
+        val fPosts = getPosts(1)
         fPosts.map { posts => 
-          cache.set("posts", posts, cacheTtl)
+          cache.set( s"posts-${(page - 1) * perPage}-${page * perPage}", posts, cacheTtl)
           Ok(views.html.index(background, posts.slice((page - 1) * perPage, page * perPage), perPage))
         } 
       case Some(result) =>
@@ -124,11 +128,11 @@ class HomeController @Inject()(
   }
 
   def posts(page: Int) = Action.async { implicit request: Request[AnyContent] =>
-      cache.get[Seq[Post]]("posts") match {
+      cache.get[Seq[Post]]( s"posts-${(page - 1) * perPage}-${page * perPage}") match {
       case None =>
-        val fPosts = getPosts()
+        val fPosts = getPosts(page)
         fPosts.map { posts => 
-          cache.set("posts", posts, cacheTtl)
+          cache.set( s"posts-${(page - 1) * perPage}-${page * perPage}", posts, cacheTtl)
           Ok(Json.toJson(posts.slice((page - 1) * perPage, page * perPage).map(_.toJson())))
         } 
       case Some(result) =>
