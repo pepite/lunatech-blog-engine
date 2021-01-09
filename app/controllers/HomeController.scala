@@ -133,10 +133,10 @@ class HomeController @Inject()(
         val fPosts = getPosts(page)
         fPosts.map { posts => 
           cache.set( s"posts-${(page - 1) * perPage}-${page * perPage}", posts, cacheTtl)
-          Ok(Json.toJson(posts.slice((page - 1) * perPage, page * perPage).map(_.toJson())))
+          Ok(Json.toJson(posts.map(_.toJson())))
         } 
       case Some(result) =>
-        Future.successful(Ok(Json.toJson(result.slice((page - 1) * perPage, page * perPage).map(_.toJson()))))
+        Future.successful(Ok(Json.toJson(result.map(_.toJson()))))
     }
   }
 
