@@ -72,7 +72,7 @@ class HomeController @Inject()(
                 println(name)
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
-                  val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
+                  val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
                     r.body))
                   val getUser = Github(accessToken).users.get(post.map(_.authorName).getOrElse("")).execFuture[HttpResponse[String]]()
                   val postWithAuthor = getUser.map {
@@ -82,6 +82,7 @@ class HomeController @Inject()(
                   
                       case Right(rUser) => {
                         val user = rUser.result
+                        // TODO: cache author
                         val author = Author(user.login,
                               user.avatar_url,
                               user.html_url,
@@ -170,7 +171,7 @@ class HomeController @Inject()(
   def view(name: String) = Action.async { implicit request: Request[AnyContent] =>
       val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/posts/${name}.adoc")
       request.get().flatMap { r => {
-        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media${name}/background.png",
+        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch.getOrElse("master")}/media/${name}/background.png",
         r.body)
         // TODO Change me
         if (post.header.getDocumentTitle() == null)  {
@@ -181,6 +182,7 @@ class HomeController @Inject()(
               case Left(e) => Ok(views.html.post(post))
               case Right(re) => {
                 val user = re.result
+                // TODO: cache author
                 val author = Author(user.login,
                       user.avatar_url,
                       user.html_url,
