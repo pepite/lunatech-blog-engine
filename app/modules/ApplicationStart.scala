@@ -83,6 +83,7 @@ class ApplicationStart @Inject()(
               val posts = r.result.toList.reverse.map { d =>
                 val url = d.download_url.get
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
+                println(name)
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
                   val p = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
