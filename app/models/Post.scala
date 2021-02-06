@@ -6,6 +6,7 @@ import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.ast.DocumentHeader;
 import models.Author._
 import play.api.libs.json._
+import scala.util.control.Exception._
 
 object Post {
   implicit val postWrites = Json.writes[Post]
@@ -26,7 +27,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
 
   val title: String = header.getDocumentTitle().getMain()
 
-  lazy val tags = header.getAttributes().get("tags")
+  lazy val tags: Option[Array[String]] = allCatch.opt(header.getAttributes().get("tags").toString().split(","))
 
   def toJson() = {
     JsObject(

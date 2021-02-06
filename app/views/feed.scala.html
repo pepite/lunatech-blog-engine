@@ -1,0 +1,61 @@
+@(posts: Seq[Post])
+@import org.joda.time.{ DateTime, DateTimeZone }
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Lunatech's engineer blog</title>
+	<atom:link href="https://blog.lunatech.com/feed/" rel="self" type="application/rss+xml" />
+	<link>https://blog.lunatech.com</link>
+	<description>Simplify your IT</description>
+	<lastBuildDate>Sun, 24 Jan 2021 09:46:02 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	weekly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>Lunatech's blog engine</generator>
+
+<image>
+	<url>https://blog.lunatech.com/assets/images/logo-lunatech-france.png</url>
+	<title>Lunatech's engineer blog</title>
+	<link>https://blog.lunatech.com</link>
+	<width>32</width>
+	<height>32</height>
+</image> 
+
+@posts.map { post => 
+	<item>
+		<title>@post.title</title>
+		<link>https://blog.lunatech.com/@post.slug</link>
+		
+		<dc:creator><![CDATA[@post.author.map(_.name)]]></dc:creator>
+        <pubDate>@post.publicationDate</pubDate>
+        @post.tags.map { tags => 
+            @tags.map { tag => {
+            <category><![CDATA[@tag.trim]]></category>
+                }
+            } 
+        }
+		<guid isPermaLink="false">https://blog.lunatech.com/@post.slug</guid>
+
+					<description>
+                        <![CDATA[ @(post.content.slice(0, 250))...]]></description>
+                    <content:encoded><![CDATA[
+                    @Html(post.htmlContent)
+<]]></content:encoded>
+					
+		
+		
+			</item>
+        }
+	</channel>
+</rss>
+
+

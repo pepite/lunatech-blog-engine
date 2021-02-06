@@ -1,12 +1,12 @@
-@(id: String, title: Option[String] = None, extracss: Option[String] = None, extraHeader: Option[String] = None, headerImage: Option[String] = None)(headerText:Html)(content: Html)
+@import org.joda.time.{ DateTime, DateTimeZone }
+
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title>@title.map(txt => s"$txt")</title>
-        @extraHeader.map(metaContent => Html(metaContent)).getOrElse("")
+        <title>404 - Not found</title>
         <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.ico")">
 
             <!-- Bootstrap CSS -->
@@ -16,7 +16,7 @@
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/main.css")">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
-        <link rel="alternate" type="application/rss+xml" title="Lunatech Blog » Feed" href="https://blog.lunatech.com/feed/">
+        
     </head>
     <body>
  
@@ -26,27 +26,24 @@
                 </ul>
             </nav>
         </aside>
-
-        <a href="#target" class="scroll-down" address="true"></a>
-        <header>
-            <div class="container-fluid">
-                <div class="row d-flex">
-                @defining(headerImage.map(url => s"background-image: url($url)")) { backImg =>
-                    <div class="col-12 header-page-left" style="@backImg">
-                        <div class="overlay-header"></div>
-                        <a href="/"><img src="@routes.Assets.versioned("images/logo-lunatech-france.png")"></a>
-                        <p>@title</p>
-                        <!-- <span class="red-square"></span> -->
-                    </div>
-                }
-
-
-                </div>
-            </div>
-        </header>
-
+  
         <main id="target">
-            @content
+            <section class="blog-section">
+                <div class="container-fluid">
+                    <div class="row">   
+                        <a href="/"><img style="padding-left: 10px; padding-top: 20px; width: 235px;" src="@routes.Assets.versioned("images/logo-lunatech-france.png")"></a>
+         
+                    
+                        <div style="font-size: 200pt; display: block; font-weight: 800; margin-left: auto;color: #fff; font-family: Arial, Helvetica, sans-serif;">500</div>
+                        <div style="font-size: 100pt;display: block; font-weight: 800; margin-left: auto;color: #fff; font-family: Arial, Helvetica, sans-serif;">INTERNAL</div>
+                            <div style="font-size: 100pt;display: block; font-weight: 800; margin-left: auto;color: #fff; font-family: Arial, Helvetica, sans-serif;">ERROR</div>
+                
+                    </div>
+                    <div class="row" id="content">  
+           
+               
+                </div>
+            </section>
         </main>
 
         <footer>
@@ -122,20 +119,4 @@
             ga('send', 'pageview');
         </script>
 
-        <!-- JQUERY -->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-        <!--Button scroll down header -->
-        <script>
-            $(document).on('click', 'a[href^="#"]', function (event) {
-                event.preventDefault();
-
-                $('html, body').animate({
-                    scrollTop: $($.attr(this, 'href')).offset().top
-                }, 500);
-            });
-        </script>
-
-
-    </body>
-</html>

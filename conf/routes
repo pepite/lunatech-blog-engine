@@ -6,7 +6,10 @@
 # An example controller showing a sample home page
 GET     /                                         controllers.HomeController.index
 GET     /posts/                                   controllers.HomeController.posts(page: Int ?= 1)
+GET     /feed/                                    controllers.HomeController.feed
 GET     /posts/:name                              controllers.HomeController.view(name: String)
 GET     /media/:post/:name                        controllers.HomeController.media(post: String, name: String)
+GET     /wp-json/wp/v2/posts                      controllers.HomeController.posts(page: Int ?= 1)
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
