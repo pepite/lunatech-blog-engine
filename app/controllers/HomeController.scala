@@ -142,15 +142,15 @@ class HomeController @Inject()(
                 }
               }
             }
-            case Some(author) => {
+            case author => {
                val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-                      r.body, Some(author))
+                      r.body, author)
              Future.successful(Ok(views.html.post(postWithAuthor)))
             }
           }
           
         }
       }
-    }.recover { case e:Exception => Ok(views.html.notFound()) }
+    }.recover { case e:Exception => e.printStackTrace();Ok(views.html.notFound()) }
   }
 }
