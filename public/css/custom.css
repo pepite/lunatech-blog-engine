@@ -666,9 +666,9 @@ author-meta a {
 }
 .figure-content {
   position: absolute;
-  bottom: 0;
+  top: 20px;
   text-align: center;
-  padding: 0 60px 50px 60px;
+  padding: 15px 30px;
 }
 .figure-content h3 {
   font-family: 'Open Sans Condensed', sans-serif;
@@ -724,8 +724,8 @@ author-meta a {
   width: 100%;
   opacity: 0;
   transition: .5s ease;
-  background-color: #EA212E;
-  padding: 60px;
+  background-color: #b31d26;
+  padding: 20px;
 }
 .figure-image:hover .figure-content-overlay {
   opacity: 1;
