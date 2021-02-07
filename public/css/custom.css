@@ -692,6 +692,20 @@ author-meta a {
   margin-bottom: 0;
   text-transform: capitalize;
 }
+
+.figure-content-overlay > h3 {
+  margin: 0pt;
+}
+.figure-content-overlay > .figure-content-author a {
+  color: white;
+    margin: 0pt;
+    position: relative;
+    bottom: 0;
+    transform: none;
+    font-size: 10pt;
+    left: unset;
+}
+
 .blog-background {
   background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.16), rgba(9, 0, 22,1.0));
   height: 100%;

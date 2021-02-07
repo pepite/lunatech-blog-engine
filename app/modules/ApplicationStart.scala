@@ -64,8 +64,54 @@ class ApplicationStart @Inject()(
     fPosts.map { posts =>  
       cache.set("posts", posts)
       println("posts loaded!")
-    } 
+      // Contruct our author cache
+      getPostByAuthor(posts).map { case (author, posts) =>
+        cache.set("author-" + author, posts)
+      }
+      
+      getPostByTag(posts).map { case (tag, posts) =>
+        cache.set("tag-" + tag, posts)
+      }
+    }
     Await.result(fPosts, 5 minutes)
+  }
+
+  private def getPostByAuthor(posts: Seq[Post]): Map[String, Seq[Post]] = {
+      posts.groupBy(_.authorName)
+  }
+
+  private def getPostByTag(posts: Seq[Post]): Map[String, Seq[Post]] = {
+      generateMap(posts)
+  }
+
+  def generateMap(list: Seq[Post]): Map[String, Seq[Post]] = {
+    var m: Map[String, Seq[Post]] = Map.empty
+    for (p <- list) {
+      for (t <- p.tags.getOrElse(Array.empty)) {
+        if(m.keySet.contains(t)) {
+          m = m ++ Map(t -> (m(t) :+ p ))
+        } else {
+          m = m ++ Map(t -> Seq(p))
+        }
+      }
+    }
+    m
+  }
+
+  // Recursive version is too slow...
+  def generateMap(list: Seq[Post], map: Map[String, Seq[Post]]) : Map[String, Seq[Post]] = list match {
+    case x :: y => 
+       val r = x.tags.getOrElse(Array.empty).toSet
+       if(map.keySet.intersect(r) == r) { 
+            r.map { tag =>
+                generateMap(y, map ++ Map(tag -> (map(tag) :+ x ))) 
+            }.headOption.getOrElse(generateMap(y, map ))
+        } else {
+            r.map { tag =>
+                  generateMap(y, map ++ Map(tag -> Seq(x)))
+            }.headOption.getOrElse(generateMap(y, map ))
+        }
+    case Nil => map
   }
 
   private def getPosts(page: Int = 1):Future[Seq[Post]] = getContents().flatMap { repo =>
@@ -83,7 +129,6 @@ class ApplicationStart @Inject()(
               val posts = r.result.toList.reverse.map { d =>
                 val url = d.download_url.get
                 val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
-                println(name)
                 val request: WSRequest = ws.url(url)
                 val posts = request.get().flatMap { r =>
                   val p = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",

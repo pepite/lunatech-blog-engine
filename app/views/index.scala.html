@@ -24,7 +24,12 @@
 
                             <div class="figure-content-overlay">
                                 <h3>@post.title</h3>
-
+                                <div class="figure-content-author">
+                                    <div>by <a href="@routes.HomeController.byAuthor(post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName))">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a></div>
+                                    <div>tags: @post.tags.getOrElse(Array.empty).map{ tag => 
+                                        <a href="@routes.HomeController.byTags(tag)">@tag</a><span> </span>  
+                                    }</div>
+                                </div>
                                 <a class="btn btn-custom3" href="@post.slug" role="button">
                                     Read more</a>
                             </div>
@@ -37,10 +42,12 @@
             <div class="row" id="content">  
                 
            </div>
+           @if(!(blogsPerPage == -1)){
             <div class="row">
                 <div style="padding-top: 20px;padding-bottom: 20px;display: block;margin:auto;"><button id="load" class="btn btn-custom3">Load more</button></div>
         
             </div>
+            }
         </div>
     </section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU="

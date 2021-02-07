@@ -8,6 +8,8 @@ GET     /                                         controllers.HomeController.ind
 GET     /posts/                                   controllers.HomeController.posts(page: Int ?= 1)
 GET     /feed/                                    controllers.HomeController.feed
 GET     /posts/:name                              controllers.HomeController.view(name: String)
+GET     /author/:name                             controllers.HomeController.byAuthor(name: String)
+GET     /tags/:name                               controllers.HomeController.byTags(name: String)
 GET     /media/:post/:name                        controllers.HomeController.media(post: String, name: String)
 GET     /wp-json/wp/v2/posts                      controllers.HomeController.posts(page: Int ?= 1)
 

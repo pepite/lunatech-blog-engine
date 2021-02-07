@@ -27,7 +27,8 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
 
   val title: String = header.getDocumentTitle().getMain()
 
-  lazy val tags: Option[Array[String]] = allCatch.opt(header.getAttributes().get("tags").toString().split(","))
+  lazy val tags: Option[Array[String]] = allCatch.opt(header.getAttributes().get("tags").toString().drop(1).dropRight(1).split(","))
+
 
   def toJson() = {
     JsObject(

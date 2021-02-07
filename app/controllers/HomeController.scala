@@ -50,8 +50,8 @@ class HomeController @Inject()(
   val repository = configuration.get[String]("githubRepository")
   val branch = configuration.get[String]("githubBranch")
   val background = configuration.get[String]("blogBackground")
-  //val cacheTtl = configuration.get[Duration]("cacheTtl")
   val perPage = configuration.get[Int]("blogsPerPage")
+
    /**
    * 
    *
@@ -63,6 +63,25 @@ class HomeController @Inject()(
        Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
         Future.successful(Ok(views.html.index(background, result.slice((page - 1) * perPage, page * perPage), perPage)))
+    }
+  }
+
+  def byTags(name: String) = Action.async { implicit request: Request[AnyContent] =>
+    cache.get[Seq[Post]]("tag-" + name)  match {
+      case None =>
+       Future.successful(BadRequest("nothing in the cache"))
+      case Some(result) =>
+        Future.successful(Ok(views.html.index(background, result, -1)))
+    }
+  }
+
+  def byAuthor(name: String) = Action.async { implicit request: Request[AnyContent] =>
+    val page = 1
+    cache.get[Seq[Post]]("author-" + name)  match {
+      case None =>
+       Future.successful(BadRequest("nothing in the cache"))
+      case Some(result) =>
+        Future.successful(Ok(views.html.index(background, result, -1)))
     }
   }
 
