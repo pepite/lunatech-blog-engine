@@ -25,7 +25,7 @@
                             <div class="figure-content-overlay">
                                 <h3>@post.title</h3>
                                 <div class="figure-content-author">
-                                    <div>by <a href="@routes.HomeController.byAuthor(post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName))">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a></div>
+                                    <div>by <a href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a></div>
                                     <div>tags: @post.tags.getOrElse(Array.empty).map{ tag => 
                                         <a href="@routes.HomeController.byTags(tag)">@tag</a><span> </span>  
                                     }</div>
