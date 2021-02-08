@@ -29,6 +29,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
 
   lazy val tags: Option[Array[String]] = allCatch.opt(header.getAttributes().get("tags").toString().drop(1).dropRight(1).split(","))
 
+  lazy val excerpt: String = Post.asciidoctor.convert(content.split("\n").drop(6).take(4).mkString(" "), new java.util.HashMap[String, Object]())
 
   def toJson() = {
     JsObject(

@@ -46,7 +46,7 @@
 		<guid isPermaLink="false">https://blog.lunatech.com/@post.slug</guid>
 
 					<description>
-                        <![CDATA[ @(post.content.split("\n").drop(6).mkString.split(" ").slice(0, 60).mkString(" "))..]]></description>
+                        <![CDATA[ @Html(post.excerpt)]]></description>
                     <content:encoded><![CDATA[
                     @Html(post.htmlContent)
 <]]></content:encoded>
