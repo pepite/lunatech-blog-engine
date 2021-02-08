@@ -666,9 +666,15 @@ author-meta a {
 }
 .figure-content {
   position: absolute;
-  top: 20px;
+  top: 0;
   text-align: center;
   padding: 15px 30px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .figure-content h3 {
   font-family: 'Open Sans Condensed', sans-serif;
@@ -691,21 +697,19 @@ author-meta a {
   letter-spacing: 5px;
   margin-bottom: 0;
   text-transform: capitalize;
-}
-
-.figure-content-overlay > h3 {
-  margin: 0pt;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .figure-content-overlay > .figure-content-author a {
   color: white;
-    margin: 0pt;
-    position: relative;
-    bottom: 0;
-    transform: none;
-    font-size: 10pt;
-    left: unset;
+  margin: 0pt;
+  position: relative;
+  bottom: 0;
+  transform: none;
+  font-size: 10pt;
+  left: unset;
 }
-
 .blog-background {
   background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.16), rgba(9, 0, 22,1.0));
   height: 100%;
@@ -717,15 +721,15 @@ author-meta a {
 .figure-content-overlay {
   position: absolute;
   top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   height: 100%;
   width: 100%;
   opacity: 0;
   transition: .5s ease;
   background-color: #b31d26;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .figure-image:hover .figure-content-overlay {
   opacity: 1;
@@ -1267,6 +1271,6 @@ table .thead-light th {
 .dark-blue {
   color: #26374C!important;
 }
-.col-sm-4 {
-  height: 300px
+@media (min-width: 1500px) {
+  .figure-image img {height: 600px;}
 }
