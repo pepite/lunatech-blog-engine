@@ -709,6 +709,8 @@ author-meta a {
   transform: none;
   font-size: 10pt;
   left: unset;
+  text-transform: lowercase;
+  letter-spacing: 1pt;
 }
 .blog-background {
   background: radial-gradient(circle at 50% 0%, rgba(0, 0, 0, 0.16), rgba(9, 0, 22,1.0));
