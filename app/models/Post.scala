@@ -38,7 +38,8 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
       "title"     -> JsString(title),
       "slug"     -> JsString(slug),
       "image_url"     -> JsString(mainImage),
-      "author"     -> JsString(author.map(_.name.getOrElse(authorName)).getOrElse(authorName))
+      "author"     -> JsString(author.map(_.name.getOrElse(authorName)).getOrElse(authorName)),
+      "tags" -> tags.map(_).getOrElse(JsArray())
     ))
   }
 
