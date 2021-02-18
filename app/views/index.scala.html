@@ -113,7 +113,7 @@
                                 <h3>` + post.title  + `</h3>
                                 <div class="figure-content-author">
                                     <div>by <a href="/author/` + post.author + ` ">` + post.author + `</a></div>
-                                    <div>tags: ` + post.tags.map ( tag => (`<a href="` + tag + `"> ` + tag + `</a><span> </span> `)) + `</div>
+                                    <div>tags: ` + post.tags.map ( tag => (`<a href="/tags/` + tag + `"> ` + tag + `</a><span> </span> `)) + `</div>
                                 </div>
                                 <a class="btn btn-custom3" href="` + post.slug + `" role="button">
                                     Read more</a>
