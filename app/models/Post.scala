@@ -39,7 +39,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
       "slug"     -> JsString(slug),
       "image_url"     -> JsString(mainImage),
       "author"     -> JsString(author.map(_.name.getOrElse(authorName)).getOrElse(authorName)),
-      "tags" -> JsArray(tags.getOrElse(Array.empty).toSeq)
+      "tags" -> JsObject(tags.getOrElse(Array.empty).toSeq)
     ))
   }
 
