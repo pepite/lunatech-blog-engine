@@ -34,7 +34,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
   def toJson() = {
     JsObject(
     Seq(
-      "publication_date"     -> JsString(publicationDate.toString("dd-MM-yyy")),
+      "publication_date"     -> JsString(publicationDate.toString("yyyy-MM-dd")),
       "title"     -> JsString(title),
       "slug"     -> JsString(slug),
       "image_url"     -> JsString(mainImage),
