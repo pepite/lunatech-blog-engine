@@ -1,11 +1,171 @@
-.blog-content img, .blog-content img[alt="\{in-between-width\}"] {
-  max-width: 100%;
-  padding-bottom: 2.5em;
-  display: block;
-  text-align: center;
-  margin: auto;
-}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline; }
 
-#target .blog-section div.row {
-  background: #000;
-}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block; }
+
+body {
+  line-height: 1; }
+
+ol, ul {
+  list-style: none; }
+
+blockquote, q {
+  quotes: none; }
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none; }
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+body {
+  font-family: "Karla", sans-serif;
+  font-weight: 400;
+  font-size: 1rem;
+  background: #fffaee;
+  -webkit-font-smoothing: antialiased; }
+
+h1 {
+  font-family: "Space Mono", sans-serif;
+  font-weight: 700;
+  font-size: 120px;
+  color: #fffaee;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 32px;
+  z-index: 2; }
+
+@font-face {
+  font-family: "Karla";
+  src: url("../fonts/Karla-Regular.ttf") format("truetype");
+  font-weight: 400; }
+
+@font-face {
+  font-family: "Karla";
+  src: url("../fonts/Karla-Bold.ttf") format("truetype");
+  font-weight: 700; }
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../fonts/SpaceMono-Regular.ttf") format("truetype");
+  font-weight: 400; }
+
+@font-face {
+  font-family: "Space Mono";
+  src: url("../fonts/SpaceMono-Bold.ttf") format("truetype");
+  font-weight: 700; }
+
+.lb_flexbox {
+  display: flex;
+  align-items: center; }
+
+.lb_mgr-md {
+  margin-right: 32px; }
+
+/* Layout */
+header {
+  padding: 48px;
+  justify-content: space-between;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 3; }
+
+/* Components */
+.lb_menu {
+  margin-right: 32px; }
+  .lb_menu ul li {
+    margin-right: 32px; }
+    .lb_menu ul li:last-child {
+      margin-right: 0; }
+    .lb_menu ul li a {
+      text-decoration: none;
+      color: #ffffff;
+      opacity: .5; }
+      .lb_menu ul li a:hover {
+        opacity: 1; }
+
+.lb_language > img {
+  margin-right: 8px; }
+
+.lb_language div a {
+  color: #ffffff;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  opacity: .5;
+  height: 16px; }
+  .lb_language div a:hover {
+    opacity: 1; }
+  .lb_language div a:first-child {
+    padding-right: 8px;
+    border-right: 1px solid rgba(255, 255, 255, 0.5); }
+  .lb_language div a:last-child {
+    padding-left: 8px; }
+
+.lb_cover {
+  position: relative;
+  background: #252322;
+  height: 752px;
+  justify-content: center;
+  flex-direction: column;
+  color: #ffffff;
+  overflow: hidden; }
+
+.lb_dot {
+  position: absolute;
+  left: -128px;
+  bottom: -270px;
+  height: 664px;
+  width: 664px;
+  background: url("../../images/noise.svg");
+  border-radius: 50%;
+  z-index: 1; }
+
+.lb_btn {
+  font-family: "Space Mono", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  height: 48px;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 8px;
+  border-top-right-radius: 0;
+  cursor: pointer; }
+
+.lb_primary-btn {
+  color: #ffffff;
+  background: #ea212e; }
+  .lb_primary-btn:hover {
+    background: #9b0f17; }
+
+.lb_secondary-btn {
+  color: #252322;
+  background: #fffaee; }
+  .lb_secondary-btn:hover {
+    background: #b0a29c; }

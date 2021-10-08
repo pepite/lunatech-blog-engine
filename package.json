@@ -1,0 +1,25 @@
+{
+  "name": "lunatech-blog-engine",
+  "version": "1.0.0",
+  "description": "The blog engine that powers the future blog.lunatech.com",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "sass": "node-sass -w public/scss/ -o public/css/ --recursive"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lunatech-labs/lunatech-blog-engine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lunatech-labs/lunatech-blog-engine/issues"
+  },
+  "homepage": "https://github.com/lunatech-labs/lunatech-blog-engine#readme",
+  "dependencies": {
+    "node-sass": "^5.0.0"
+  }
+}

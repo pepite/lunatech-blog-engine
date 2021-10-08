@@ -1,0 +1,20 @@
+.lb_cover {
+    position: relative;
+    background: $grey;
+    height: 752px;
+    justify-content: center;
+    flex-direction: column;
+    color: $white;
+    overflow: hidden;
+}
+.lb_dot {
+    position: absolute;
+    left: -128px;
+    bottom: -270px;
+    height: 664px;
+    width: 664px;
+    background: url('../../images/noise.svg');
+    border-radius: 50%;
+    z-index: 1;
+}
+

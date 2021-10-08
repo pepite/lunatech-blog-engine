@@ -1,0 +1,23 @@
+.lb_btn {
+    font-family: "Space Mono", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    height: 48px;
+    padding: 0 $space-md;
+    @include flexbox;
+    border: none;
+    border-radius: $border-radius;
+    border-top-right-radius: 0;
+    cursor: pointer;
+}
+.lb_primary-btn {
+    color: $white;
+    background: $bright-red;
+    &:hover {background: $dark-red;}
+}
+.lb_secondary-btn {
+    color: $grey;
+    background: $light-sand;
+    &:hover {background: $dark-sand;}
+}
+

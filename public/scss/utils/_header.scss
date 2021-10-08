@@ -1,0 +1,47 @@
+/* Layout */
+header {
+    padding: 48px;
+    justify-content: space-between;
+    position: fixed;
+    right: 0;
+    left: 0;
+    z-index: 3;
+}
+/* Components */
+.lb_logo {
+
+}
+.lb_menu {
+    margin-right: $space-md;
+    ul {
+        li {
+            margin-right: $space-md;
+            &:last-child {margin-right: 0;}
+            a {
+                text-decoration: none;
+                color: $white;
+                opacity: .5;
+                &:hover {opacity: 1;}
+            }
+        }
+    }
+}
+.lb_language {
+    > img {margin-right: $space-xs;}
+    div {
+        a {
+            color: $white;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            opacity: .5;
+            height: 16px;
+            &:hover {opacity: 1;}
+            &:first-child {
+                padding-right: $space-xs;
+                border-right: 1px solid rgba(255, 255, 255, .5);
+            }
+            &:last-child {padding-left: $space-xs;}
+        }
+    }
+}

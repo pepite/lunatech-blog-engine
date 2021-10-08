@@ -9,41 +9,64 @@
         @extraHeader.map(metaContent => Html(metaContent)).getOrElse("")
         <link rel="shortcut icon" type="image/x-icon" href="@routes.Assets.versioned("images/favicon.ico")">
 
-            <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-        <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/custom.css")">
         <link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("css/main.css")">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+       
         <link rel="alternate" type="application/rss+xml" title="Lunatech Blog » Feed" href="https://blog.lunatech.com/feed/">
     </head>
     <body>
- 
-        <aside class="aside-hide" id="aside">
-            <nav class="nav-custom">
-                <ul>
-                </ul>
-            </nav>
-        </aside>
-
-        <a href="#target" class="scroll-down" address="true"></a>
-        <header>
-            <div class="container-fluid">
-                <div class="row d-flex">
-                @defining(headerImage.map(url => s"background-image: url($url)")) { backImg =>
-                    <div class="col-12 header-page-left" style="@backImg">
-                        <div class="overlay-header"></div>
-                        <a href="/"><img src="@routes.Assets.versioned("images/logo-lunatech-france.png")"></a>
-                        <p>@title</p>
-                        <!-- <span class="red-square"></span> -->
-                    </div>
-                }
-
-
+        <header class="lb_flexbox">
+            <a class="lb_logo" href="/"><img src="@routes.Assets.versioned("images/lunatech-logo.svg")"></a>
+            <div class="lb_flexbox">
+                <nav class="lb_menu">
+                    <ul class="lb_flexbox">
+                        <li><a href="">Blog</a></li>
+                        <li><a href="">Success stories</a></li>
+                    </ul>
+                </nav>
+                <button class="lb_btn lb_primary-btn lb_mgr-md">Join us</button>
+                <div class="lb_language lb_flexbox">
+                    <img src="@routes.Assets.versioned("images/language.svg")">
+                    <div>
+                        <a href="#">EN</a>
+                        <a href="#">FR</a>
+                    </div> 
                 </div>
             </div>
+            
         </header>
+
+        <div class="lb_cover lb_flexbox">
+            <h1>Lunatech's<br />engineer blog</h1>
+            <button class="lb_btn lb_secondary-btn">View success stories</button>
+            <div class="lb_dot"></div>
+        </div>
+
+
+
+
+
+
+
+
+        <main>
+
+        </main>
+
+        <footer>
+
+        </footer>
+
+
+
+
+
+
+
+
+ 
+
+        <a href="#target" class="scroll-down" address="true"></a>
+        
 
         <main id="target">
             @content
