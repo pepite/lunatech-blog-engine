@@ -1,15 +1,23 @@
 /* Layout */
 header {
-    padding: 48px;
+    padding: 32px;
     justify-content: space-between;
     position: fixed;
     right: 0;
     left: 0;
     z-index: 3;
 }
+header.scroll {
+    background: $light-sand;
+    padding: 16px 32px;
+    .lb_logo {
+        svg .lb_logo-path {
+            fill: $grey;
+        }
+    }
+}
 /* Components */
 .lb_logo {
-
 }
 .lb_menu {
     margin-right: $space-md;

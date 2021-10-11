@@ -3,55 +3,93 @@
 
 @main(id = "blog", title = Some("Lunatech's engineer blog"), extracss = None, headerImage = Some(headerImageUrl)) {
 }{
-    <section class="blog-section">
-        <div class="container-fluid">
-            <div class="row">   
+    <section class="lb_posts-list">
+        <div class="lb_container lb_grid">
             @posts.map { post =>
-                <div class="col-xs-12 col-sm-4 col-xl-3 no-pad">
-                    <div class="blog-section-info zoom">
-                        <figure class="figure-image">
-                            <div class="blog-background"></div>
-                            <img src="@post.mainImage" onerror="imgError(this)" alt=""/>
-
-                            <div class="figure-content">
-                                <h3>@post.title</h3>
-
-                                <p class="figure-content-date">@post.publicationDate.toString("dd MMM yyyy")</p>
-                                <p class="figure-content-author">
-                                    by @post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)
-                                </p>
-                            </div>
-
-                            <div class="figure-content-overlay">
-                                <h3>@post.title</h3>
-                                <div class="figure-content-author">
-                                    <div>by <a href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a></div>
-                                    <div>tags: @post.tags.getOrElse(Array.empty).map{ tag => 
-                                        <a href="@routes.HomeController.byTags(tag)">@tag</a><span> </span>  
-                                    }</div>
+                <div class="lb_post">
+                    <div class="lb_post-head">
+                        <img class="lb_post-img" src="@post.mainImage" onerror="imgError(this)" alt=""/>
+                        <div class="lb_post-tags">
+                            @post.tags.getOrElse(Array.empty).map{ tag => 
+                                <a href="@routes.HomeController.byTags(tag)">@tag</a>
+                            }
+                        </div>
+                    </div>
+                    <div class="lb_post-body">
+                        <p class="lb_post-title">@post.title</p>
+                        <div class="lb_flexbox lb_flex-Sb">
+                            <div class="lb_flexbox">
+                                @if(post.author.nonEmpty) {
+                                    <img class="lb_post-thumb" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                                } 
+                                @if(!(post.author.nonEmpty)) {
+                                    <p class="lb_post-initial"></p>
+                                }
+                                <div class="lb_flexbox lb_flex-dC lb_flex-S">
+                                    <a class="lb_post-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
+                                    <p class="lb_post-date">@post.publicationDate.toString("dd MMM yyyy")</p>
                                 </div>
-                                <a class="btn btn-custom3" href="@post.slug" role="button">
-                                    Read more</a>
                             </div>
-                        </figure>
+                            <a class="lb_read-btn" href="@post.slug" role="button"><img src="@routes.Assets.versioned("images/read.svg")"></a>
+                        </div>
                     </div>
                 </div>
-            }
+
+
+
+
+
+
+
+             
         
-            </div>
-            <div class="row" id="content">  
+                   
+         
+        
+
+                   
+  
+  
+                            
+          
+          
+            }
                 
-           </div>
-           @if(!(blogsPerPage == -1)){
+               
+           
+            @if(!(blogsPerPage == -1)){
             <div class="row">
                 <div style="padding-top: 20px;padding-bottom: 20px;display: block;margin:auto;"><button id="load" class="btn btn-custom3">Load more</button></div>
-        
             </div>
             }
+
+
+
+
+
+
+
+
+
+
         </div>
-    </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU="
-    crossorigin="anonymous"></script>
+    </div>
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU="crossorigin="anonymous"></script>
     <script>
         // we will add this content, replace for anything you want to add
        

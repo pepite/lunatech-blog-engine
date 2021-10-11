@@ -9,11 +9,12 @@
 @import "utils/fonts";
 @import "utils/utils";
 
-// Layout partials
+// Layouts partials
 @import "utils/header";
 
-// Parts partials
+// Sections partials
 @import "utils/cover";
+@import "utils/posts";
 
 // Components partials
 @import "utils/buttons";

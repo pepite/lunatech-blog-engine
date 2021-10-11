@@ -20,4 +20,14 @@
     background: $light-sand;
     &:hover {background: $dark-sand;}
 }
+.lb_read-btn {
+    height: 32px;
+    width: 32px;
+    border-radius: $border-radius;
+    border-top-right-radius: 0;
+    @include flexbox;
+    justify-content: center;
+    background: $bright-red;
+    &:hover {background: $dark-red;}
+}
 
