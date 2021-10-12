@@ -1,8 +1,7 @@
 @(headerImageUrl: String, posts: Seq[Post], blogsPerPage: Int)
 @import org.joda.time.{ DateTime, DateTimeZone }
 
-@main(id = "blog", title = Some("Lunatech's engineer blog"), extracss = None, headerImage = Some(headerImageUrl)) {
-}{
+@main(id = "blog", title = "Lunatech's engineer blog") {
     <section class="lb_posts-list">
         <div class="lb_container lb_grid">
             @posts.map { post =>
@@ -34,44 +33,13 @@
                         </div>
                     </div>
                 </div>
-
-
-
-
-
-
-
-             
-        
-                   
-         
-        
-
-                   
-  
-  
-                            
-          
-          
             }
                 
-               
-           
             @if(!(blogsPerPage == -1)){
-            <div class="row">
-                <div style="padding-top: 20px;padding-bottom: 20px;display: block;margin:auto;"><button id="load" class="btn btn-custom3">Load more</button></div>
-            </div>
+                <div class="row">
+                    <div style="padding-top: 20px;padding-bottom: 20px;display: block;margin:auto;"><button id="load" class="btn btn-custom3">Load more</button></div>
+                </div>
             }
-
-
-
-
-
-
-
-
-
-
         </div>
     </div>
     
