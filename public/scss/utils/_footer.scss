@@ -1,0 +1,9 @@
+footer {
+
+}
+.lb_footer-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: $space-lg;
+}
+

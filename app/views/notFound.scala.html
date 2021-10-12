@@ -38,5 +38,15 @@
             ga('create', 'UA-56364023-3', 'auto');
             ga('send', 'pageview');
         </script>
+        <!-- Header scroll -->
+        <script>
+            $(window).on("scroll", function() {
+                if($(window).scrollTop() > 700) {
+                    $("header").addClass("scroll");
+                } else {
+                    $("header").removeClass("scroll");
+                }
+            });
+        </script>
     </body>
 </html>

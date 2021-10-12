@@ -21,22 +21,4 @@ h1 {
     margin-right: auto;
     margin-left: auto;
 }
-.lb_grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: $space-lg;
-}
-
-
-
-
-#logo-svg.active .logo-path {
-    fill: #000;
-}
-
-
-
-
-
-
 

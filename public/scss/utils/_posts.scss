@@ -1,6 +1,11 @@
 .lb_posts-list {
     padding: $space-xl 0;
 }
+.lb_posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: $space-lg;
+}
 .lb_post {
     
 }
