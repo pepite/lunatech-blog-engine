@@ -19,3 +19,5 @@ dist
 /*.iws
 .DS_Store
 /node_modules
+/public/css/main.css
+/public/css/main.css.map
