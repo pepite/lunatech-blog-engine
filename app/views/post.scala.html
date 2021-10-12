@@ -11,7 +11,18 @@
             <section class="lb_cover-post">
                 <img class="lb_cover-img" src="@post.mainImage" onerror="imgError(this)" alt=""/>
                 <div class="lb_container-lg">
-                    
+                    <p class="lb_cover-title">@post.title</p>
+                    <div class="lb_flexbox">
+                        @if(post.author.nonEmpty) {
+                            <img class="lb_cover-thumb" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                        } 
+                        @if(!(post.author.nonEmpty)) {
+                            <p class="lb_cover-initial"></p>
+                        }
+                        <div class="lb_flexbox lb_flex-dC lb_flex-S">
+                            <a class="lb_cover-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
+                        </div>
+                    </div>
                 </div>  
             </section>
 
@@ -20,27 +31,6 @@
                     @Html(post.htmlContent)
                 </div>
             </section>
-
-
-
-
-
-
-
-            <div class="container">
-      
-                <div class="post-footer">
-                    <figure class="author-image">
-                        <a class="img" href="#" style="background-image: url(@post.author.map(_.avatar_url))"><span class="hidden">@post.author.map(_.name)'s Picture</span></a>
-                    </figure>
-
-                    <section class="author">
-                        <h4>By @post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</h4>
-
-                        <p>@post.author.map(_.bio)</p>
-                    </section>
-                </div>
-            </div>
         </main>
         @footer()
 
@@ -72,7 +62,7 @@
                 }
             });
         </script>
-        <script type="text/javascript" src="/assets/javascripts/highlight.pack.js")"></script>
+        <script type="text/javascript" src="/assets/js/highlight.pack.js")"></script>
         <script>
             document.querySelectorAll('pre.highlight').forEach((block) => {
                 hljs.highlightBlock(block);

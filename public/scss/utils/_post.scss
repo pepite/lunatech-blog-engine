@@ -1,19 +1,57 @@
 .lb_cover-post {
+    position: relative;
     height: 560px;
+    > div {
+        position: relative;
+        z-index: 3;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
     .lb_cover-img {
         height: 560px;
         width: 100%;
         object-fit: cover;
+        position: absolute;
+        z-index: 1;
+    }
+    .lb_cover-title {
+        font-family: "Space Mono", sans-serif;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 64px;
+        margin-bottom: $space-md;
+        line-height: 80px;
+    }
+    .lb_cover-thumb {
+        width: $size-lg;
+        height: $size-lg;
+        border-radius: 50%;
+        margin-right: $space-xs;
+    }
+    .lb_cover-initial {
+        width: $size-md;
+        height: $size-md;
+        border-radius: 50%;
+        margin-right: $space-xs;
+        background: $dark-sand;
+    }
+    .lb_cover-author {
+        text-decoration: none;
+        text-transform: capitalize;
+        color: $grey;
+        font-size: 24px;
     }
 }
 .lb_content-post {
+    padding: $space-lg 0;
     .sectionbody {
         margin-bottom: $space-md;
         .paragraph {
             margin-bottom: $space-s;
         }
     }
-    padding: $space-lg 0;
     p {
         font-size: 20px;
         line-height: 32px;
@@ -21,5 +59,10 @@
     img {
         width: 100%;
     }
-    
+    code {
+        line-height: 28px;
+    }
+    pre {
+        margin-bottom: $space-s;
+    }
 }
