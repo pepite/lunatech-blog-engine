@@ -10,9 +10,22 @@ header {
 header.scroll {
     background: $light-sand;
     padding: 16px 32px;
-    .lb_logo {
-        svg .lb_logo-path {
-            fill: $grey;
+    svg .lb_path {fill: $grey;}
+    .lb_menu {
+        ul {
+            li {
+                a {color: $grey;}
+            }
+        }
+    }
+    .lb_language {
+        div {
+            a {
+                color: $grey;
+                &:first-child {
+                    border-right: 1px solid rgba(0, 0, 0, .5);
+                }
+            }
         }
     }
 }
@@ -35,7 +48,7 @@ header.scroll {
     }
 }
 .lb_language {
-    > img {margin-right: $space-xs;}
+    > svg {margin-right: $space-xs;}
     div {
         a {
             color: $white;
@@ -44,6 +57,7 @@ header.scroll {
             display: inline-flex;
             opacity: .5;
             height: 16px;
+            line-height: 20x;
             &:hover {opacity: 1;}
             &:first-child {
                 padding-right: $space-xs;

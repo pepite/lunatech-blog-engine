@@ -1,0 +1,25 @@
+.lb_cover-post {
+    height: 560px;
+    .lb_cover-img {
+        height: 560px;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+.lb_content-post {
+    .sectionbody {
+        margin-bottom: $space-md;
+        .paragraph {
+            margin-bottom: $space-s;
+        }
+    }
+    padding: $space-lg 0;
+    p {
+        font-size: 20px;
+        line-height: 32px;
+    }
+    img {
+        width: 100%;
+    }
+    
+}

@@ -1,9 +1,75 @@
 footer {
-
-}
-.lb_footer-grid {
-    display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    grid-gap: $space-lg;
+    padding: $space-lg 0;
+    > div:first-child {
+        padding: $space-md;
+        border: 2px solid $bright-red;
+        border-radius: 32px;
+        border-top-right-radius: 0;
+    }
+    
+    .lb_footer-content {
+        margin-bottom: $space-md;
+        display: grid;
+        grid-template-columns: repeat(12, 1fr);
+        grid-gap: $space-lg;
+        .lb_logo {
+            grid-column: 1 / 7;
+            svg .lb_path {
+                fill: $grey;
+            }
+        }
+        .lb_footer-menu {
+            &:nth-child(2) {grid-column: 7 / 10;}
+            &:nth-child(3) {grid-column: 10 / 13;}
+            ul {
+                li {
+                    a {
+                        text-decoration: none;
+                        color: $grey;
+                        line-height: 24px;
+                        &:hover {
+                            opacity: .5;
+                        }
+                    }
+                }
+            }
+            .lb_footer-social {
+                @include flexbox;
+                margin-top: $space-s;
+                a {
+                    @include flexbox;
+                    width: 32px;
+                    height: 32px;
+                    background: $grey;
+                    border-radius: 8px;
+                    justify-content: center;
+                    margin-right: $space-xs;
+                    img {
+                        width: 16px;
+                    }
+                }
+            }
+        }
+    }
+    .lb_footer-copyright {
+        @include flexbox;
+        p {
+            margin-right: $space-s;
+        }
+        ul {
+            @include flexbox;
+            li {
+                margin-right: $space-s;
+                a {
+                    text-decoration: none;
+                    color: $grey;
+                    line-height: 24px;
+                    &:hover {
+                        opacity: .5;
+                    }
+                }
+            }
+        }
+    }
 }
 

@@ -6,11 +6,29 @@
     @head(title = post.title)
     <body>
         @header()
-        <main id="target" class="bg-gray">
-            <div class="container">
-                <div class="blog-content">
+        <main id="target">
+            <!-- Cover post -->
+            <section class="lb_cover-post">
+                <img class="lb_cover-img" src="@post.mainImage" onerror="imgError(this)" alt=""/>
+                <div class="lb_container-lg">
+                    
+                </div>  
+            </section>
+
+            <section class="lb_content-post">
+                <div class="lb_container-md">
                     @Html(post.htmlContent)
                 </div>
+            </section>
+
+
+
+
+
+
+
+            <div class="container">
+      
                 <div class="post-footer">
                     <figure class="author-image">
                         <a class="img" href="#" style="background-image: url(@post.author.map(_.avatar_url))"><span class="hidden">@post.author.map(_.name)'s Picture</span></a>
