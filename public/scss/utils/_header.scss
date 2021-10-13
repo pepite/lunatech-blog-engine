@@ -18,16 +18,6 @@ header.scroll {
             }
         }
     }
-    .lb_language {
-        div {
-            a {
-                color: $grey;
-                &:first-child {
-                    border-right: 1px solid rgba(0, 0, 0, .5);
-                }
-            }
-        }
-    }
 }
 /* Components */
 .lb_logo {
@@ -44,26 +34,6 @@ header.scroll {
                 opacity: .5;
                 &:hover {opacity: 1;}
             }
-        }
-    }
-}
-.lb_language {
-    > svg {margin-right: $space-xs;}
-    div {
-        a {
-            color: $white;
-            text-transform: uppercase;
-            text-decoration: none;
-            display: inline-flex;
-            opacity: .5;
-            height: 16px;
-            line-height: 20x;
-            &:hover {opacity: 1;}
-            &:first-child {
-                padding-right: $space-xs;
-                border-right: 1px solid rgba(255, 255, 255, .5);
-            }
-            &:last-child {padding-left: $space-xs;}
         }
     }
 }
