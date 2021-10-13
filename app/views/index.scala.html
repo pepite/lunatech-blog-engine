@@ -27,6 +27,7 @@
                                 <div class="lb_flexbox lb_flex-dC lb_flex-S">
                                     <a class="lb_post-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
                                     <p class="lb_post-date">@post.publicationDate.toString("dd MMM yyyy")</p>
+                                    <p class="lb_post-language"><a href="@routes.HomeController.byTags(post.lang)"><img src="@routes.Assets.versioned("images/" + post.lang + ".png")"></a></p>
                                 </div>
                             </div>
                             <a class="lb_read-btn" href="@post.slug" role="button"><img src="@routes.Assets.versioned("images/read.svg")"></a>
