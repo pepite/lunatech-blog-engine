@@ -39,47 +39,50 @@ import scala.util.control.Exception._
  */
 @Singleton
 class HomeController @Inject()(
-  cc: ControllerComponents, 
-  ws: WSClient, 
-  configuration: Configuration,
-  cache: SyncCacheApi
-) extends AbstractController(cc) {
+                                cc: ControllerComponents,
+                                ws: WSClient,
+                                configuration: Configuration,
+                                cache: SyncCacheApi
+                              ) extends AbstractController(cc) {
 
- val accessToken = configuration.get[String]("accessToken")
+  val accessToken = configuration.get[String]("accessToken")
   val organization = configuration.get[String]("githubOrganisation")
   val repository = configuration.get[String]("githubRepository")
   val branch = configuration.get[String]("githubBranch")
   val background = configuration.get[String]("blogBackground")
   val perPage = configuration.get[Int]("blogsPerPage")
 
-   /**
-   * 
+  private def slicePosts(posts: Seq[Post], page: Int): Seq[Post] = {
+    posts.slice((page - 1) * perPage, page * perPage)
+  }
+
+  /**
+   *
    *
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
     val page = 1
     cache.get[Seq[Post]]("posts")  match {
       case None =>
-       Future.successful(BadRequest("nothing in the cache"))
+        Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
-        Future.successful(Ok(views.html.index(background, result.slice((page - 1) * perPage, page * perPage), perPage)))
+        Future.successful(Ok(views.html.index(background, slicePosts(result, page), perPage)))
     }
   }
 
   def byTags(name: String) = Action.async { implicit request: Request[AnyContent] =>
     cache.get[Seq[Post]]("tag-" + name)  match {
       case None =>
-       Future.successful(BadRequest("nothing in the cache"))
+        Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
         Future.successful(Ok(views.html.index(background, result, -1)))
     }
   }
 
   def byAuthor(name: String) = Action.async { implicit request: Request[AnyContent] =>
-    val page = 1
     cache.get[Seq[Post]]("author-" + name)  match {
       case None =>
-       Future.successful(BadRequest("nothing in the cache"))
+        Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
         Future.successful(Ok(views.html.index(background, result, -1)))
     }
@@ -88,9 +91,9 @@ class HomeController @Inject()(
   def posts(page: Int) = Action.async { implicit request: Request[AnyContent] =>
     cache.get[Seq[Post]]("posts")  match {
       case None =>
-          Future.successful(BadRequest("nothing in the cache"))
+        Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
-        Future.successful(Ok(Json.toJson(result.slice((page - 1) * perPage, page * perPage).map(_.toJson()))))
+        Future.successful(Ok(Json.toJson(slicePosts(result, page).map(_.toJson()))))
     }
   }
 
@@ -105,9 +108,9 @@ class HomeController @Inject()(
 
   def media(post: String, name: String) = Action.async { implicit request: Request[AnyContent] =>
 
-      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/$post/$name")
-      // Make the request
-      request.withMethod("GET").stream().map { response =>
+    val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/$post/$name")
+    // Make the request
+    request.withMethod("GET").stream().map { response =>
       // Check that the response was successful
       if (response.status == 200) {
 
@@ -129,47 +132,47 @@ class HomeController @Inject()(
   }
 
   def view(name: String) = Action.async { implicit request: Request[AnyContent] =>
-      val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
-      request.get().flatMap { r => {
-        val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
+    val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
+    request.get().flatMap { r => {
+      val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
         r.body)
-        // TODO Change me
-        if (post.header.getDocumentTitle() == null)  {
-            Future(Ok(views.html.notFound()))
-        } else {
-          cache.get(post.authorName) match {
-            case None => {
-              val getUser = Github(Option(accessToken)).users.get(post.authorName).execFuture[HttpResponse[String]]()
-              getUser.map {
-                  case Left(e) => Ok(views.html.post(post))
-                  case Right(re) => {
-                    val user = re.result
-                    // TODO: cache author
-                    val author = Author(user.login,
-                          user.avatar_url,
-                          user.html_url,
-                          user.name,
-                          user.email,
-                          user.company,
-                          user.blog,
-                          user.location,
-                          user.bio)
-                    cache.set(post.authorName, author)
-                    val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-                      r.body, Some(author))
-                    Ok(views.html.post(postWithAuthor))
-                }
+      // TODO Change me
+      if (post.header.getDocumentTitle() == null)  {
+        Future(Ok(views.html.notFound()))
+      } else {
+        cache.get(post.authorName) match {
+          case None => {
+            val getUser = Github(Option(accessToken)).users.get(post.authorName).execFuture[HttpResponse[String]]()
+            getUser.map {
+              case Left(e) => Ok(views.html.post(post))
+              case Right(re) => {
+                val user = re.result
+                // TODO: cache author
+                val author = Author(user.login,
+                  user.avatar_url,
+                  user.html_url,
+                  user.name,
+                  user.email,
+                  user.company,
+                  user.blog,
+                  user.location,
+                  user.bio)
+                cache.set(post.authorName, author)
+                val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
+                  r.body, Some(author))
+                Ok(views.html.post(postWithAuthor))
               }
             }
-            case author => {
-               val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-                      r.body, author)
-             Future.successful(Ok(views.html.post(postWithAuthor)))
-            }
           }
-          
+          case author => {
+            val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
+              r.body, author)
+            Future.successful(Ok(views.html.post(postWithAuthor)))
+          }
         }
+
       }
+    }
     }.recover { case e:Exception => e.printStackTrace();Ok(views.html.notFound()) }
   }
 }

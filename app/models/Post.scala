@@ -1,6 +1,6 @@
 package models
 
-import org.joda.time.{ DateTime, DateTimeZone }
+import org.joda.time.{DateTime, DateTimeZone}
 import org.asciidoctor.Asciidoctor.Factory;
 import org.asciidoctor.Asciidoctor;
 import org.asciidoctor.ast.DocumentHeader;
@@ -14,13 +14,13 @@ object Post {
 }
 
 case class Post(slug: String, mainImage: String, content: String, author: Option[Author] = None) {
-  
+
   lazy val htmlContent: String = Post.asciidoctor.convert(
-      content,
-      new java.util.HashMap[String, Object]())
+    content,
+    new java.util.HashMap[String, Object]())
 
   val header = Post.asciidoctor.readDocumentHeader(content)
-  
+
   lazy val authorName: String = header.getAuthor().getFullName()
 
   lazy val publicationDate: DateTime = new DateTime(header.getRevisionInfo().getDate())
@@ -35,15 +35,17 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
 
   def toJson() = {
     JsObject(
-    Seq(
-      "publication_date"     -> JsString(publicationDate.toString("yyyy-MM-dd")),
-      "title"     -> JsString(title),
-      "slug"     -> JsString(slug),
-      "lang" -> JsString(lang),
-      "image_url"     -> JsString(mainImage),
-      "author"     -> JsString(author.map(_.name.getOrElse(authorName)).getOrElse(authorName)),
-      "tags" ->  JsArray(tags.getOrElse(Array.empty).toSeq.map(JsString(_)))
-    ))
+      Seq(
+        "publication_date" -> JsString(publicationDate.toString("dd MMM yyyy")),
+        "title" -> JsString(title),
+        "slug" -> JsString(slug),
+        "lang" -> JsString(lang),
+        "image_url" -> JsString(mainImage),
+        "author" -> JsString(author.map(_.name.getOrElse(authorName)).getOrElse(authorName)),
+        "author_name" -> JsString(authorName),
+        "author_img" -> JsString(author.map(_.avatar_url).getOrElse("null")),
+        "tags" -> JsArray(tags.getOrElse(Array.empty).toSeq.map(JsString(_)))
+      ))
   }
 
 
