@@ -4,11 +4,12 @@
 // Base partials
 @import "utils/reset";
 @import "utils/mixins";
+@import "utils/responsive";
 @import "utils/variables";
 @import "utils/general";
 @import "utils/fonts";
 @import "utils/utils";
-@import "utils/responsive";
+
 
 // Layouts partials
 @import "utils/header";

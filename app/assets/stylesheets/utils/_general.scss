@@ -34,6 +34,8 @@ h3 {
     max-width: 1440px;
     margin-right: auto;
     margin-left: auto;
+    @include xl {max-width: 1140px;}
+
 }
 .lb_container-md {
     max-width: 960px;
