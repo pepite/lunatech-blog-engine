@@ -27,7 +27,9 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
 
   val title: String = header.getDocumentTitle().getMain()
 
-  lazy val tags: Option[Array[String]] = allCatch.opt(header.getAttributes().get("tags").toString().drop(1).dropRight(1).split(","))
+  lazy val lang: String = allCatch.opt(header.getAttributes().get("lang").toString()).getOrElse("en")
+
+  lazy val tags: Option[Array[String]] = allCatch.opt(header.getAttributes().get("tags").toString().drop(1).dropRight(1).split(",") :+ lang)
 
   lazy val excerpt: String = Post.asciidoctor.convert(content.split("\n").drop(6).take(4).mkString(" "), new java.util.HashMap[String, Object]())
 
@@ -37,6 +39,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
       "publication_date"     -> JsString(publicationDate.toString("yyyy-MM-dd")),
       "title"     -> JsString(title),
       "slug"     -> JsString(slug),
+      "lang" -> JsString(lang),
       "image_url"     -> JsString(mainImage),
       "author"     -> JsString(author.map(_.name.getOrElse(authorName)).getOrElse(authorName)),
       "tags" ->  JsArray(tags.getOrElse(Array.empty).toSeq.map(JsString(_)))
