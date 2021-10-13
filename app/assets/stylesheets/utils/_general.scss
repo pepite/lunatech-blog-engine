@@ -1,45 +1,51 @@
 body {
-    font-family: "Acumin Pro", sans-serif;
-    font-weight: 400;
-    font-size: $font-md;
-    background: $light-sand;
-    color: $grey;
-    -webkit-font-smoothing: antialiased;
+  font-family: "Acumin Pro", sans-serif;
+  font-weight: 400;
+  font-size: $font-md;
+  background: $light-sand;
+  color: $grey;
+  -webkit-font-smoothing: antialiased;
 }
+
 h1 {
-    font-family: "Space Mono", sans-serif;
-    font-weight: 700;
-    font-size: 120px;
-    color: $light-sand;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 32px;
-    z-index: 2;
+  font-family: "Space Mono", sans-serif;
+  font-weight: 700;
+  font-size: 120px;
+  color: $light-sand;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 32px;
+  z-index: 2;
 }
+
 h2 {
-    font-family: "Space Mono", sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    text-transform: uppercase;
-    margin-bottom: $space-s;
+  font-family: "Space Mono", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: uppercase;
+  margin-bottom: $space-s;
 }
+
 h3 {
-    font-family: "Space Mono", sans-serif;
-    font-weight: 700;
-    font-size: 24px;
-    text-transform: uppercase;
-    margin-bottom: $space-s;
+  font-family: "Space Mono", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  text-transform: uppercase;
+  margin-bottom: $space-s;
 }
+
 .lb_container-lg {
-    max-width: 1440px;
-    margin-right: auto;
-    margin-left: auto;
-    @include xl {max-width: 1140px;}
+  max-width: 1440px;
+  margin-right: auto;
+  margin-left: auto;
+  @include xl {
+    max-width: 1140px;
+  }
 
 }
+
 .lb_container-md {
-    max-width: 960px;
-    margin-right: auto;
-    margin-left: auto;
+  max-width: 960px;
+  margin-right: auto;
+  margin-left: auto;
 }
-

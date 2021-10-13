@@ -1,0 +1,85 @@
+#not-found {
+  header {
+    background: $light-sand;
+    padding: 16px 32px;
+
+    svg .lb_path {
+      fill: $grey;
+    }
+
+    .lb_menu {
+      ul {
+        li {
+          a {
+            color: $grey;
+          }
+        }
+      }
+    }
+  }
+
+  .lb_not-found {
+    display: grid;
+    grid-gap: $space-lg;
+    grid-template-columns: repeat(12, 1fr);
+    padding-top: 150px;
+
+    &-logo {
+      margin-left: 70px;
+      grid-column: 1 / 6;
+    }
+
+    &-text {
+      grid-column: 7 / 13;
+
+      a {
+        background-color: rgba(176, 162, 156, 0.8);
+        color: white;
+        display: inline-flex;
+
+        &:hover {
+          background-color: rgba(176, 162, 156, 1);
+        }
+      }
+
+      h1 {
+        color: #252322;
+        margin-bottom: 0;
+        text-align: left;
+      }
+
+      p {
+        color: rgba(37, 35, 34, 0.8);
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 2rem;
+        padding-top: 30px;
+        padding-bottom: 30px;
+      }
+    }
+  }
+
+  .lb_not-found-logo {
+    position: relative;
+
+    #inner-circle {
+      position: absolute;
+      top: 70px;
+      left: 40px;
+      height: 170px;
+      width: 170px;
+      background-color: $bright-red;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    #circle {
+      height: 450px;
+      width: 450px;
+      border: 1px solid $bright-red;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+  }
+}

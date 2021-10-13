@@ -3,18 +3,18 @@
 <!DOCTYPE html>
 <html lang="en">
     @head(title = "Page 404 Not found")
-    <body>
+    <body id="not-found">
         @header()
         <main id="target">
-            <div class="lb_container-lg">
-                <div>
-                    <div></div>
-                    <div></div>
+            <div class="lb_container-lg lb_not-found">
+                <div class="lb_not-found-logo">
+                    <div id="circle"></div>
+                    <div id="inner-circle"></div>
                 </div>
-                <div>
+                <div class="lb_not-found-text">
                     <h1>Oh No!<br />error 404</h1>
                     <p>The link you clicked may be broken or the page may have been removed.</p>
-                    <a href="#">Back to home page</a>
+                    <a class="lb_btn lb_secondary-btn" href=@routes.HomeController.index()>Back to home page</a>
                 </div>
 
             </div>
