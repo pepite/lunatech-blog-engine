@@ -6,6 +6,12 @@
     flex-direction: column;
     color: $white;
     overflow: hidden;
+    h1 {
+        @include md {
+            font-size: 48px;
+        }
+        
+    }
 }
 .lb_dot {
     position: absolute;

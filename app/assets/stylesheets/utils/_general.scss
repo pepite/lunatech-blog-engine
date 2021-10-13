@@ -35,12 +35,23 @@ h3 {
 }
 
 .lb_container-lg {
+<<<<<<< HEAD
   max-width: 1440px;
   margin-right: auto;
   margin-left: auto;
   @include xl {
     max-width: 1140px;
   }
+=======
+    max-width: 1440px;
+    margin-right: auto;
+    margin-left: auto;
+    @include xl {max-width: 1140px;}
+    @include md {
+        max-width: 100%;
+        padding: 0 16px;
+    }
+>>>>>>> b61b241 (responsive home smartphone)
 
 }
 

@@ -6,6 +6,15 @@ header {
     right: 0;
     left: 0;
     z-index: 3;
+    @include md {
+        flex-direction: column;
+    }
+    > div {
+        @include md {
+            flex-direction: column;
+        }
+    }
+    
 }
 header.scroll {
     background: $light-sand;
@@ -21,9 +30,16 @@ header.scroll {
 }
 /* Components */
 .lb_logo {
+    @include md {
+        margin-bottom: $space-s;
+    }
 }
 .lb_menu {
     margin-right: $space-md;
+    @include md {
+        margin-right: 0;
+        margin-bottom: $space-xs;
+    }
     ul {
         li {
             margin-right: $space-md;

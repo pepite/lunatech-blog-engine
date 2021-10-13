@@ -1,10 +1,13 @@
 .lb_posts-list {
-    padding: $space-xl 0 $space-lg 0;
+    padding: $space-xl 0 0 0;
 }
 .lb_posts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: $space-lg;
+    @include md {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
 .lb_post {
     
@@ -15,7 +18,7 @@
     .lb_post-img {
         width: 100%;
         height: 340px;
-        object-fit: cover;
+        object-fit: none;
     }
     .lb_post-tags {
         display: inline-table;
@@ -52,6 +55,9 @@
     max-height: 192px;
     display: flex;
     flex-direction: column;
+    @include md {
+        margin-left: 0;
+    }
     .lb_post-title {
         font-size: 24px;
         margin-bottom: $space-md;
@@ -69,6 +75,12 @@
     .lb_post-thumb {
         position: relative;
         margin-right: $space-xs;
+        .lb_post-initial {
+            width: $size-md;
+            height: $size-md;
+            border-radius: 50%;
+            background: $dark-sand;
+        }
         img {
             &:first-child {
                 width: $size-md;
@@ -88,13 +100,6 @@
         }
         
         
-    }
-    .lb_post-initial {
-        width: $size-md;
-        height: $size-md;
-        border-radius: 50%;
-        margin-right: $space-xs;
-        background: $dark-sand;
     }
     .lb_post-author {
         text-decoration: none;
