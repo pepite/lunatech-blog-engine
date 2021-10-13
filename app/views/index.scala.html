@@ -16,7 +16,10 @@
                 <div class="lb_flexbox lb_flex-Sb">
                     <div class="lb_flexbox">
                         @if(post.author.nonEmpty) {
-                            <img class="lb_post-thumb" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                            <div class="lb_post-thumb">
+                                <img src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                                <img src="@routes.Assets.versioned("images/" + post.lang + ".png")">
+                            </div>
                         }
                         @if(post.author.isEmpty) {
                             <p class="lb_post-initial"></p>
@@ -35,109 +38,109 @@
     @main(id = "blog", title = "Lunatech's engineer blog") {
         <section class="lb_posts-list">
             <div class="lb_container-lg lb_posts-grid" id="lb_posts-list">
-            @posts.map { post => @displayPost(post)}
+                @posts.map { post => @displayPost(post)}
             </div>
             @if(blogsPerPage != -1){
-                <div class="row">
-                    <div style="position: relative;"><button style="cursor: pointer; background: none; padding: 20px; position: absolute; left: 50%; transform: translateX(-50%); margin-top: 20px;" id="load" class="btn btn-custom3">Load more</button></div>
+                <div class="lb_flexbox lb_flex-C">
+                    <button class="lb_btn lb_secondary-btn" id="load">Load more</button>
                 </div>
             }
-            </div>
 
             @helper.javascriptRouter("jsRoutes")(
                 routes.javascript.Assets.versioned,
                 routes.javascript.HomeController.byTags,
                 routes.javascript.HomeController.byAuthor
             )
+        </section>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU="crossorigin="anonymous"></script>
-            <script>
-                    // we will add this content, replace for anything you want to add
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU="crossorigin="anonymous"></script>
+        <script>
+                // we will add this content, replace for anything you want to add
 
-                    var btn = document.getElementById("load")
-                    var listPosts = document.getElementById("lb_posts-list")
-                    var page = 2
+                var btn = document.getElementById("load")
+                var listPosts = document.getElementById("lb_posts-list")
+                var page = 2
 
-                    // cross browser addEvent, today you can safely use just addEventListener
-                    function addEvent(obj,ev,fn) {
-                        if(obj.addEventListener) obj.addEventListener(ev, fn, false)
-                        else if(obj.attachEvent) obj.attachEvent("on" + ev, fn)
+                // cross browser addEvent, today you can safely use just addEventListener
+                function addEvent(obj,ev,fn) {
+                    if(obj.addEventListener) obj.addEventListener(ev, fn, false)
+                    else if(obj.attachEvent) obj.attachEvent("on" + ev, fn)
+                }
+
+                async function fetchPosts() {
+                    const posts = []
+                    let state = {
+                        posts: [],
+                        baseUrl: '/posts/',
                     }
+                    const post = axios.get(`${state.baseUrl}?page=${page}`)
+                    posts.push(post)
 
-                    async function fetchPosts() {
-                        const posts = []
-                        let state = {
-                            posts: [],
-                            baseUrl: '/posts/',
-                        }
-                        const post = axios.get(`${state.baseUrl}?page=${page}`)
-                        posts.push(post)
+                    await axios.all(posts).then((response) => {
+                        const postData = response.map(res => res.data)
+                        state.posts = postData.flat()
+                    }).catch(e => console.log('error fetching posts: ', e))
 
-                        await axios.all(posts).then((response) => {
-                            const postData = response.map(res => res.data)
-                            state.posts = postData.flat()
-                        }).catch(e => console.log('error fetching posts: ', e))
+                    return state.posts
+                }
 
-                        return state.posts
+                function displayPost(post) {
+                    const tagLinks = post.tags.map(tag => `<a href="${jsRoutes.controllers.HomeController.byTags(tag).url}">${tag}</a>`);
+                    var authorImg = "";
+                    if(post.author_img === "null") {
+                        authorImg = `<p class="lb_post-initial"></p>`;
+                    } else {
+                        authorImg = `<img class="lb_post-thumb" src="${post.author_img}" alt="author image" nopin="nopin">`;
                     }
-
-                    function displayPost(post) {
-                        const tagLinks = post.tags.map(tag => `<a href="${jsRoutes.controllers.HomeController.byTags(tag).url}">${tag}</a>`);
-                        var authorImg = "";
-                        if(post.author_img === "null") {
-                            authorImg = `<p class="lb_post-initial"></p>`;
-                        } else {
-                            authorImg = `<img class="lb_post-thumb" src="${post.author_img}" alt="author image" nopin="nopin">`;
-                        }
-                        return `<div class="lb_post">
-                        <div class="lb_post-head">
-                           <!--                The image should not be hardcoded        -->
-                            <img class="lb_post-img" src="${post.image_url}" onerror="this.src='https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg';" alt=""/>
-                            <div class="lb_post-tags">
-                                ${tagLinks.join(" ")}
-                            </div>
-                        </div>
-                        <div class="lb_post-body">
-                            <p class="lb_post-title">${post.title}</p>
-                            <div class="lb_flexbox lb_flex-Sb">
-                            <div class="lb_flexbox">
-                                ${authorImg}
-                                <div class="lb_flexbox lb_flex-dC lb_flex-S">
-                                    <a class="lb_post-author" href="${jsRoutes.controllers.HomeController.byAuthor(post.author_name).url}">${post.author}</a>
-                                    <p class="lb_post-date">${post.publication_date}</p>
-                                </div>
-                            </div>
-                            <a class="lb_read-btn" href="${post.slug}" role="button"><img src="${jsRoutes.controllers.Assets.versioned("images/read.svg").url}"></a>
+                    return `<div class="lb_post">
+                    <div class="lb_post-head">
+                        <!--                The image should not be hardcoded        -->
+                        <img class="lb_post-img" src="${post.image_url}" onerror="this.src='https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg';" alt=""/>
+                        <div class="lb_post-tags">
+                            ${tagLinks.join(" ")}
                         </div>
                     </div>
-                </div>`;
-                    }
+                    <div class="lb_post-body">
+                        <p class="lb_post-title">${post.title}</p>
+                        <div class="lb_flexbox lb_flex-Sb">
+                        <div class="lb_flexbox">
+                            ${authorImg}
+                            <div class="lb_flexbox lb_flex-dC lb_flex-S">
+                                <a class="lb_post-author" href="${jsRoutes.controllers.HomeController.byAuthor(post.author_name).url}">${post.author}</a>
+                                <p class="lb_post-date">${post.publication_date}</p>
+                            </div>
+                        </div>
+                        <a class="lb_read-btn" href="${post.slug}" role="button"><img src="${jsRoutes.controllers.Assets.versioned("images/read.svg").url}"></a>
+                    </div>
+                </div>
+            </div>`;
+                }
 
-                    // this is the scroll event handler
-                    function loadContent() {
-                        // print relevant scroll info
-                        fetchPosts().then((posts) => {
-                            page = page + 1;
-                            if (posts.length === 0 || posts.length < @blogsPerPage) {
-                                btn.remove();
-                            }
-                            for (const post of posts){
-                                listPosts.innerHTML += displayPost(post);
-                            }
-                        })
+                // this is the scroll event handler
+                function loadContent() {
+                    // print relevant scroll info
+                    fetchPosts().then((posts) => {
+                        page = page + 1;
+                        if (posts.length === 0 || posts.length < @blogsPerPage) {
+                            btn.remove();
+                        }
+                        for (const post of posts){
+                            listPosts.innerHTML += displayPost(post);
+                        }
+                    })
 
 
-                    }
+                }
 
 
-                    function imgError(image) {
-                        image.onerror = "";
-                        image.src = "@headerImageUrl";
-                        return true;
-                    }
-                    // hook the scroll handler to scroll event
-                    addEvent(btn, "click", loadContent);
+                function imgError(image) {
+                    image.onerror = "";
+                    image.src = "@headerImageUrl";
+                    return true;
+                }
+                // hook the scroll handler to scroll event
+                addEvent(btn, "click", loadContent);
 
-            </script>
+        </script>
 
     }

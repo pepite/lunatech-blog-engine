@@ -1,5 +1,5 @@
 .lb_posts-list {
-    padding: $space-xl 0;
+    padding: $space-xl 0 $space-lg 0;
 }
 .lb_posts-grid {
     display: grid;
@@ -67,10 +67,27 @@
         }
     }
     .lb_post-thumb {
-        width: $size-md;
-        height: $size-md;
-        border-radius: 50%;
+        position: relative;
         margin-right: $space-xs;
+        img {
+            &:first-child {
+                width: $size-md;
+                height: $size-md;
+                border-radius: 50%;
+            }
+            &:nth-child(2) {
+                position: absolute;
+                width: $size-s;
+                height: $size-s;
+                border-radius: 50%;
+                object-fit: cover;
+                bottom: -2px;
+                right: -4px;
+                object-fit: cover;
+            }
+        }
+        
+        
     }
     .lb_post-initial {
         width: $size-md;
