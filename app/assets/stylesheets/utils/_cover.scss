@@ -1,11 +1,11 @@
 .lb_cover {
     position: relative;
-    background: $grey;
     height: 720px;
     justify-content: center;
     flex-direction: column;
     color: $white;
     overflow: hidden;
+    background-image: url("../images/noise.png");
     h1 {
         @include md {
             font-size: 48px;
@@ -19,7 +19,8 @@
     bottom: -270px;
     height: 664px;
     width: 664px;
-    background: $bright-red;
+    
+    background: linear-gradient(to right, rgba(255, 0, 0, 0), rgba(234, 33, 46, .8));
     border-radius: 50%;
     z-index: 1;
 }

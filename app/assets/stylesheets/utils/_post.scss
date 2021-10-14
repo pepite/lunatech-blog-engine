@@ -1,6 +1,7 @@
 .lb_cover-post {
     position: relative;
     height: 560px;
+    background-image: url("../images/noise.png");
     > div {
         position: relative;
         z-index: 3;
@@ -15,6 +16,7 @@
         object-fit: cover;
         position: absolute;
         z-index: 1;
+        opacity: .1;
     }
     .lb_cover-title {
         font-family: "Space Mono", sans-serif;
@@ -23,6 +25,7 @@
         font-size: 64px;
         margin-bottom: $space-md;
         line-height: 80px;
+        color: $light-sand;
     }
     .lb_cover-thumb {
         width: $size-lg;
@@ -40,7 +43,7 @@
     .lb_cover-author {
         text-decoration: none;
         text-transform: capitalize;
-        color: $grey;
+        color: $light-sand;
         font-size: 24px;
     }
 }

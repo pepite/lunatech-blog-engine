@@ -23,27 +23,34 @@
     .lb_post-tags {
         display: inline-table;
         position: absolute;
-        top: 16px;
-        left: 16px;
+        bottom: $space-md;
+        left: -$space-md;
+        font-family: "Space Mono";
+        text-transform: uppercase;
+        font-weight: 700;
+        @include md {
+            left: 0;
+        }
         a {
             display: inline-flex;
             align-items: center;
             border-radius: $border-radius;
-            background: $dark-sand;
+            background: rgba(234, 33, 46, .3);
             padding: $space-xs;
             text-decoration: none;
             color: $white;
             height: 16px;
             margin: 0 $space-xs $space-xs 0;
             font-size: 12px;
+            backdrop-filter: blur(8px);
             &:hover {
-                
+                background: rgba(234, 33, 46, .6);
             }
         }
     }
 }
 .lb_post-body {
-    background: rgba(37, 35, 34, .05);
+    background: rgba(37, 35, 34, .2);
     padding: $space-md;
     border-radius: $border-radius;
     margin-top: -$space-md;
@@ -51,7 +58,7 @@
     z-index: 2;
     position: relative;
     width: calc(100% - 64px);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
     max-height: 192px;
     display: flex;
     flex-direction: column;
@@ -62,14 +69,13 @@
         font-size: 24px;
         margin-bottom: $space-md;
         line-height: 32px;
-        font-weight: 700;
         text-decoration: none;
-        color: $grey;
+        color: $bright-red;
         display: flex;
         height: 64px;
         overflow: hidden;
         &:hover {
-            opacity: .5;
+            color: $dark-red;
         }
     }
     .lb_post-thumb {
@@ -105,9 +111,14 @@
         text-decoration: none;
         text-transform: capitalize;
         color: $grey;
+        &:hover {
+            border-bottom: 1px solid $grey;
+        }
     }
     .lb_post-date {
-        opacity: .5;
+        font-family: "Space Mono";
+        font-weight: 700;
+        line-height: 24px;
     }
     .lb_post-language img {
         height: 16px;

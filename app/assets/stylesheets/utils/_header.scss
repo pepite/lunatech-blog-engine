@@ -14,7 +14,6 @@ header {
             flex-direction: column;
         }
     }
-    
 }
 header.scroll {
     background: $light-sand;
@@ -23,7 +22,12 @@ header.scroll {
     .lb_menu {
         ul {
             li {
-                a {color: $grey;}
+                a {
+                    color: $grey;
+                    &:hover {
+                        border-bottom: 2px solid $grey;
+                    }
+                }
             }
         }
     }
@@ -47,8 +51,9 @@ header.scroll {
             a {
                 text-decoration: none;
                 color: $white;
-                opacity: .5;
-                &:hover {opacity: 1;}
+                &:hover {
+                    border-bottom: 2px solid $white;
+                }
             }
         }
     }
