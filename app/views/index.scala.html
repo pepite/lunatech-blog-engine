@@ -1,5 +1,12 @@
 @(headerImageUrl: String, posts: Seq[Post], blogsPerPage: Int)(implicit request: Request[AnyContent])
     @import org.joda.time.{ DateTime, DateTimeZone }
+    <script>
+         function imgError(image) {
+            image.onerror = "";
+            image.src = "@headerImageUrl";
+            return true;
+        }
+    </script>
 
     @displayPost(post: Post) = {
         <div class="lb_post">
@@ -59,12 +66,13 @@
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU="crossorigin="anonymous"></script>
         <script>
+                
                 // we will add this content, replace for anything you want to add
-
+            document.addEventListener("DOMContentLoaded", function(event) { 
                 var btn = document.getElementById("load")
                 var listPosts = document.getElementById("lb_posts-list")
                 var page = 2
-
+            
                 // cross browser addEvent, today you can safely use just addEventListener
                 function addEvent(obj,ev,fn) {
                     if(obj.addEventListener) obj.addEventListener(ev, fn, false)
@@ -140,19 +148,13 @@
                             listPosts.innerHTML += displayPost(post);
                         }
                     })
-
-
                 }
 
 
-                function imgError(image) {
-                    image.onerror = "";
-                    image.src = "@headerImageUrl";
-                    return true;
-                }
                 // hook the scroll handler to scroll event
                 addEvent(btn, "click", loadContent);
-
+                
+            });
         </script>
 
     }
