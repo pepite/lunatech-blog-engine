@@ -38,19 +38,24 @@ h3 {
     max-width: 1440px;
     margin-right: auto;
     margin-left: auto;
-    @include xl {
+    @include xxl {
         max-width: 100%;
-        margin-right: 32px;
-        margin-left: 64px;
-    }
-    @include md {
-        max-width: 100%;
-        padding: 0 16px;
+        margin-right: $space-md;
+        margin-left: $space-md;
     }
 }
 
 .lb_container-md {
-  max-width: 960px;
-  margin-right: auto;
-  margin-left: auto;
+    max-width: 960px;
+    margin-right: auto;
+    margin-left: auto;
+    @include xxl {
+        max-width: 100%;
+        margin-right: $space-md;
+        margin-left: $space-md;
+    }
 }
+
+
+
+

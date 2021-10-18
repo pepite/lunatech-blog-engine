@@ -2,6 +2,15 @@
     position: relative;
     height: 560px;
     background-image: url("../images/noise.png");
+    overflow: hidden;
+    @include lg {
+        height: auto;
+        padding-top: $space-xl;
+        padding-bottom: $space-xl;
+    }
+    @include md {
+        z-index: 2;
+    }
     > div {
         position: relative;
         z-index: 3;
@@ -17,6 +26,7 @@
         position: absolute;
         z-index: 1;
         opacity: .1;
+        top: 0;
     }
     .lb_cover-title {
         font-family: "Space Mono", sans-serif;
@@ -26,6 +36,10 @@
         margin-bottom: $space-md;
         line-height: 80px;
         color: $light-sand;
+        @include sm {
+            font-size: 48px;
+            line-height: 56px;
+        }
     }
     .lb_cover-thumb {
         width: $size-lg;

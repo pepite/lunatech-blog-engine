@@ -7,7 +7,7 @@ header {
     left: 0;
     z-index: 3;
     @include md {
-        flex-direction: column;
+        position: absolute;
     }
     > div {
         @include md {
@@ -20,41 +20,102 @@ header.scroll {
     padding: 16px 32px;
     svg .lb_path {fill: $grey;}
     .lb_menu {
+        .lb_menu-content {
+            ul {
+                li {
+                    a {
+                        color: $grey;
+                        &:hover {border-bottom: 2px solid $grey;}
+                    }
+                }
+            }
+        } 
+    }
+}
+/* Components */
+.lb_logo {
+    display: flex;
+}
+.lb_menu {   
+    input[type="checkbox"] {
+        display: none;
+        &:not(:checked) {
+            & ~ .lb_menu-content {
+                @include md {display: none;}
+            }
+            & + label:before {
+                @include md {content: "\f0c9";}
+            }
+        }
+        &:checked {
+            & ~ .lb_menu-content {
+                @include md {
+                    display: flex;
+                    top: 0;
+                    right: 0;
+                    width: 100%;
+                    height: 100vh;
+                    z-index: 10;
+                    background: $grey;
+                    position: absolute;
+                }
+                ul {
+                    margin-right: 0;
+                    margin-top: $space-lg;
+                    margin-bottom: $space-md;
+                }
+            }
+            & + label:before {
+                @include md {content: "\f00d";}
+            }
+        }
+        & + label:before {
+            @include md {
+                font-family: FontAwesome;
+                font-size: 30px;
+                content: "\f0c9";
+            }
+        }
+
+    }
+    label {
+        color: $white;
+        position: relative;
+        z-index: 20;
+    } 
+    .lb_menu-content {
+        @include md {
+            flex-direction: column;
+        }
         ul {
+            margin-right: $space-md;
             li {
+                margin-right: $space-md;
+                &:last-child {margin-right: 0;}
                 a {
-                    color: $grey;
+                    text-decoration: none;
+                    color: $white;
                     &:hover {
-                        border-bottom: 2px solid $grey;
+                        border-bottom: 2px solid $white;
                     }
                 }
             }
         }
     }
 }
-/* Components */
-.lb_logo {
-    @include md {
-        margin-bottom: $space-s;
-    }
-}
-.lb_menu {
-    margin-right: $space-md;
-    @include md {
-        margin-right: 0;
-        margin-bottom: $space-xs;
-    }
-    ul {
-        li {
-            margin-right: $space-md;
-            &:last-child {margin-right: 0;}
-            a {
-                text-decoration: none;
-                color: $white;
-                &:hover {
-                    border-bottom: 2px solid $white;
-                }
-            }
-        }
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
