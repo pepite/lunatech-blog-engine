@@ -2,7 +2,6 @@
   header {
     background: $light-sand;
     padding: 16px 32px;
-
     svg .lb_path {
       fill: $grey;
     }
@@ -23,10 +22,16 @@
     grid-gap: $space-lg;
     grid-template-columns: repeat(12, 1fr);
     padding-top: 150px;
-
+	@include md {
+		display: flex;
+		flex-direction: column;
+	}
+	
     &-logo {
-      margin-left: 70px;
       grid-column: 1 / 6;
+	  @include md {
+		display: none;
+	}
     }
 
     &-text {
@@ -82,4 +87,15 @@
     }
 
   }
+}
+
+.lb_not-found-text {
+	@include md {
+		text-align: center;
+	}
+	h1 {
+		@include md {
+			text-align: center!important;
+		}
+	}
 }
