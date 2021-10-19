@@ -1,10 +1,18 @@
-.lb_posts-list {padding: $space-xl 0 0 0;}
+.lb_posts-list {
+    padding: $space-xl 0 0 0;
+    @include md {
+        padding-top: $space-md;
+    }
+}
 .lb_posts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: $space-lg;
     @include lg {grid-template-columns: repeat(2, 1fr);}
-    @include md {grid-template-columns: repeat(1, 1fr);}
+    @include md {
+        grid-template-columns: repeat(1, 1fr);
+        grid-gap: $space-md;
+    }
 }
 .lb_post {
     
@@ -21,7 +29,7 @@
         @include xl {height: 200px;}
         @include lg {height: 280px;}
         @include md {height: 340px;}
-        @include sm {height: 280px;}
+        @include sm {height: 220px;}
     }
     .lb_post-tags {
         display: inline-table;
