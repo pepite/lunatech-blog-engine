@@ -1,16 +1,10 @@
-.lb_posts-list {
-    padding: $space-xl 0 0 0;
-}
+.lb_posts-list {padding: $space-xl 0 0 0;}
 .lb_posts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: $space-lg;
-    @include lg {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    @include md {
-        grid-template-columns: repeat(1, 1fr);
-    }
+    @include lg {grid-template-columns: repeat(2, 1fr);}
+    @include md {grid-template-columns: repeat(1, 1fr);}
 }
 .lb_post {
     
@@ -37,9 +31,6 @@
         font-family: "Space Mono";
         text-transform: uppercase;
         font-weight: 700;
-        @include md {
-            left: 0;
-        }
         a {
             display: inline-flex;
             align-items: center;
@@ -51,10 +42,13 @@
             height: 16px;
             margin: 0 $space-xs $space-xs 0;
             font-size: 12px;
+            -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
-            &:hover {
-                background: rgba(234, 33, 46, .6);
-            }
+            -webkit-transition: .25s ease-in-out;
+            -moz-transition: .25s ease-in-out;
+            -o-transition: .25s ease-in-out;
+            transition: .25s ease-in-out;
+            &:hover {background: rgba(234, 33, 46, .6);}
         }
     }
 }
@@ -66,13 +60,12 @@
     z-index: 2;
     position: relative;
     width: calc(100% - 96px);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     max-height: 192px;
     display: flex;
     flex-direction: column;
-    @include md {
-        margin-left: 0;
-    }
+    @include md {margin-left: 0;}
     .lb_post-title {
         font-size: 24px;
         margin-bottom: $space-md;
@@ -82,9 +75,7 @@
         display: flex;
         height: 64px;
         overflow: hidden;
-        &:hover {
-            color: $dark-red;
-        }
+        &:hover {color: $dark-red;}
     }
     .lb_post-thumb {
         position: relative;
@@ -111,17 +102,13 @@
                 right: -4px;
                 object-fit: cover;
             }
-        }
-        
-        
+        }  
     }
     .lb_post-author {
         text-decoration: none;
         text-transform: capitalize;
         color: $grey;
-        &:hover {
-            border-bottom: 1px solid $grey;
-        }
+        &:hover {border-bottom: 1px solid $grey;}
     }
     .lb_post-date {
         font-family: "Space Mono";

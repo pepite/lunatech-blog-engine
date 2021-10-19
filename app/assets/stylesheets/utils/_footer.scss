@@ -21,12 +21,8 @@ footer {
         }
         .lb_logo {
             grid-column: 1 / 7;
-            @include md {
-                display: flex;
-            }
-            svg .lb_path {
-                fill: $grey;
-            }
+            @include md {display: flex;}
+            svg .lb_path {fill: $grey;}
         }
         .lb_footer-menu {
             @include md {
@@ -41,9 +37,7 @@ footer {
                         text-decoration: none;
                         color: $grey;
                         line-height: 24px;
-                        &:hover {
-                            opacity: .5;
-                        }
+                        &:hover {border-bottom: 1px solid $grey;}
                     }
                 }
             }
@@ -58,9 +52,7 @@ footer {
                     border-radius: 8px;
                     justify-content: center;
                     margin-right: $space-xs;
-                    img {
-                        width: 16px;
-                    }
+                    img {width: 16px;}
                 }
             }
         }
@@ -72,9 +64,7 @@ footer {
         }
         p {
             margin-right: $space-s;
-            @include md {
-                margin-bottom: $space-s;
-            }
+            @include md {margin-bottom: $space-s;}
         }
         ul {
             @include flexbox;
@@ -84,9 +74,7 @@ footer {
                     text-decoration: none;
                     color: $grey;
                     line-height: 24px;
-                    &:hover {
-                        opacity: .5;
-                    }
+                    &:hover {border-bottom: 1px solid $grey;}
                 }
             }
         }

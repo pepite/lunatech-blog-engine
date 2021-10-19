@@ -43,6 +43,11 @@ h3 {
         margin-right: $space-md;
         margin-left: $space-md;
     }
+    @include md {
+        max-width: 100%;
+        margin-right: $space-s;
+        margin-left: $space-s;
+    }
 }
 
 .lb_container-md {
@@ -53,5 +58,10 @@ h3 {
         max-width: 100%;
         margin-right: $space-md;
         margin-left: $space-md;
+    }
+    @include md {
+        max-width: 100%;
+        margin-right: $space-s;
+        margin-left: $space-s;
     }
 }
