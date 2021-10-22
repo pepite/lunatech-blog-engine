@@ -7,7 +7,7 @@
 .lb_posts-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-gap: $space-lg;
+    grid-gap: $space-md;
     @include lg {grid-template-columns: repeat(2, 1fr);}
     @include md {
         grid-template-columns: repeat(1, 1fr);
@@ -24,12 +24,16 @@
     .lb_post-img {
         width: 100%;
         height: 290px;
-        object-fit: none;
         @include xxl {height: 280px;}
         @include xl {height: 200px;}
         @include lg {height: 280px;}
         @include md {height: 340px;}
         @include sm {height: 220px;}
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: none;
+        }
     }
     .lb_post-tags {
         display: inline-table;

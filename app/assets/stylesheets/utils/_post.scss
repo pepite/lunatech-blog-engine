@@ -63,11 +63,74 @@
 }
 .lb_content-post {
     padding: $space-lg 0;
-    .sectionbody {
+    a {
+        color: $bright-red;
+        text-decoration: none;
+        &:hover {
+            color: $dark-red;
+        }
+    }
+    details {
+        margin-top: $space-md;
         margin-bottom: $space-md;
-        .paragraph {
+    }
+    .listingblock {
+        .title {
+            margin-top: $space-s;
             margin-bottom: $space-s;
         }
+        .content {
+            pre {
+                color: #abb2bf;
+                background: #282c34;
+                padding: 1em;
+                border-radius: 10px;
+                line-height: 24px;
+            }
+        }
+    }
+    .sect1 {
+        margin-bottom: $space-lg;
+        .paragraph {
+            
+        }
+        .imageblock {
+            margin-top: $space-s;
+            border: 2px solid $bright-red;
+            padding: 16px;
+            border-radius: 32px;
+            border-top-right-radius: 0;
+            position: relative;
+            margin-bottom: $space-md;
+            img {
+                border-radius: 32px;
+                border-top-right-radius: 0;
+            }
+            .title {
+                position: absolute;
+                bottom: 32px;
+                right: 48px;
+                color: $light-sand;
+            }
+        }
+        .admonitionblock {
+            background: $sand;
+            border-radius: 32px;
+            padding: $space-md;
+            margin-top: $space-s;
+            margin-bottom: $space-s;
+        }
+        table {
+            .icon {
+                width: 16%;
+            }
+            .content {
+                line-height: 24px;
+            }
+        }
+    }
+    .sect2 {
+        margin-bottom: $space-lg;
     }
     p {
         font-size: 20px;
@@ -80,6 +143,7 @@
         line-height: 28px;
     }
     pre {
+        margin-top: $space-s;
         margin-bottom: $space-s;
     }
 }
