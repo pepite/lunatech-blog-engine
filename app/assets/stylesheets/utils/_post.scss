@@ -62,6 +62,12 @@
     }
 }
 .lb_content-post {
+    ul, ol {
+        padding-left: $space-s;
+        margin-top: $space-xs;
+        margin-bottom: $space-s;
+        list-style: initial;
+    }
     padding: $space-lg 0;
     a {
         color: $bright-red;
