@@ -131,7 +131,7 @@ class HomeController @Inject()(
     }
   }
 
-  def view(name: String) = Action.async { implicit request: Request[AnyContent] =>
+  def view(name: String): Action[AnyContent] = Action.async { implicit req: Request[AnyContent] =>
     val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
     request.get().flatMap { r => {
       val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
@@ -144,7 +144,7 @@ class HomeController @Inject()(
           case None => {
             val getUser = Github(Option(accessToken)).users.get(post.authorName).execFuture[HttpResponse[String]]()
             getUser.map {
-              case Left(e) => Ok(views.html.post(post))
+              case Left(_) => Ok(views.html.post(post))
               case Right(re) => {
                 val user = re.result
                 // TODO: cache author

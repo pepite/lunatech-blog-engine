@@ -1,13 +1,28 @@
 @import models._
-@(post: Post)
+@(post: Post)(implicit request: Request[AnyContent])
 
-<!DOCTYPE html>
-<html lang="en">
-    @head(title = post.title)
-    <body>
-        @header()
+    @defining(List(
+        """<meta prefix="og:http://ogp.me/ns#" property="og:type" content="article" />""",
+        s"""<meta prefix="og:http://ogp.me/ns#" property="og:title" content="${post.title}" />""",
+//        s"""<meta prefix="og:http://ogp.me/ns#" property="og:description" content="${post.content}" />""",
+        s"""<meta prefix="og:http://ogp.me/ns#" property="og:image" content="${post.mainImage}" />""",
+        s"""<meta prefix="og:http://ogp.me/ns#" property="og:article:author" content="${post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)}" />""",
+        s"""<meta prefix="og:http://ogp.me/ns#" property="og:article:published_time" content="${post.publicationDate}" />""",
+        s"""<meta prefix="og:http://ogp.me/ns#" property="og:url" content="https://blog.lunatech.com${request.path}" />""",
+        """<meta name="twitter:card" content="summary_large_image"/>""",
+        """<meta name="twitter:site" content="@LunatechLabs" />""",
+        s"""<meta name="twitter:domain" content="https://blog.lunatech.com${request.path}" />""",
+        s"""<meta name="twitter:title" content="${post.title}" />""",
+        s"""<meta name="twitter:image" content="${post.mainImage}" />""",
+//        s"""<meta name="twitter:description" content="${post.content}" />"""
+    )) { socialHeaders =>
+    <!DOCTYPE html>
+        <html lang="en">
+            @head(title = post.title, extraHeader = socialHeaders)
+        <body>
+            @header()
         <main id="target">
-            <!-- Cover post -->
+                <!-- Cover post -->
             <section class="lb_cover-post">
                 <img class="lb_cover-img" src="@post.mainImage" onerror="imgError(this)" alt=""/>
                 <div class="lb_container-lg">
@@ -15,58 +30,59 @@
                     <div class="lb_flexbox">
                         @if(post.author.nonEmpty) {
                             <img class="lb_cover-thumb" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                        } 
+                        }
                         @if(!(post.author.nonEmpty)) {
                             <p class="lb_cover-initial"></p>
                         }
-                        <div class="lb_flexbox lb_flex-dC lb_flex-S">
-                            <a class="lb_cover-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
-                        </div>
+                    <div class="lb_flexbox lb_flex-dC lb_flex-S">
+                        <a class="lb_cover-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
                     </div>
-                </div>  
+                    </div>
+                </div>
             </section>
 
             <section class="lb_content-post">
                 <div class="lb_container-md">
-                    @Html(post.htmlContent)
+                @Html(post.htmlContent)
                 </div>
             </section>
         </main>
-        @footer()
+            @footer()
 
-        <!-- JQUERY -->
-        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-        <script>
-            (function (i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function () {
-                    (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+                <!-- JQUERY -->
+            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+            <script>
+                    (function (i, s, o, g, r, a, m) {
+                        i['GoogleAnalyticsObject'] = r;
+                        i[r] = i[r] || function () {
+                            (i[r].q = i[r].q || []).push(arguments)
+                        }, i[r].l = 1 * new Date();
+                        a = s.createElement(o),
+                                m = s.getElementsByTagName(o)[0];
+                        a.async = 1;
+                        a.src = g;
+                        m.parentNode.insertBefore(a, m)
+                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-            ga('create', 'UA-56364023-3', 'auto');
-            ga('send', 'pageview');
-        </script>
-        <!-- Header scroll -->
-        <script>
-            $(window).on("scroll", function() {
-                if($(window).scrollTop() > 700) {
-                    $("header").addClass("scroll");
-                } else {
-                    $("header").removeClass("scroll");
-                }
-            });
-        </script>
-        <script type="text/javascript" src="/assets/js/highlight.pack.js")"></script>
-        <script>
-            document.querySelectorAll('pre.highlight').forEach((block) => {
-                hljs.highlightBlock(block);
-            });
-        </script>
-    </body>
-</html>
+                    ga('create', 'UA-56364023-3', 'auto');
+                    ga('send', 'pageview');
+            </script>
+                <!-- Header scroll -->
+            <script>
+                    $(window).on("scroll", function () {
+                        if ($(window).scrollTop() > 700) {
+                            $("header").addClass("scroll");
+                        } else {
+                            $("header").removeClass("scroll");
+                        }
+                    });
+            </script>
+            <script type="text/javascript" src="/assets/js/highlight.pack.js" )"></script>
+            <script>
+                    document.querySelectorAll('pre.highlight').forEach((block) => {
+                        hljs.highlightBlock(block);
+                    });
+            </script>
+        </body>
+        </html>
+    }

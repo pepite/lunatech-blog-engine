@@ -1,4 +1,4 @@
-@(id: String, title: String, extracss: Option[String] = None, extraHeader: Option[String] = None)(content: Html)
+@(id: String, title: String, extracss: Option[String] = None, extraHeader: List[String] = List())(content: Html)
 <!DOCTYPE html>
 <html lang="en">
     @head(title = "Lunatech's engineer blog", extraHeader = extraHeader)
