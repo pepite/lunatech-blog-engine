@@ -1,155 +1,158 @@
 .lb_cover-post {
+  position: relative;
+  height: 560px;
+  background-image: url("../images/noise.png");
+  overflow: hidden;
+  @include lg {
+    height: auto;
+    padding-top: $space-xl;
+    padding-bottom: $space-xl;
+  }
+  @include md {
+    z-index: 2;
+  }
+  > div {
     position: relative;
+    z-index: 3;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .lb_cover-img {
     height: 560px;
-    background-image: url("../images/noise.png");
-    overflow: hidden;
-    @include lg {
-        height: auto;
-        padding-top: $space-xl;
-        padding-bottom: $space-xl;
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.1;
+    top: 0;
+  }
+  .lb_cover-title {
+    font-family: "Space Mono", sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 64px;
+    margin-bottom: $space-md;
+    line-height: 80px;
+    color: $light-sand;
+    @include sm {
+      font-size: 48px;
+      line-height: 56px;
     }
-    @include md {
-        z-index: 2;
-    }
-    > div {
-        position: relative;
-        z-index: 3;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .lb_cover-img {
-        height: 560px;
-        width: 100%;
-        object-fit: cover;
-        position: absolute;
-        z-index: 1;
-        opacity: .1;
-        top: 0;
-    }
-    .lb_cover-title {
-        font-family: "Space Mono", sans-serif;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 64px;
-        margin-bottom: $space-md;
-        line-height: 80px;
-        color: $light-sand;
-        @include sm {
-            font-size: 48px;
-            line-height: 56px;
-        }
-    }
-    .lb_cover-thumb {
-        width: $size-lg;
-        height: $size-lg;
-        border-radius: 50%;
-        margin-right: $space-xs;
-    }
-    .lb_cover-initial {
-        width: $size-md;
-        height: $size-md;
-        border-radius: 50%;
-        margin-right: $space-xs;
-        background: $dark-sand;
-    }
-    .lb_cover-author {
-        text-decoration: none;
-        text-transform: capitalize;
-        color: $light-sand;
-        font-size: 24px;
-    }
+  }
+  .lb_cover-thumb {
+    width: $size-lg;
+    height: $size-lg;
+    border-radius: 50%;
+    margin-right: $space-xs;
+  }
+  .lb_cover-initial {
+    width: $size-md;
+    height: $size-md;
+    border-radius: 50%;
+    margin-right: $space-xs;
+    background: $dark-sand;
+  }
+  .lb_cover-author {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: $light-sand;
+    font-size: 24px;
+  }
 }
 .lb_content-post {
-    ul, ol {
-        padding-left: $space-s;
-        margin-top: $space-xs;
-        margin-bottom: $space-s;
-        list-style: initial;
+  ul,
+  ol {
+    padding-left: $space-s;
+    margin-top: $space-xs;
+    margin-bottom: $space-s;
+    list-style: initial;
+  }
+  padding: $space-lg 0;
+  a {
+    color: $bright-red;
+    text-decoration: none;
+    &:hover {
+      color: $dark-red;
     }
-    padding: $space-lg 0;
-    a {
+  }
+  details {
+    margin-top: $space-md;
+    margin-bottom: $space-md;
+  }
+  .listingblock {
+    .title {
+      margin-top: $space-s;
+      margin-bottom: $space-s;
+    }
+    .content {
+      pre {
+        color: #abb2bf;
+        background: #282c34;
+        padding: 1em;
+        border-radius: 10px;
+        line-height: 24px;
+      }
+    }
+  }
+  #preamble {
+    margin-bottom: $space-lg;
+  }
+  .sect1 {
+    margin-bottom: $space-lg;
+    .imageblock {
+      margin-top: $space-s;
+      border: 2px solid $bright-red;
+      padding: 16px;
+      border-radius: 32px;
+      border-top-right-radius: 0;
+      position: relative;
+      margin-bottom: $space-md;
+      img {
+        border-radius: 32px;
+        border-top-right-radius: 0;
+      }
+      .title {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
         color: $bright-red;
-        text-decoration: none;
-        &:hover {
-            color: $dark-red;
-        }
+        font-style: italic;
+      }
     }
-    details {
-        margin-top: $space-md;
-        margin-bottom: $space-md;
+    .admonitionblock {
+      background: $sand;
+      border-radius: 32px;
+      padding: $space-md;
+      margin-top: $space-s;
+      margin-bottom: $space-s;
     }
-    .listingblock {
-        .title {
-            margin-top: $space-s;
-            margin-bottom: $space-s;
-        }
-        .content {
-            pre {
-                color: #abb2bf;
-                background: #282c34;
-                padding: 1em;
-                border-radius: 10px;
-                line-height: 24px;
-            }
-        }
+    table {
+      .icon {
+        width: 16%;
+      }
+      .content {
+        line-height: 24px;
+      }
     }
-    .sect1 {
-        margin-bottom: $space-lg;
-        .paragraph {
-            
-        }
-        .imageblock {
-            margin-top: $space-s;
-            border: 2px solid $bright-red;
-            padding: 16px;
-            border-radius: 32px;
-            border-top-right-radius: 0;
-            position: relative;
-            margin-bottom: $space-md;
-            img {
-                border-radius: 32px;
-                border-top-right-radius: 0;
-            }
-            .title {
-                position: absolute;
-                bottom: 32px;
-                right: 48px;
-                color: $light-sand;
-            }
-        }
-        .admonitionblock {
-            background: $sand;
-            border-radius: 32px;
-            padding: $space-md;
-            margin-top: $space-s;
-            margin-bottom: $space-s;
-        }
-        table {
-            .icon {
-                width: 16%;
-            }
-            .content {
-                line-height: 24px;
-            }
-        }
-    }
-    .sect2 {
-        margin-bottom: $space-lg;
-    }
-    p {
-        font-size: 20px;
-        line-height: 32px;
-    }
-    img {
-        width: 100%;
-    }
-    code {
-        line-height: 28px;
-    }
-    pre {
-        margin-top: $space-s;
-        margin-bottom: $space-s;
-    }
+  }
+  .sect2 {
+    margin-bottom: $space-lg;
+  }
+  p {
+    font-size: 20px;
+    line-height: 32px;
+  }
+  img {
+    width: 100%;
+  }
+  code {
+    line-height: 28px;
+  }
+  pre {
+    margin-top: $space-s;
+    margin-bottom: $space-s;
+  }
 }

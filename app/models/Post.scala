@@ -19,7 +19,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
     content,
     new java.util.HashMap[String, Object]())
 
-  val header = Post.asciidoctor.readDocumentHeader(content)
+  val header: DocumentHeader = Post.asciidoctor.readDocumentHeader(content)
 
   lazy val authorName: String = header.getAuthor().getFullName()
 
