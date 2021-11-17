@@ -29,19 +29,19 @@
                     @if(post.author.nonEmpty) {
                         <div class="lb_post-thumb">
                             <img src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                            <img src="@routes.Assets.versioned(" images/" + post.lang + ".png")">
+                            <img src="@routes.Assets.versioned("images/" + post.lang + ".png")">
                         </div>
                     }
                     @if(post.author.isEmpty) {
                         <div class="lb_post-thumb">
                             <p class="lb_post-initial"></p>
-                            <img src="@routes.Assets.versioned(" images/" + post.lang + ".png")">
+                            <img src="@routes.Assets.versioned("images/" + post.lang + ".png")">
                         </div>
 
                     }
                     <a class="lb_post-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
                 </div>
-                <a class="lb_read-btn" href="@post.slug" role="button"><img src="@routes.Assets.versioned(" images/read.svg")"></a>
+                <a class="lb_read-btn" href="@post.slug" role="button"><img src="@routes.Assets.versioned("images/read.svg")"></a>
             </div>
         </div>
     </div>
