@@ -43,7 +43,7 @@ class HomeController @Inject()(
    *
    *
    */
-  def index() = Action.async { implicit request: Request[AnyContent] =>
+  def index = Action.async { implicit request: Request[AnyContent] =>
     val page = 1
     cache.get[Seq[Post]]("posts") match {
       case None =>

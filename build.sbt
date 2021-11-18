@@ -5,20 +5,12 @@ version := "1.0-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayScala)
 
-scalaVersion := "2.12.8"
+scalaVersion := "2.13.7"
 
 libraryDependencies ++= Seq(
-  guice,
-  "org.scalatestplus.play" %% "scalatestplus-play" % "4.0.1" % Test,
-  "org.asciidoctor" % "asciidoctorj" % "2.3.0",
-  "com.47deg" %% "github4s" % "0.20.1",
-  ws,
-  ehcache,
-  "com.typesafe.play" %% "play-json" % "2.7.0"
+  guice, ws, ehcache,
+  "org.scalatestplus.play" %% "scalatestplus-play" % "5.1.0" % Test,
+  "org.asciidoctor" % "asciidoctorj" % "2.5.2",
+  "com.47deg" %% "github4s" % "0.21.0",
+  "com.typesafe.play" %% "play-json" % "2.9.2",
 )
-
-// Adds additional packages into Twirl
-//TwirlKeys.templateImports += "com.lunatech.blog.controllers._"
-
-// Adds additional packages into conf/routes
-// play.sbt.routes.RoutesKeys.routesImport += "com.lunatech.blog.binders._"
