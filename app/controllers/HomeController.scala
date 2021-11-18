@@ -1,37 +1,20 @@
 package controllers
 
-import javax.inject._
-import play.api._
-import play.api.mvc._
-import org.joda.time.{ DateTime, DateTimeZone }
-import models._
 import github4s.Github
-import github4s.jvm.Implicits._
-import scala.concurrent.Future
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.duration._
-import scala.concurrent.Await
 import github4s.Github._
+import github4s.jvm.Implicits._
+import models._
+import play.api._
+import play.api.cache.SyncCacheApi
+import play.api.http.HttpEntity
+import play.api.libs.json._
+import play.api.libs.ws._
+import play.api.mvc._
 import scalaj.http.HttpResponse
 
-import javax.inject.Inject
+import javax.inject._
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
-import scala.concurrent.duration._
-import play.api.cache.SyncCacheApi
-
-import play.api.mvc._
-import play.api.libs.ws._
-import play.api.http.HttpEntity
-
-import akka.actor.ActorSystem
-import akka.stream.ActorMaterializer
-import akka.stream.scaladsl._
-import akka.util.ByteString
-
-import scala.concurrent.ExecutionContext
-
-import play.api.libs.json._
-import scala.util.control.Exception._
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -45,12 +28,12 @@ class HomeController @Inject()(
                                 cache: SyncCacheApi
                               ) extends AbstractController(cc) {
 
-  val accessToken = configuration.get[String]("accessToken")
-  val organization = configuration.get[String]("githubOrganisation")
-  val repository = configuration.get[String]("githubRepository")
-  val branch = configuration.get[String]("githubBranch")
-  val background = configuration.get[String]("blogBackground")
-  val perPage = configuration.get[Int]("blogsPerPage")
+  private val accessToken = configuration.get[String]("accessToken")
+  private val organization = configuration.get[String]("githubOrganisation")
+  private val repository = configuration.get[String]("githubRepository")
+  private val branch = configuration.get[String]("githubBranch")
+  private val background = configuration.get[String]("blogBackground")
+  private val perPage = configuration.get[Int]("blogsPerPage")
 
   private def slicePosts(posts: Seq[Post], page: Int): Seq[Post] = {
     posts.slice((page - 1) * perPage, page * perPage)
@@ -62,7 +45,7 @@ class HomeController @Inject()(
    */
   def index() = Action.async { implicit request: Request[AnyContent] =>
     val page = 1
-    cache.get[Seq[Post]]("posts")  match {
+    cache.get[Seq[Post]]("posts") match {
       case None =>
         Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
@@ -71,7 +54,7 @@ class HomeController @Inject()(
   }
 
   def byTags(name: String) = Action.async { implicit request: Request[AnyContent] =>
-    cache.get[Seq[Post]]("tag-" + name)  match {
+    cache.get[Seq[Post]]("tag-" + name) match {
       case None =>
         Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
@@ -80,7 +63,7 @@ class HomeController @Inject()(
   }
 
   def byAuthor(name: String) = Action.async { implicit request: Request[AnyContent] =>
-    cache.get[Seq[Post]]("author-" + name)  match {
+    cache.get[Seq[Post]]("author-" + name) match {
       case None =>
         Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
@@ -89,16 +72,16 @@ class HomeController @Inject()(
   }
 
   def posts(page: Int) = Action.async { implicit request: Request[AnyContent] =>
-    cache.get[Seq[Post]]("posts")  match {
+    cache.get[Seq[Post]]("posts") match {
       case None =>
         Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
-        Future.successful(Ok(Json.toJson(slicePosts(result, page).map(_.toJson()))))
+        Future.successful(Ok(Json.toJson(slicePosts(result, page).map(_.toJson))))
     }
   }
 
   def feed() = Action.async { implicit request: Request[AnyContent] =>
-    cache.get[Seq[Post]]("posts")  match {
+    cache.get[Seq[Post]]("posts") match {
       case None =>
         Future.successful(BadRequest("nothing in the cache"))
       case Some(result) =>
@@ -134,21 +117,21 @@ class HomeController @Inject()(
   def view(name: String): Action[AnyContent] = Action.async { implicit req: Request[AnyContent] =>
     val request: WSRequest = ws.url(s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/posts/${name}.adoc")
     request.get().flatMap { r => {
-      val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-        r.body)
+      val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png", r.body)
       // TODO Change me
-      if (post.header.getDocumentTitle() == null)  {
+      if (post.header.getDocumentTitle == null) {
         Future(Ok(views.html.notFound()))
       } else {
         cache.get(post.authorName) match {
-          case None => {
+          case None =>
             val getUser = Github(Option(accessToken)).users.get(post.authorName).execFuture[HttpResponse[String]]()
             getUser.map {
               case Left(_) => Ok(views.html.post(post))
-              case Right(re) => {
+              case Right(re) =>
                 val user = re.result
                 // TODO: cache author
-                val author = Author(user.login,
+                val author = Author(
+                  user.login,
                   user.avatar_url,
                   user.html_url,
                   user.name,
@@ -161,18 +144,15 @@ class HomeController @Inject()(
                 val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
                   r.body, Some(author))
                 Ok(views.html.post(postWithAuthor))
-              }
             }
-          }
-          case author => {
+          case author =>
             val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
               r.body, author)
             Future.successful(Ok(views.html.post(postWithAuthor)))
-          }
         }
 
       }
     }
-    }.recover { case e:Exception => e.printStackTrace();Ok(views.html.notFound()) }
+    }.recover { case e: Exception => e.printStackTrace(); Ok(views.html.notFound()) }
   }
 }
