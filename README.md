@@ -8,7 +8,9 @@ In the `posts` directory a file with the following structure `yyyy-MM-dd-name-of
 In the `media` directory a directory `yyyy-MM-dd-name-of-the-blog` with at least a `background.png` file and all other assets files needed for the blog post.
 
 ## Configuration of the application
-```
+Create a new file in [conf/overrides.conf](conf/overrides.conf) to override some of the configuration:
+
+```hocon
 accessToken = your-secret-token
 github_organisation = lunatech-labs
 github_repository = lunatech-blog
@@ -22,5 +24,3 @@ You can modify the template in the `app/views/` directory.
 ## Starting the application 
 
 `sbt run` and go in your browser to `http:localhost:9000`
-
-
