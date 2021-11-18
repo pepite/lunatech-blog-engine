@@ -33,7 +33,7 @@ case class Post(slug: String, mainImage: String, content: String, author: Option
 
   lazy val excerpt: String = Post.asciidoctor.convert(content.split("\n").slice(6, 10).mkString(" "), new java.util.HashMap[String, Object]())
 
-  def toJson: JsObject = {
+  def toJson(): JsObject = {
     JsObject(
       Seq(
         "publication_date" -> JsString(publicationDate.toString("dd MMM yyyy")),
