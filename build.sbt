@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
   "com.47deg" %% "github4s" % "0.21.0",
   "com.typesafe.play" %% "play-json" % "2.9.2",
 )
+
+Global / onChangedBuildSource := ReloadOnSourceChanges
