@@ -21,7 +21,7 @@ h1 {
 h2 {
   font-family: "Space Mono", sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 32px;
   text-transform: uppercase;
   margin-bottom: $space-s;
 }
@@ -29,9 +29,18 @@ h2 {
 h3 {
   font-family: "Space Mono", sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 28px;
   text-transform: uppercase;
   margin-bottom: $space-s;
+}
+
+h4 {
+  font-family: "Space Mono", sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  margin-bottom: $space-s;
+  margin-top: $space-s;
 }
 
 .lb_container-lg {
