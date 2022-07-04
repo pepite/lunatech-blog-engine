@@ -8,9 +8,9 @@
 		padding-top: $space-xl;
 		padding-bottom: $space-xl;
 	}
-  	@include md {
-    	z-index: 2;
-  	}
+	@include md {
+		z-index: 2;
+	}
 	> div {
 		position: relative;
 		z-index: 3;
@@ -63,7 +63,8 @@
 }
 .lb_content-post {
 	padding: $space-lg 0;
-	ul, ol {
+	ul,
+	ol {
 		padding-left: $space-s;
 		margin-top: $space-xs;
 		margin-bottom: $space-s;
@@ -73,7 +74,7 @@
 		color: $bright-red;
 		text-decoration: none;
 		&:hover {
-		color: $dark-red;
+			color: $dark-red;
 		}
 	}
 	details {
@@ -83,20 +84,20 @@
 	.quoteblock {
 		font-size: 1.3em;
 		font-style: italic;
-		background: #F8EFDD;
+		background: #f8efdd;
 		line-height: 1.521739em;
 		padding: 24px 24px 24px 64px;
-		float:left;
+		float: left;
 		color: #9b0f17;
 		border-radius: 24px;
-    	margin: 24px 0;
+		margin: 24px 0;
 		&:before {
-			content: ' “ ';
+			content: " “ ";
 			font-family: serif;
 			font-size: 3.5em;
-			float:left;
+			float: left;
 			margin-left: -0.62em;
-			margin-top: .23em;
+			margin-top: 0.23em;
 		}
 	}
 	.listingblock {
@@ -144,7 +145,7 @@
 	}
 	.imageblock {
 		margin-top: $space-s;
-		background: #F8EFDD;
+		background: #f8efdd;
 		padding: 16px;
 		border-radius: 24px;
 		border-top-right-radius: 0;
@@ -167,7 +168,7 @@
 		}
 	}
 	img {
-		width: 60%;
+		width: 90%;
 	}
 	code {
 		line-height: 28px;
