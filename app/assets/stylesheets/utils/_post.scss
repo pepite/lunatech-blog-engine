@@ -22,10 +22,11 @@
 	.lb_cover-img {
 		height: 560px;
 		width: 100%;
+		object-position: 50% 20%;
 		object-fit: cover;
 		position: absolute;
 		z-index: 1;
-		opacity: 0.1;
+		opacity: 0.15;
 		top: 0;
 	}
 	.lb_cover-title {

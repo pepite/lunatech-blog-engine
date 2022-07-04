@@ -8,14 +8,13 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: $space-md;
-    @include lg {grid-template-columns: repeat(2, 1fr);}
+    @include lg {
+        grid-template-columns: repeat(2, 1fr);
+    }
     @include md {
         grid-template-columns: repeat(1, 1fr);
         grid-gap: $space-md;
     }
-}
-.lb_post {
-    
 }
 .lb_post-head {
     position: relative;
@@ -24,15 +23,25 @@
     .lb_post-img {
         width: 100%;
         height: 290px;
-        @include xxl {height: 280px;}
-        @include xl {height: 200px;}
-        @include lg {height: 280px;}
-        @include md {height: 340px;}
-        @include sm {height: 220px;}
+        @include xxl {
+            height: 280px;
+        }
+        @include xl {
+            height: 200px;
+        }
+        @include lg {
+            height: 280px;
+        }
+        @include md {
+            height: 340px;
+        }
+        @include sm {
+            height: 220px;
+        }
         img {
             width: 100%;
             height: 100%;
-            object-fit: none;
+            object-fit: contain;
         }
     }
     .lb_post-tags {
@@ -47,7 +56,7 @@
             display: inline-flex;
             align-items: center;
             border-radius: $border-radius;
-            background: rgba(234, 33, 46, .3);
+            background: rgba(234, 33, 46, 0.3);
             padding: $space-xs;
             text-decoration: none;
             color: $white;
@@ -56,16 +65,18 @@
             font-size: 12px;
             -webkit-backdrop-filter: blur(8px);
             backdrop-filter: blur(8px);
-            -webkit-transition: .25s ease-in-out;
-            -moz-transition: .25s ease-in-out;
-            -o-transition: .25s ease-in-out;
-            transition: .25s ease-in-out;
-            &:hover {background: rgba(234, 33, 46, .6);}
+            -webkit-transition: 0.25s ease-in-out;
+            -moz-transition: 0.25s ease-in-out;
+            -o-transition: 0.25s ease-in-out;
+            transition: 0.25s ease-in-out;
+            &:hover {
+                background: rgba(234, 33, 46, 0.6);
+            }
         }
     }
 }
 .lb_post-body {
-    background: rgba(37, 35, 34, .2);
+    background: rgba(37, 35, 34, 0.2);
     padding: $space-md;
     border-radius: $border-radius;
     margin-top: -$space-md;
@@ -77,7 +88,9 @@
     max-height: 192px;
     display: flex;
     flex-direction: column;
-    @include md {margin-left: 0;}
+    @include md {
+        margin-left: 0;
+    }
     .lb_post-title {
         font-size: 24px;
         margin-bottom: $space-md;
@@ -87,7 +100,9 @@
         display: flex;
         height: 64px;
         overflow: hidden;
-        &:hover {color: $dark-red;}
+        &:hover {
+            color: $dark-red;
+        }
     }
     .lb_post-thumb {
         position: relative;
@@ -114,13 +129,15 @@
                 right: -4px;
                 object-fit: cover;
             }
-        }  
+        }
     }
     .lb_post-author {
         text-decoration: none;
         text-transform: capitalize;
         color: $grey;
-        &:hover {border-bottom: 1px solid $grey;}
+        &:hover {
+            border-bottom: 1px solid $grey;
+        }
     }
     .lb_post-date {
         font-family: "Space Mono";
@@ -132,4 +149,3 @@
         margin: 0 $space-xs $space-xs 0;
     }
 }
-
