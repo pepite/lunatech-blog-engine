@@ -1,20 +1,19 @@
 package controllers
 
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import github4s.Github
-import github4s.Github._
-import github4s.jvm.Implicits._
 import models._
+import org.http4s.client.{Client, JavaNetClientBuilder}
 import play.api._
 import play.api.cache.SyncCacheApi
 import play.api.http.HttpEntity
 import play.api.libs.json._
 import play.api.libs.ws._
 import play.api.mvc._
-import scalaj.http.HttpResponse
 
 import javax.inject._
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
  * This controller creates an `Action` to handle HTTP requests to the
@@ -26,7 +25,7 @@ class HomeController @Inject()(
                                 ws: WSClient,
                                 configuration: Configuration,
                                 cache: SyncCacheApi
-                              ) extends AbstractController(cc) {
+                              )(implicit ec: ExecutionContext) extends AbstractController(cc) {
 
   private val accessToken = configuration.get[String]("accessToken")
   private val organization = configuration.get[String]("githubOrganisation")
@@ -34,6 +33,7 @@ class HomeController @Inject()(
   private val branch = configuration.get[String]("githubBranch")
   private val background = configuration.get[String]("blogBackground")
   private val perPage = configuration.get[Int]("blogsPerPage")
+  private val httpClient: Client[IO] = JavaNetClientBuilder[IO].create
 
   private def slicePosts(posts: Seq[Post], page: Int): Seq[Post] = {
     posts.slice((page - 1) * perPage, page * perPage)
@@ -124,26 +124,26 @@ class HomeController @Inject()(
       } else {
         cache.get(post.authorName) match {
           case None =>
-            val getUser = Github(Option(accessToken)).users.get(post.authorName).execFuture[HttpResponse[String]]()
-            getUser.map {
-              case Left(_) => Ok(views.html.post(post))
-              case Right(re) =>
-                val user = re.result
-                // TODO: cache author
-                val author = Author(
-                  user.login,
-                  user.avatar_url,
-                  user.html_url,
-                  user.name,
-                  user.email,
-                  user.company,
-                  user.blog,
-                  user.location,
-                  user.bio)
-                cache.set(post.authorName, author)
-                val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-                  r.body, Some(author))
-                Ok(views.html.post(postWithAuthor))
+            Github(httpClient, Option(accessToken)).users.get(post.authorName).unsafeToFuture().map { res =>
+              res.result match {
+                case Left(_) => Ok(views.html.post(post))
+                case Right(user) =>
+                  // TODO: cache author
+                  val author = Author(
+                    user.login,
+                    user.avatar_url,
+                    user.html_url,
+                    user.name,
+                    user.email,
+                    user.company,
+                    user.blog,
+                    user.location,
+                    user.bio)
+                  cache.set(post.authorName, author)
+                  val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
+                    r.body, Some(author))
+                  Ok(views.html.post(postWithAuthor))
+              }
             }
           case author =>
             val postWithAuthor = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",

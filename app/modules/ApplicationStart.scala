@@ -1,18 +1,17 @@
 package modules
 
+import cats.effect.IO
+import cats.effect.unsafe.implicits.global
 import github4s.Github
-import github4s.Github._
-import github4s.jvm.Implicits._
 import models._
+import org.http4s.client.{Client, JavaNetClientBuilder}
 import play.api._
 import play.api.cache.SyncCacheApi
 import play.api.libs.ws._
-import scalaj.http.HttpResponse
 
 import javax.inject._
-import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
-import scala.concurrent.{Await, Future}
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.language.postfixOps
 import scala.util.control.Exception._
 
@@ -22,14 +21,15 @@ class ApplicationStart @Inject()(
                                   ws: WSClient,
                                   configuration: Configuration,
                                   cache: SyncCacheApi
-                                ) {
+                                )(implicit ec: ExecutionContext) {
 
   private val accessToken = configuration.get[String]("accessToken")
   private val organization = configuration.get[String]("githubOrganisation")
   private val repository = configuration.get[String]("githubRepository")
   private val branch = configuration.get[String]("githubBranch")
+  private val httpClient: Client[IO] = JavaNetClientBuilder[IO].create
 
-  private def getContents = Github(Option(accessToken)).repos.getContents(organization, repository, "posts", Option(branch)).execFuture[HttpResponse[String]]()
+  private def getContents = Github(httpClient, Option(accessToken)).repos.getContents(organization, repository, "posts", Option(branch)).unsafeToFuture()
 
   {
     // Parse all and put into cache
@@ -88,61 +88,64 @@ class ApplicationStart @Inject()(
     case Nil => map
   }
 
-  private def getPosts(page: Int = 1): Future[Seq[Post]] = getContents.flatMap {
-    case Left(e) =>
-      println(e.getMessage)
-      Future.successful(Seq.empty)
-    // Those are our blog post
-    case Right(r) =>
-      // Build our posts
-      // get only the pageSize
-      val posts = r.result.toList.reverse.map { d =>
-        val url = d.download_url.get
-        val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
-        val request: WSRequest = ws.url(url)
-        val posts = request.get().flatMap { r =>
-          val p = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
-            r.body))
-          p match {
-            case Some(post) =>
-              val authorName = post.authorName
-              cache.get(authorName) match {
-                case None =>
-                  val getUser = Github(Option(accessToken)).users.get(authorName).execFuture[HttpResponse[String]]()
-                  val postWithAuthor = getUser.map {
-                    case Left(_) => p
-                    case Right(rUser) =>
-                      val user = rUser.result
-                      // TODO: cache author
-                      val author = Author(
-                        user.login,
-                        user.avatar_url,
-                        user.html_url,
-                        user.name,
-                        user.email,
-                        user.company,
-                        user.blog,
-                        user.location,
-                        user.bio
-                      )
-                      cache.set(authorName, author)
-                      val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media${name}/background.png",
-                        r.body, Some(author)))
-                      post
-                  }
-                  postWithAuthor
-                case author =>
-                  val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media${name}/background.png",
-                    r.body, author))
-                  Future.successful(post)
-              }
-            case None => Future.successful(None)
+  private def getPosts(page: Int = 1): Future[Seq[Post]] = getContents.flatMap { response =>
+    response.result match {
+      case Left(e) =>
+        println(e.getMessage)
+        Future.successful(Seq.empty)
+      // Those are our blog post
+      case Right(r) =>
+        // Build our posts
+        // get only the pageSize
+        val posts = r.toList.reverse.map { d =>
+          val url = d.download_url.get
+          val name = url.slice(url.lastIndexOf("/"), url.lastIndexOf(".adoc"))
+          val request: WSRequest = ws.url(url)
+          val posts = request.get().flatMap { r =>
+            val p = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png",
+              r.body))
+            p match {
+              case Some(post) =>
+                val authorName = post.authorName
+                cache.get(authorName) match {
+                  case None =>
+                    val getUser = Github(httpClient, Option(accessToken)).users.get(authorName).unsafeToFuture()
+                    val postWithAuthor = getUser.map { rUser =>
+                      rUser.result match {
+                        case Left(_) => p
+                        case Right(user) =>
+                          // TODO: cache author
+                          val author = Author(
+                            user.login,
+                            user.avatar_url,
+                            user.html_url,
+                            user.name,
+                            user.email,
+                            user.company,
+                            user.blog,
+                            user.location,
+                            user.bio
+                          )
+                          cache.set(authorName, author)
+                          val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media${name}/background.png",
+                            r.body, Some(author)))
+                          post
+                      }
+                    }
+                    postWithAuthor
+                  case author =>
+                    val post = allCatch.opt(Post(s"/posts$name", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media${name}/background.png",
+                      r.body, author))
+                    Future.successful(post)
+                }
+              case None => Future.successful(None)
+            }
           }
+          posts
         }
-        posts
-      }
-      Future.sequence(posts).map { p =>
-        p.flatten
-      }
+        Future.sequence(posts).map { p =>
+          p.flatten
+        }
+    }
   }
 }
