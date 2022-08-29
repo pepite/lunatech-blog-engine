@@ -1,10 +1,4 @@
 // Flexbox
-.lb_flexbox {@include flexbox;}
-.lb_flex-dC {flex-direction: column;}
-.lb_flex-S {align-items: flex-start;}
-.lb_flex-Sb {justify-content: space-between;}
-.lb_flex-C {justify-content: center;}
+.flexbox {@include flexbox;}
 
 // Space
-.lb_mgt-lg {margin-top: $space-lg;}
-.lb_mgb-lg {margin-bottom: $space-lg;}

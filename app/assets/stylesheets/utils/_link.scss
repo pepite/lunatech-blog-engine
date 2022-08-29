@@ -1,0 +1,8 @@
+.link {
+    text-decoration: none;
+    color: white;
+    opacity: .8;
+    &:hover {
+        opacity: 1;
+    }
+}

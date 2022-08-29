@@ -1,0 +1,38 @@
+.searchbar {
+    display: flex;
+    width: 320px;
+    height: 40px;
+    margin: 0 16px;
+    position: relative;
+    &__input {
+        width: 100%;
+        padding: 0 16px 0 48px;
+        border: 1px solid white;
+        background: none;
+        outline: none;
+        color: white;
+        &:focus {
+            border: 1px solid #EA212E;
+            transition: 0.35s ease;
+            color: white;
+            &::-webkit-input-placeholder {
+                transition: opacity 0.45s ease; 
+                opacity: 0;
+            }
+            &::-moz-placeholder {
+                transition: opacity 0.45s ease; 
+                opacity: 0;
+            }
+            &:-ms-placeholder {
+                transition: opacity 0.45s ease; 
+                opacity: 0;
+            }    
+        }
+    }
+    &__icon {
+        position: absolute;
+        top: 9px;
+        left: 16px;
+        color: white;
+    }
+}

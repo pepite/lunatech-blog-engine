@@ -1,24 +1,20 @@
-// Space Mono Regular
 @font-face {
-    font-family: "Space Mono";
-    src: url("../fonts/SpaceMono-Regular.ttf") format("truetype");
+    font-family: "Cabin";
+    src: url("../fonts/Cabin-Regular.ttf") format("truetype");
     font-weight: 400;
 }
-// Space Mono Bold
 @font-face {
-    font-family: "Space Mono";
-    src: url("../fonts/SpaceMono-Bold.ttf") format("truetype");
-    font-weight: 700;
+    font-family: "Cabin";
+    src: url("../fonts/Cabin-Medium.ttf") format("truetype");
+    font-weight: 500;
 }
-// Acumin Pro Regular
 @font-face {
-    font-family: "Acumin Pro";
-    src: url("../fonts/AcuminPro-Regular.ttf") format("truetype");
-    font-weight: 400;
+    font-family: "Cabin";
+    src: url("../fonts/Cabin-SemiBold.ttf") format("truetype");
+    font-weight: 600;
 }
-// Acumin Pro Bold
 @font-face {
-    font-family: "Acumin Pro";
-    src: url("../fonts/AcuminPro-Bold.ttf") format("truetype");
+    font-family: "Cabin";
+    src: url("../fonts/Cabin-Bold.ttf") format("truetype");
     font-weight: 700;
 }

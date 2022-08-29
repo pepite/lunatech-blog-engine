@@ -1,42 +1,18 @@
-.lb_btn {
-    font-family: "Space Mono", sans-serif;
-    font-weight: 700;
-    text-transform: uppercase;
-    height: 48px;
-    padding: 0 $space-md;
-    @include flexbox;
-    border: none;
-    border-radius: $border-radius;
-    border-top-right-radius: 0;
-    cursor: pointer;
-    text-decoration: none;
-    -webkit-transition: .25s ease-in-out;
-    -moz-transition: .25s ease-in-out;
-    -o-transition: .25s ease-in-out;
-    transition: .25s ease-in-out;
-}
-.lb_primary-btn {
-    color: $white;
-    background: $bright-red;
-    &:hover {background: $dark-red;}
-}
-.lb_secondary-btn {
-    color: $light-sand;
-    background: $dark-sand;
-    &:hover {background: #837772;}
-}
-.lb_read-btn {
-    height: 32px;
-    width: 32px;
-    border-radius: $border-radius;
-    border-top-right-radius: 0;
+.btn {
     @include flexbox;
     justify-content: center;
-    background: $bright-red;
-    -webkit-transition: .25s ease-in-out;
-    -moz-transition: .25s ease-in-out;
-    -o-transition: .25s ease-in-out;
-    transition: .25s ease-in-out;
-    &:hover {background: $dark-red;}
+    height: 40px;
+    font-weight: 500;
+    padding: 0 32px;
+    cursor: pointer;
+    border: none;
 }
-
+.btn__red {
+    color: white;
+    background: #EA212E;
+    &:hover {
+        color: $white;
+        text-decoration: none;
+        background: #61D500;
+    }
+}

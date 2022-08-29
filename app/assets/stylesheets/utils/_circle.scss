@@ -1,0 +1,34 @@
+.circle-group {
+    position: relative;
+    &__xs {
+        border: 1px solid white;
+        width: 176px;
+        height: 176px;
+        opacity: .25;
+    }
+    &__sm {
+        border: 1px solid #EA212E;
+        width: 280px;
+        height: 280px;
+    }
+    &__md {
+        border: 1px solid white;
+        width: 400px;
+        height: 400px;
+        opacity: .5;
+    }
+    &__lg {
+        border: 1px solid white;
+        width: 544px;
+        height: 544px;
+        opacity: .75;
+    }
+}
+.circle {
+    @include flexbox;
+    border-radius: 25rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

@@ -1,27 +1,23 @@
-.lb_cover {
-    position: relative;
-    height: 720px;
-    justify-content: center;
-    flex-direction: column;
-    color: $white;
-    overflow: hidden;
-    background-image: url("../images/noise.png");
-    h1 {
-        @include md {
-            font-size: 48px;
-        }
-        
+.cover {
+    @include flexbox;
+    background: black;
+    padding: 0 128px;
+    height: 768px;   
+    &__left {
+
+    }
+    &__right {
+
+    }
+    &__subtitle {
+        font-size: 32px;
+        color: white;
+        opacity: .5;
+    }
+    &__title {
+        font-size: 96px;
+        font-weight: 500;
+        line-height: 112px;
+        color: white;
     }
 }
-.lb_dot {
-    position: absolute;
-    left: -128px;
-    bottom: -270px;
-    height: 664px;
-    width: 664px;
-    
-    background: linear-gradient(to right, rgba(255, 0, 0, 0), rgba(234, 33, 46, .8));
-    border-radius: 50%;
-    z-index: 1;
-}
-

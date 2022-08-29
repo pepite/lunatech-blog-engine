@@ -1,26 +1,31 @@
 // Commons imports
 // -------
 
-// Base partials
-@import "utils/reset";
+// Abstracts partials
 @import "utils/mixins";
-@import "utils/responsive";
 @import "utils/variables";
-@import "utils/general";
-@import "utils/fonts";
 @import "utils/utils";
 
+// Base partials
+@import "utils/reset";
+@import "utils/general";
+@import "utils/fonts";
+@import "utils/responsive";
 
 // Layouts partials
 @import "utils/header";
-@import "utils/footer";
-
-// Sections partials
-@import "utils/cover";
-@import "utils/posts-list";
-@import "utils/post";
 
 // Components partials
 @import "utils/buttons";
+@import "utils/circle";
+@import "utils/cover";
+@import "utils/form";
 @import "utils/highlight";
+@import "utils/link";
+@import "utils/logo";
+@import "utils/searchbar";
+
+// Page partials
+@import "utils/posts-list";
+@import "utils/post";
 @import "utils/not-found";

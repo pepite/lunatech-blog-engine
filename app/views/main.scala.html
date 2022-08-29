@@ -6,10 +6,25 @@
         @header()
         <main id="target">
             <!-- Cover -->
-            <section class="lb_cover lb_flexbox">
-                <h1>Lunatech's<br />engineer blog</h1>
-                <div class="lb_dot"></div>
-            </section>
+            <div class="cover">
+                <div class="cover__left">
+                    <p class="cover__subtitle">Our blog</p>
+                    <h1 class="cover__title">Lunatech’s<br />engineer blog</h1>
+                </div>
+                <div class="cover__right">
+                    <div class="circle-group">
+                        <span class="circle circle-group__xs"></span>
+                        <span class="circle circle-group__sm"></span>
+                        <span class="circle circle-group__md"></span>
+                        <span class="circle circle-group__lg"></span>
+                    </div>
+                    <div class="card-char">
+                        <img src="@routes.Assets.versioned("images/char1.png")">
+
+                    </div>
+                </div>
+
+            </div>
             <!-- Posts list -->
             @content
         </main>
