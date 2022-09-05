@@ -1,0 +1,18 @@
+.card-group {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 32px;
+}
+.card {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 256px;
+    height: 352px;
+    background: #5E18CF;
+    border-radius: 24px;
+    &__char {
+        width: 90%;
+        
+    }
+}

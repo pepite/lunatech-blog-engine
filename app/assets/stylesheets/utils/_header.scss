@@ -6,6 +6,10 @@ header {
     height: 80px;
     background: black;
     border-bottom: 1px solid #ffffff4D;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
     > div {
         display: flex;
         align-items: center;

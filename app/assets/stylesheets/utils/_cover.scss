@@ -1,8 +1,10 @@
 .cover {
     @include flexbox;
+    justify-content: space-between;
     background: black;
     padding: 0 128px;
-    height: 768px;   
+    height: 784px;
+    overflow: hidden;
     &__left {
 
     }

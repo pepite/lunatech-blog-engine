@@ -17,15 +17,18 @@
 
 // Components partials
 @import "utils/buttons";
+@import "utils/card";
 @import "utils/circle";
 @import "utils/cover";
 @import "utils/form";
+@import "utils/grid";
 @import "utils/highlight";
 @import "utils/link";
 @import "utils/logo";
 @import "utils/searchbar";
+@import "utils/wrapper";
 
-// Page partials
-@import "utils/posts-list";
-@import "utils/post";
+// Part/Page partials
 @import "utils/not-found";
+@import "utils/post";
+@import "utils/posts-list";
