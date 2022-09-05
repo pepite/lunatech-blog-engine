@@ -1,0 +1,17 @@
+.logo-full {
+    margin-right: 32px;
+    height: 32px;
+}
+.logo-letter {
+    height: 16px;
+}
+.logo-visual {
+    height: 40px;
+    margin-left: 16px;
+}
+.logo-full, .logo-letter, .logo-visual {
+    display: flex;
+    img {
+        height: 100%;
+    }
+}

@@ -2,33 +2,16 @@
 // -------
 
 // Abstracts partials
-@import "utils/mixins";
-@import "utils/variables";
-@import "utils/utils";
+@import "utils/abstracts/__abstracts-dir";
 
 // Base partials
-@import "utils/reset";
-@import "utils/general";
-@import "utils/fonts";
-@import "utils/responsive";
-
-// Layouts partials
-@import "utils/header";
+@import "utils/base/__base-dir";
 
 // Components partials
-@import "utils/buttons";
-@import "utils/card";
-@import "utils/circle";
-@import "utils/cover";
-@import "utils/form";
-@import "utils/grid";
-@import "utils/highlight";
-@import "utils/link";
-@import "utils/logo";
-@import "utils/searchbar";
-@import "utils/wrapper";
+@import "utils/components/__components-dir";
 
-// Part/Page partials
-@import "utils/not-found";
-@import "utils/post";
-@import "utils/posts-list";
+// Layout partials
+@import "utils/layouts/__layouts-dir";
+
+// Pages partials
+@import "utils/pages/__pages-dir";

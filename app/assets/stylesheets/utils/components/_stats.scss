@@ -1,0 +1,14 @@
+.stats {
+    @include flexbox;
+    &__text {
+        span {
+            padding-left: 4px;
+            opacity: .5;
+        }
+    }
+    &__line {
+        height: 24px;
+        border-right: 1px solid #ffffff4D;
+        margin: 0 8px;
+    }
+}

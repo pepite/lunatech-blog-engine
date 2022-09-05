@@ -1,0 +1,13 @@
+.social {
+    @include flexbox;
+    &__link {
+        margin-left: 16px;
+        opacity: .8;
+        &:hover {
+            opacity: 1;
+        }
+        img {
+            height: 24px;
+        }
+    }
+}
