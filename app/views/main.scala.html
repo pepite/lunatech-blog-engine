@@ -7,17 +7,11 @@
         <main id="target">
             <!-- Cover -->
             <div class="cover">
-                <div class="cover__left">
+                <div class="cover__part">
                     <p class="cover__subtitle">Our blog</p>
                     <h1 class="cover__title">Lunatech’s<br />engineer blog</h1>
                 </div>
-                <div class="cover__right">
-                    <div class="circle-group">
-                        <span class="circle circle-group__xs"></span>
-                        <span class="circle circle-group__sm"></span>
-                        <span class="circle circle-group__md"></span>
-                        <span class="circle circle-group__lg"></span>
-                    </div>
+                <div class="cover__part">
                     <div class="card-group">
                         <div class="card">
                             <img class="card__char" src="@routes.Assets.versioned("images/char1.png")">
@@ -45,7 +39,12 @@
                         </div>
                     </div> 
                 </div>
-
+                <div class="circle-group">
+                    <span class="circle circle-group__xs"></span>
+                    <span class="circle circle-group__sm"></span>
+                    <span class="circle circle-group__md"></span>
+                    <span class="circle circle-group__lg"></span>
+                </div>
             </div>
             <!-- Posts list -->
             @content

@@ -5,11 +5,10 @@
     padding: 0 128px;
     height: 784px;
     overflow: hidden;
-    &__left {
-
-    }
-    &__right {
-
+    padding-top: 80px;
+    position: relative;
+    &__part {
+        z-index: 1
     }
     &__subtitle {
         font-size: 32px;
