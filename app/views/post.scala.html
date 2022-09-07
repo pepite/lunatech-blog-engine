@@ -1,6 +1,5 @@
 @import models._
 @(post: Post)(implicit request: Request[AnyContent])
-
     @defining(List(
         """<meta prefix="og:http://ogp.me/ns#" property="og:type" content="article" />""",
         s"""<meta prefix="og:http://ogp.me/ns#" property="og:title" content="${post.title}" />""",
