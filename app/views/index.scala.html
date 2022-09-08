@@ -21,7 +21,7 @@
                     <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
                 }
                 @if(post.author.isEmpty) {
-                    <img class="post__avatar" src="@routes.Assets.versioned("images/no-user.jpg")">
+                    <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
                     <p class="post__text">Elty</p>
                 }
             </div>
@@ -32,13 +32,12 @@
                     <!-- <a href="@routes.HomeController.byTags(tag)">@tag</a> -->
                 }
             </div>
-            
         </div>
     </a>
 }
 
 @main(id = "blog", title = "Lunatech's engineer blog") {
-    <section class="b-bottom">
+    <section>
         <div class="wrapper">
             <h2>Latest articles</h2>
             <p class="subtitle">Our most recent posts</p>
@@ -50,12 +49,12 @@
         </div>
     </section>
         
-    <section>
+    <section class="bg-gray">
         <div class="wrapper">
             <h2>All blog posts</h2>
             <p class="subtitle">Our different categories</p>
 
-            <div class="grid">
+            <div class="post-list">
                 @posts.map { post => @displayPost(post) }
             </div>
 
@@ -74,92 +73,84 @@
     </section>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js" integrity="sha256-lrZTgsdM1iVdRigETFOU8u8/BmLX1ysQ8bzrULbuVFU=" crossorigin="anonymous"></script>
-<script>
-    // we will add this content, replace for anything you want to add
-    document.addEventListener("DOMContentLoaded", function (event) {
-        var btn = document.getElementById("load")
-        var listPosts = document.getElementById("lb_posts-list")
-        var page = 2
+    <script>
+        // we will add this content, replace for anything you want to add
+        document.addEventListener("DOMContentLoaded", function (event) {
+            var btn = document.getElementById("load")
+            var listPosts = document.getElementsByClassName("post-list")
+            var page = 2
 
-        // cross browser addEvent, today you can safely use just addEventListener
-        function addEvent(obj, ev, fn) {
-            if (obj.addEventListener) obj.addEventListener(ev, fn, false)
-            else if (obj.attachEvent) obj.attachEvent("on" + ev, fn)
-        }
-
-        async function fetchPosts() {
-            const posts = []
-            let state = {
-                posts: [],
-                baseUrl: '/posts/',
+            // cross browser addEvent, today you can safely use just addEventListener
+            function addEvent(obj, ev, fn) {
+                if (obj.addEventListener) obj.addEventListener(ev, fn, false)
+                else if (obj.attachEvent) obj.attachEvent("on" + ev, fn)
             }
-            const post = axios.get(`${state.baseUrl}?page=${page}`)
-            posts.push(post)
 
-            await axios.all(posts).then((response) => {
-                const postData = response.map(res => res.data)
-                state.posts = postData.flat()
-            }).catch(e => console.log('error fetching posts: ', e))
+            async function fetchPosts() {
+                const posts = []
+                let state = {
+                    posts: [],
+                    baseUrl: '/posts/',
+                }
+                const post = axios.get(`${state.baseUrl}?page=${page}`)
+                posts.push(post)
 
-            return state.posts
-        }
+                await axios.all(posts).then((response) => {
+                    const postData = response.map(res => res.data)
+                    state.posts = postData.flat()
+                }).catch(e => console.log('error fetching posts: ', e))
 
-        function displayPost(post) {
-            const tagLinks = post.tags.map(tag => `<a href="${jsRoutes.controllers.HomeController.byTags(tag).url}">${tag}</a>`);
-            var authorImg = "";
-            if (post.author_img === "null") {
-                authorImg =
-                        `<div class="lb_post-thumb">
-                        <p class="lb_post-initial"></p>
-                        <img src="${jsRoutes.controllers.Assets.versioned("images/" + post.lang + ".png").url}">
-                    </div>`
-            } else {
-                authorImg =
-                        `<div class="lb_post-thumb">
-                        <img src="${post.author_img}" alt="author image" nopin="nopin">
-                        <img src="${jsRoutes.controllers.Assets.versioned("images/" + post.lang + ".png").url}">
-                    </div>`
+                return state.posts
             }
-            return `<div class="lb_post">
-                <div class="lb_post-head">
-                    <!--                The image should not be hardcoded        -->
-                    <a class="lb_post-img" href="${post.slug}">
-                        <img src="${post.image_url}" onerror="this.src='https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg';" alt=""/>
-                    </a>
-                    <div class="lb_post-tags">
-                        ${tagLinks.join(" ")}
-                    </div>
-                </div>
-                <div class="lb_post-body">
-                    <p class="lb_post-date">${post.publication_date}</p>
-                    <a href="${post.slug}" class="lb_post-title">${post.title}</a>
-                    <div class="lb_flexbox lb_flex-Sb">
-                    <div class="lb_flexbox">
-                        ${authorImg}
-                        <a class="lb_post-author" href="${jsRoutes.controllers.HomeController.byAuthor(post.author_name).url}">${post.author}</a>
-                    </div>
-                    <a class="lb_read-btn" href="${post.slug}" role="button"><img src="${jsRoutes.controllers.Assets.versioned("images/read.svg").url}"></a>
-                </div>
-            </div>
-        </div>`;
-        }
 
-        // this is the scroll event handler
-        function loadContent() {
-            // print relevant scroll info
-            fetchPosts().then((posts) => {
-                page = page + 1;
-                if (posts.length === 0 || posts.length < @blogsPerPage) {
-                    btn.remove();
+            function displayPost(post) {
+                const tagLinks = post.tags.map(tag => `<p class="post__tag">${tag}</p>`);
+                var authorImg = "";
+                if (post.author_img === "null") {
+                    authorImg =
+                        `
+                            <img class="post__avatar" src="${jsRoutes.controllers.Assets.versioned("images/" + post.lang + ".png").url}">
+                        `
+                } else {
+                    authorImg =
+                        `
+                            <img class="post__avatar" src="${post.author_img}" alt="author image" nopin="nopin">
+                        `
                 }
-                for (const post of posts) {
-                    listPosts.innerHTML += displayPost(post);
-                }
-            })
-        }
+                return `<a class="post" href="${post.slug}">
+                        <div class="post__cover">
+                            <img src="${post.image_url}" onerror="this.src='https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg';" alt=""/>
+                        </div>
+                        <div class="post__infos">
+                            <div class="flexbox">
+                                ${authorImg}
+                                <p class="post__text">${post.author}<span></span>${post.publication_date})<span></span></p> 
+                            </div>
+                            <p class="post__title">${post.title}</p>
+                            <div class="flexbox ff-wrap">
+                                ${tagLinks.join(" ")}
+                            </div>
+                        </div>
+                    </a>`
+                ;
+            }
 
-        // hook the scroll handler to scroll event
-        addEvent(btn, "click", loadContent);
-    });
-</script>
+            // this is the scroll event handler
+            function loadContent() {
+                // print relevant scroll info
+                fetchPosts().then((posts) => {
+                    page = page + 1;
+                    if (posts.length === 0 || posts.length < @blogsPerPage) {
+                        btn.remove();
+                    }
+                    for (const post of posts) {
+                        listPosts.innerHTML += displayPost(post);
+                    }
+                })
+            }
+
+            // hook the scroll handler to scroll event
+            addEvent(btn, "click", loadContent);
+        });
+    </script>
 }
