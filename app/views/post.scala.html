@@ -21,67 +21,94 @@
         <body>
             @header()
         <main id="target">
-                <!-- Cover post -->
-            <section class="lb_cover-post">
-                <img class="lb_cover-img" src="@post.mainImage" onerror="imgError(this)" alt=""/>
-                <div class="lb_container-lg">
-                    <p class="lb_cover-title">@post.title</p>
-                    <div class="lb_flexbox">
-                        @if(post.author.nonEmpty) {
-                            <img class="lb_cover-thumb" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                        }
-                        @if(!(post.author.nonEmpty)) {
-                            <p class="lb_cover-initial"></p>
-                        }
-                    <div class="lb_flexbox lb_flex-dC lb_flex-S">
-                        <a class="lb_cover-author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
-                    </div>
-                    </div>
-                </div>
-            </section>
 
-            <section class="lb_content-post">
-                <div class="lb_container-md">
-                @Html(post.htmlContent)
+            <div id="progress-display">
+                <div id="progress-over"></div>
+                <div id="progress-impend"></div>
+            </div>
+
+            <div class="post-details">
+                <div class="wrapper">
+                    <div class="grid">
+                        <section class="post-details__content">
+                            <div class="post-details__meta">
+                                @if(post.author.nonEmpty) {
+                                    <img class="post__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                                    <p class="post__text">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</p> 
+                                    <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
+                                }
+                                @if(post.author.isEmpty) {
+                                    <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
+                                    <p class="post__text">Elty</p>
+                                }
+                                <span></span>
+                                <p>@post.publicationDate.toString("dd MMM yyyy")</p>
+                                <span></span>
+                                <div class="post-details__time">
+                                    <p id="progress-time"></p>
+                                    <p>min</p>
+                                </div>
+                            </div>
+                            <h1 class="post-details__title">@post.title</h1>
+                            <div class="post-details__cover">
+                                <img src="@post.mainImage" onerror="imgError(this)" alt=""/>
+                            </div>
+                            <article id="progress-measure">@Html(post.htmlContent)</article>
+                        </section>
+            
+                        <section class="post-details__infos">
+                            @if(post.author.nonEmpty) {
+                                <img class="post__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                                <p class="post__text">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</p> 
+                                <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
+                            }
+                            @if(post.author.isEmpty) {
+                                <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
+                                <p class="post__text">Elty</p>
+                            }
+                            <a class="" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
+                        </section>
+                    </div>
                 </div>
-            </section>
+            </div>
         </main>
-            @footer()
+        @footer()
 
-                <!-- JQUERY -->
-            <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-            <script>
-                    (function (i, s, o, g, r, a, m) {
-                        i['GoogleAnalyticsObject'] = r;
-                        i[r] = i[r] || function () {
-                            (i[r].q = i[r].q || []).push(arguments)
-                        }, i[r].l = 1 * new Date();
-                        a = s.createElement(o),
-                                m = s.getElementsByTagName(o)[0];
-                        a.async = 1;
-                        a.src = g;
-                        m.parentNode.insertBefore(a, m)
-                    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+        <!-- JQUERY -->
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+        <script>
+                (function (i, s, o, g, r, a, m) {
+                    i['GoogleAnalyticsObject'] = r;
+                    i[r] = i[r] || function () {
+                        (i[r].q = i[r].q || []).push(arguments)
+                    }, i[r].l = 1 * new Date();
+                    a = s.createElement(o),
+                            m = s.getElementsByTagName(o)[0];
+                    a.async = 1;
+                    a.src = g;
+                    m.parentNode.insertBefore(a, m)
+                })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-                    ga('create', 'UA-56364023-3', 'auto');
-                    ga('send', 'pageview');
-            </script>
-                <!-- Header scroll -->
-            <script>
-                    $(window).on("scroll", function () {
-                        if ($(window).scrollTop() > 700) {
-                            $("header").addClass("scroll");
-                        } else {
-                            $("header").removeClass("scroll");
-                        }
-                    });
-            </script>
-            <script type="text/javascript" src="/assets/js/highlight.pack.js" )"></script>
-            <script>
-                    document.querySelectorAll('pre.highlight').forEach((block) => {
-                        hljs.highlightBlock(block);
-                    });
-            </script>
-        </body>
-        </html>
-    }
+                ga('create', 'UA-56364023-3', 'auto');
+                ga('send', 'pageview');
+        </script>
+        <!-- Header scroll -->
+        <script>
+                $(window).on("scroll", function () {
+                    if ($(window).scrollTop() > 700) {
+                        $("header").addClass("scroll");
+                    } else {
+                        $("header").removeClass("scroll");
+                    }
+                });
+        </script>
+        <script type="text/javascript" src="/assets/js/highlight.pack.js" )"></script>
+        <script type="text/javascript" src="/assets/js/progress.js" )"></script>
+        <script>
+                document.querySelectorAll('pre.highlight').forEach((block) => {
+                    hljs.highlightBlock(block);
+                });
+        </script>
+    </body>
+    </html>
+}

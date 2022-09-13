@@ -1,10 +1,11 @@
 // Flexbox
 .flexbox {@include flexbox;}
 .ff-wrap {flex-flow: wrap;}
+.jc-c {justify-content: center;}
 
 // Space
+.mgt-32 {margin-top: 32px;}
+.p80-0 {padding: 80px 0;}
 
 // Colors
-.bg-gray {
-    background: #fafafb;
-}
+.bg-gray {background: #fafafb;}

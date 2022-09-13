@@ -1,31 +1,18 @@
 // Desktop first responsive
-// Very extra large devices
-@mixin xxl {
-    @media (max-width: 1399.98px) {
-        @content;
-    }
+
+// applies to large devices (desktop)
+@mixin desktop-up {
+    @media (max-width: 1200px) {@content;}
 }
-// Extra large devices
-@mixin xl {
-    @media (max-width: 1199.98px) {
-        @content;
-    }
+// applies to medium devices (tablets -> landscape)
+@mixin tablet-landscape {
+    @media (max-width: 1024px) {@content;}
 }
-// Large devices
-@mixin lg {
-    @media (max-width: 991.98px) {
-        @content;
-    }
+// applies to medium devices (tablets -> portrait)
+@mixin tablet-portrait {
+    @media (max-width: 768px) {@content;}
 }
-// Medium devices
-@mixin md {
-    @media (max-width: 767.98px) {
-        @content;
-    }
- }
-// Small devices
-@mixin sm {
-    @media (max-width: 575.98px) {
-        @content;
-    }
+// applies to medium devices (tablets -> portrait)
+@mixin phone {
+    @media (max-width: 576px) {@content;}
 }

@@ -16,3 +16,13 @@
         background: #61D500;
     }
 }
+.btn__secondary {
+    color: white;
+    background: none;
+    border: 1px solid #8d8d8d;
+    &:hover {
+        color: $white;
+        text-decoration: none;
+        background: #61D500;
+    }
+}

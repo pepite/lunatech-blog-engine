@@ -37,7 +37,7 @@
 }
 
 @main(id = "blog", title = "Lunatech's engineer blog") {
-    <section>
+    <section class="p80-0">
         <div class="wrapper">
             <h2>Latest articles</h2>
             <p class="subtitle">Our most recent posts</p>
@@ -49,18 +49,18 @@
         </div>
     </section>
         
-    <section class="bg-gray">
+    <section class="p80-0 bg-gray">
         <div class="wrapper">
             <h2>All blog posts</h2>
             <p class="subtitle">Our different categories</p>
 
-            <div class="post-list">
+            <div id="post-list" class="post-list">
                 @posts.map { post => @displayPost(post) }
             </div>
 
             @if(blogsPerPage != -1) {
-                <div class="lb_flexbox lb_flex-C lb_mgt-lg lb_mgb-lg">
-                    <button class="lb_btn lb_secondary-btn" id="load">Load more</button>
+                <div class="flexbox jc-c mgt-32">
+                    <button class="btn btn__secondary" id="load">Load more</button>
                 </div>
             }
 
@@ -77,7 +77,7 @@
         // we will add this content, replace for anything you want to add
         document.addEventListener("DOMContentLoaded", function (event) {
             var btn = document.getElementById("load")
-            var listPosts = document.getElementsByClassName("post-list")
+            var listPosts = document.getElementById("post-list")
             var page = 2
 
             // cross browser addEvent, today you can safely use just addEventListener
