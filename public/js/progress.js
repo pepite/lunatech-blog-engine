@@ -7,7 +7,7 @@ $(document).ready(function () {
     words = $('#progress-measure').html().split(' ').length;
     min = Math.floor(words / 200);
     sec = Math.round(((words / 200) - min) * 60);
-    $('#progress-time').html(min + ':' + sec);
+    $('#progress-time').html(min);
 
     // Progress scroll measure
     $(document).scroll(function () {

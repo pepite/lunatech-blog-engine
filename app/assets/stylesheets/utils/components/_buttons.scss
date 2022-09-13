@@ -6,6 +6,7 @@
     padding: 0 32px;
     cursor: pointer;
     border: none;
+    text-decoration: none;
 }
 .btn__red {
     color: white;
@@ -13,7 +14,7 @@
     &:hover {
         color: $white;
         text-decoration: none;
-        background: #61D500;
+        background: #C21823;
     }
 }
 .btn__secondary {

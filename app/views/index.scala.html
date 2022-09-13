@@ -17,12 +17,12 @@
             <div class="flexbox">
                 @if(post.author.nonEmpty) {
                     <img class="post__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                    <p class="post__text">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)<span></span>@post.publicationDate.toString("dd MMM yyyy")<span></span></p> 
+                    <p class="post__author">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)<span></span>@post.publicationDate.toString("dd MMM yyyy")</p> 
                     <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
                 }
                 @if(post.author.isEmpty) {
                     <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
-                    <p class="post__text">Elty</p>
+                    <p class="post__author">Elty</p>
                 }
             </div>
             <p class="post__title">@post.title</p>
@@ -124,7 +124,7 @@
                         <div class="post__infos">
                             <div class="flexbox">
                                 ${authorImg}
-                                <p class="post__text">${post.author}<span></span>${post.publication_date})<span></span></p> 
+                                <p class="post__author">${post.author}<span></span>${post.publication_date})<span></span></p> 
                             </div>
                             <p class="post__title">${post.title}</p>
                             <div class="flexbox ff-wrap">
