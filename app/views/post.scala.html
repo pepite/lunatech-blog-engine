@@ -34,12 +34,11 @@
                             <div class="post-details__meta">
                                 @if(post.author.nonEmpty) {
                                     <img class="post__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                                    <p class="post__text">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</p> 
-                                    <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
+                                    <a class="post__text" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> 
                                 }
                                 @if(post.author.isEmpty) {
                                     <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
-                                    <p class="post__text">Elty</p>
+                                    <a class="post__text" href="@routes.HomeController.byAuthor(post.authorName)">Elty</a>
                                 }
                                 <span></span>
                                 <p>@post.publicationDate.toString("dd MMM yyyy")</p>
@@ -58,13 +57,12 @@
             
                         <section class="post-details__infos">
                             @if(post.author.nonEmpty) {
-                                <img class="post__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                                <p class="post__text">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</p> 
-                                <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
+                                <img class="post__avatar-lg" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                                <a class="post__text-lg" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> 
                             }
                             @if(post.author.isEmpty) {
-                                <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
-                                <p class="post__text">Elty</p>
+                                <img class="post__avatar-lg" src="@routes.Assets.versioned("images/elty.jpg")">
+                                <a class="post__text-lg" href="@routes.HomeController.byAuthor(post.authorName)">Elty</a>
                             }
                             <a class="" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a>
                         </section>
