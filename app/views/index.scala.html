@@ -9,27 +9,27 @@
 </script>
 
 @displayPost(post: Post) = {
-    <a class="post" href="@post.slug">
-        <div class="post__cover">
+    <a class="card" href="@post.slug">
+        <div class="card__cover">
             <img src="@post.mainImage" onerror="imgError(this)" alt="" />
         </div>
-        <div class="post__infos">
-            <div class="flexbox">
+        <div class="card__infos">
+            <div class="author">
                 @if(post.author.nonEmpty) {
-                    <img class="post__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                    <p class="post__author">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)<span></span>@post.publicationDate.toString("dd MMM yyyy")</p> 
-                    <!-- <a class="post__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> -->
+                    <img class="author__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                    <p class="author__text">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</p> 
                 }
                 @if(post.author.isEmpty) {
-                    <img class="post__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
-                    <p class="post__author">Elty</p>
+                    <img class="author__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
+                    <p class="author__text">Elty</p>
                 }
+                <span></span>
+                <p class="author__date">@post.publicationDate.toString("dd MMM yyyy")</p>
             </div>
-            <p class="post__title">@post.title</p>
+            <p class="card__title">@post.title</p>
             <div class="flexbox ff-wrap">
                 @post.tags.getOrElse(Array.empty).map { tag =>
-                    <p class="post__tag">@tag</p>
-                    <!-- <a href="@routes.HomeController.byTags(tag)">@tag</a> -->
+                    <p class="card__tag">@tag</p>
                 }
             </div>
         </div>
@@ -54,7 +54,7 @@
             <h2>All blog posts</h2>
             <p class="subtitle">Our different categories</p>
 
-            <div id="post-list" class="post-list">
+            <div id="card-list" class="card-list">
                 @posts.map { post => @displayPost(post) }
             </div>
 
@@ -77,7 +77,7 @@
         // we will add this content, replace for anything you want to add
         document.addEventListener("DOMContentLoaded", function (event) {
             var btn = document.getElementById("load")
-            var listPosts = document.getElementById("post-list")
+            var listPosts = document.getElementById("card-list")
             var page = 2
 
             // cross browser addEvent, today you can safely use just addEventListener
@@ -104,29 +104,29 @@
             }
 
             function displayPost(post) {
-                const tagLinks = post.tags.map(tag => `<p class="post__tag">${tag}</p>`);
+                const tagLinks = post.tags.map(tag => `<p class="card__tag">${tag}</p>`);
                 var authorImg = "";
                 if (post.author_img === "null") {
                     authorImg =
                         `
-                            <img class="post__avatar" src="${jsRoutes.controllers.Assets.versioned("images/" + post.lang + ".png").url}">
+                            <img class="card__avatar" src="${jsRoutes.controllers.Assets.versioned("images/" + post.lang + ".png").url}">
                         `
                 } else {
                     authorImg =
                         `
-                            <img class="post__avatar" src="${post.author_img}" alt="author image" nopin="nopin">
+                            <img class="card__avatar" src="${post.author_img}" alt="author image" nopin="nopin">
                         `
                 }
-                return `<a class="post" href="${post.slug}">
-                        <div class="post__cover">
+                return `<a class="card" href="${post.slug}">
+                        <div class="card__cover">
                             <img src="${post.image_url}" onerror="this.src='https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg';" alt=""/>
                         </div>
-                        <div class="post__infos">
+                        <div class="card__infos">
                             <div class="flexbox">
                                 ${authorImg}
-                                <p class="post__author">${post.author}<span></span>${post.publication_date})<span></span></p> 
+                                <p class="card__author">${post.author}<span></span>${post.publication_date})<span></span></p> 
                             </div>
-                            <p class="post__title">${post.title}</p>
+                            <p class="card__title">${post.title}</p>
                             <div class="flexbox ff-wrap">
                                 ${tagLinks.join(" ")}
                             </div>

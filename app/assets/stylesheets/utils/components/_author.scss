@@ -1,0 +1,34 @@
+.author {
+    @include flexbox;
+    &__avatar {
+        height: 24px;
+        width: 24px;
+        border-radius: 5rem;
+        margin-right: 8px;
+    }
+    &__text {
+        @include flexbox;
+        font-size: 14px;
+        color: #292929;
+        opacity: 0.5;
+        text-decoration: none;
+        &:hover {
+            opacity: 1;
+        }
+    }
+    &__date {
+        @include flexbox;
+        font-size: 14px;
+        color: #292929;
+        opacity: 0.5;
+        text-decoration: none;
+    }
+    span {
+        display: flex;
+        background: #8d8d8d;
+        height: 2px;
+        width: 2px;
+        border-radius: 5rem;
+        margin: 0 8px;
+    }
+}
