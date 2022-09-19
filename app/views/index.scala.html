@@ -29,7 +29,7 @@
             <p class="card__title">@post.title</p>
             <div class="flexbox ff-wrap">
                 @post.tags.getOrElse(Array.empty).map { tag =>
-                    <p class="card__tag">@tag</p>
+                    <p class="tag">@tag</p>
                 }
             </div>
         </div>
@@ -104,7 +104,7 @@
             }
 
             function displayPost(post) {
-                const tagLinks = post.tags.map(tag => `<p class="card__tag">${tag}</p>`);
+                const tagLinks = post.tags.map(tag => `<p class="tag">${tag}</p>`);
                 var authorImg = "";
                 if (post.author_img === "null") {
                     authorImg =

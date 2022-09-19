@@ -1,5 +1,6 @@
 .author {
     @include flexbox;
+    font-size: 14px;
     &__avatar {
         height: 24px;
         width: 24px;
@@ -8,7 +9,6 @@
     }
     &__text {
         @include flexbox;
-        font-size: 14px;
         color: #292929;
         opacity: 0.5;
         text-decoration: none;
@@ -18,10 +18,13 @@
     }
     &__date {
         @include flexbox;
-        font-size: 14px;
         color: #292929;
         opacity: 0.5;
-        text-decoration: none;
+    }
+    &__time {
+        @include flexbox;
+        color: #292929;
+        opacity: 0.5;
     }
     span {
         display: flex;

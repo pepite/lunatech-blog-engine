@@ -1,0 +1,14 @@
+.tag {
+    @include flexbox;
+    border-radius: 4px;
+    font-size: 12px;
+    padding: 0 16px;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    height: 24px;
+    color: #8d8d8d;
+    text-transform: capitalize;
+    white-space: nowrap;
+    background: #ececec;
+    text-decoration: none;
+}

@@ -1,0 +1,51 @@
+.aside {
+    grid-column: span 4 / -1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    &__sticky {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 32px;
+    }
+    &__title {
+        color: #292929;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+        font-size: 12px;
+        font-weight: 700;
+    }
+    &__avatar {
+        height: 80px;
+        width: 80px;
+        border-radius: 5rem;
+        margin-bottom: 16px;
+    }
+    &__author {
+        color: #292929;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    &__link {
+        @include flexbox;
+        color: #EA212E;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 500;
+        &:hover {
+
+        }
+        span {
+            font-size: 18px;
+            margin-left: 4px;
+        }
+    }
+    &__line {
+        background: #e7e7e7;
+        border: 0;
+        display: block;
+        height: 1px;
+        width: 100%;
+        margin: 24px 0;
+    }
+}

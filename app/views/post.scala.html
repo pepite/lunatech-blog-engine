@@ -43,7 +43,7 @@
                                 <span></span>
                                 <p class="author__date">@post.publicationDate.toString("dd MMM yyyy")</p>
                                 <span></span>
-                                <div class="post__time">
+                                <div class="author__time">
                                     <p id="progress-time"></p>
                                     <p>min read</p>
                                 </div>
@@ -55,23 +55,27 @@
                             <article id="progress-measure">@Html(post.htmlContent)</article>
                         </section>
             
-                        <section class="post__infos">
-                            <p>Written by</p>
-                            @if(post.author.nonEmpty) {
-                                <img class="post__avatar-lg" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
-                                <a class="post__author-lg" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> 
-                            }
-                            @if(post.author.isEmpty) {
-                                <img class="post__avatar-lg" src="@routes.Assets.versioned("images/elty.jpg")">
-                                <a class="post__author-lg" href="@routes.HomeController.byAuthor(post.authorName)">Elty</a>
-                            }
-                            <a href="@routes.HomeController.byAuthor(post.authorName)">See all articles</a>
-                            <div class="flexbox ff-wrap">
-                                @post.tags.getOrElse(Array.empty).map { tag =>
-                                    <a class="post__tag" href="@routes.HomeController.byTags(tag)">@tag</a>
+                        <aside class="aside">
+                            <div class="aside__sticky">
+                                <p class="aside__title">Written by</p>
+                                @if(post.author.nonEmpty) {
+                                    <img class="aside__avatar" src="@post.author.map(_.avatar_url)" alt="author image" nopin="nopin">
+                                    <a class="aside__author" href="@routes.HomeController.byAuthor(post.authorName)">@post.author.map(_.name.getOrElse(post.authorName)).getOrElse(post.authorName)</a> 
                                 }
+                                @if(post.author.isEmpty) {
+                                    <img class="aside__avatar" src="@routes.Assets.versioned("images/elty.jpg")">
+                                    <a class="aside__author" href="@routes.HomeController.byAuthor(post.authorName)">Elty</a>
+                                }
+                                <a class="aside__link" href="@routes.HomeController.byAuthor(post.authorName)">See all articles<span class="material-symbols-outlined">navigate_next</span></a>
+                                <hr class="aside__line">
+                                <div class="flexbox ff-wrap">
+                                    @post.tags.getOrElse(Array.empty).map { tag =>
+                                        <a class="tag" href="@routes.HomeController.byTags(tag)">@tag</a>
+                                    }
+                                </div>
                             </div>
-                        </section>
+                            
+                        </aside>
                     </div>
                 </div>
             </div>
