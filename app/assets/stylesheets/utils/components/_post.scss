@@ -2,6 +2,9 @@
 	padding: 64px 0;
 	&__content {
 		grid-column: span 7;
+        @include tablet-portrait {
+            grid-column: span 12;
+        }
 	}
 	
 	&__time {

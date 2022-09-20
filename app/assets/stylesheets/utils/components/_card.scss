@@ -11,6 +11,9 @@
     color: #292929;
     background: white;
     overflow: hidden;
+    @include tablet-landscape {
+        grid-column: span 6;
+    }
     &:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 16px rgba(0, 0, 0, .08);

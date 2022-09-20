@@ -1,6 +1,9 @@
 .logo-full {
     margin-right: 32px;
     height: 32px;
+    @include tablet-portrait {
+        height: 24px;
+    }
 }
 .logo-letter {
     height: 16px;

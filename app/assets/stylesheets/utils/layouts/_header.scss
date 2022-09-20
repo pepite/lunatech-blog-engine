@@ -5,9 +5,8 @@
     height: 80px;
     background: black;
     border-bottom: 1px solid #ffffff4D;
-    @include tablet-portrait {
-        height: 56px;
-        padding: 0 16px;
+    @include tablet-landscape {
+        padding: 0 32px;
     }
     &__menu {
         @include flexbox;
@@ -15,12 +14,98 @@
         justify-content: space-between;
         overflow: hidden;
         transition: max-height .2s ease-out;
+        @include tablet-portrait {
+            display: none;
+        }
     }
     &__nav {
         @include flexbox;
     }
-    
+    &__title {
+        display: none;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 16px;
+    }
 }
-
-
-
+.header .menu-icon {
+    cursor: pointer;
+    display: none;
+    float: right;
+    padding: 24px 0;
+    position: relative;
+    user-select: none;
+    z-index: 4;
+    @include tablet-portrait {
+        display: inline-block;
+    }
+}
+.header .menu-icon .navicon {
+    background: white;
+    display: block;
+    height: 2px;
+    position: relative;
+    transition: background .2s ease-out;
+    width: 18px;
+}
+.header .menu-icon .navicon:before,
+.header .menu-icon .navicon:after {
+    background: white;
+    content: '';
+    display: block;
+    height: 100%;
+    position: absolute;
+    transition: all .2s ease-out;
+    width: 100%;
+}
+.header .menu-icon .navicon:before {
+    top: 5px;
+}
+.header .menu-icon .navicon:after {
+    top: -5px;
+}
+.header .menu-btn {
+    display: none;
+}
+.header .menu-btn:checked~.header__menu {
+    max-height: 100vh;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 64px;
+    background: black;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    display: block;
+    z-index: 3;
+}
+.header .menu-btn:checked~.header__menu>.link,
+.header .menu-btn:checked~.header__menu .header__nav>* {
+    margin: 16px 0;
+    width: 100%;
+    display: flex;
+}
+.header .menu-btn:checked~.header__menu .header__nav {
+    flex-direction: column;
+    width: 100%;
+}
+.header .menu-btn:checked~.header__menu>.header__title {
+    display: flex;
+}
+.header .menu-btn:checked~.menu-icon .navicon {
+    background: transparent;
+}
+.header .menu-btn:checked~.menu-icon .navicon:before {
+    transform: rotate(-45deg);
+}
+.header .menu-btn:checked~.menu-icon .navicon:after {
+    transform: rotate(45deg);
+}
+.header .menu-btn:checked~.menu-icon:not(.steps) .navicon:before,
+.header .menu-btn:checked~.menu-icon:not(.steps) .navicon:after {
+    top: 0;
+}

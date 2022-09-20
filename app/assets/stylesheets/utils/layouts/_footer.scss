@@ -2,6 +2,9 @@
     background: black;
     color: white;
     padding: 54px 128px;
+    @include tablet-landscape {
+        padding: 32px;
+    }
     &__part {
         @include flexbox;
         justify-content: space-between;

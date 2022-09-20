@@ -1,4 +1,7 @@
 .wrapper {
     max-width: 1216px;
     margin: 0 auto;
+    @include tablet-landscape {
+        padding: 0 64px;
+    }
 }
