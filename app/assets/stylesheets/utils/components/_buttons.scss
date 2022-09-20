@@ -28,3 +28,18 @@
         background: #61D500;
     }
 }
+.scroll-up {
+    position: fixed;
+    bottom: 64px;
+    right: 64px;
+    display: flex;
+    font-size: 32px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 4px;
+    border: 1px solid #e7e7e7;
+    padding: 7px;
+}
