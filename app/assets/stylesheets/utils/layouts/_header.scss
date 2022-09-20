@@ -1,13 +1,26 @@
-header {
-    display: flex;
-    align-items: center;
+.header {
+    @include flexbox;
     justify-content: space-between;
     padding: 0 128px;
     height: 80px;
     background: black;
     border-bottom: 1px solid #ffffff4D;
-    > div {
-        display: flex;
-        align-items: center;
+    @include tablet-portrait {
+        height: 56px;
+        padding: 0 16px;
     }
+    &__menu {
+        @include flexbox;
+        width: 100%;
+        justify-content: space-between;
+        overflow: hidden;
+        transition: max-height .2s ease-out;
+    }
+    &__nav {
+        @include flexbox;
+    }
+    
 }
+
+
+
