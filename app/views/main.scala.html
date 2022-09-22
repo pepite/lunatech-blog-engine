@@ -11,34 +11,33 @@
                     <p class="cover__subtitle">Our blog</p>
                     <h1 class="cover__title">Lunatech’s<br />engineer blog</h1>
                 </div>
-                <div class="cover__part">
-                    <div class="people-group">
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char1.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char2.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char3.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char4.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char5.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char6.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char7.png")">
-                        </div>
-                        <div class="people">
-                            <img class="people__picture" src="@routes.Assets.versioned("images/char1.png")">
-                        </div>
-                    </div> 
+
+                <div class="slider">
+                    <div class="slider__group">
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char1.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char2.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char3.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char4.png")"></div>
+
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char1.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char2.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char3.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char4.png")"></div> 
+                    </div>
+
+                    <div class="slider__group">
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char1.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char2.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char3.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char4.png")"></div>
+
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char1.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char2.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char3.png")"></div>
+                        <div class="slider__person"><img class="slider__picture" src="@routes.Assets.versioned("images/char4.png")"></div> 
+                    </div>
                 </div>
+
                 <div class="circle-group">
                     <span class="circle circle-group__xs"></span>
                     <span class="circle circle-group__sm"></span>
@@ -78,6 +77,46 @@
                     $("header").removeClass("scroll");
                 }
             });
+        </script>
+        <script>
+            var toTop = 0;
+            function autoPlay1() {
+                timer = setTimeout(function() {
+                    var row1 = document.getElementById('slider__group1');
+                    toTop = toTop - 128;
+
+                    if (toTop < -1152) {
+                        toTop = 0;
+                        clearTimeout(timer);
+                        row1.onmouseover = clearTimeout(timer);
+                    }
+
+                    row1.style.top = toTop +'px';
+                    autoPlay1();
+
+                }, 200);
+            }
+            autoPlay1();
+        </script>
+        <script>
+            var toBottom = 0;
+            function autoPlay2() {
+                timer = setTimeout(function() {
+                    var row2 = document.getElementById('row');
+                    toBottom = toBottom + 128;
+
+                    if (toBottom < -1152) {
+                        toBottom = 0;
+                        clearTimeout(timer);
+                        row2.onmouseover = clearTimeout(timer);
+                    }
+
+                    row2.style.top = toBottom +'px';
+                    autoPlay2();
+
+                }, 200);
+            }
+            autoPlay2();
         </script>
     </body>
 </html>
