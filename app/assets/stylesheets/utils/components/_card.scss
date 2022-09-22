@@ -2,6 +2,9 @@
     display: grid;
     grid-template-columns: repeat(12, 1fr);
     grid-gap: 32px;
+    @include phone {
+        grid-gap: 24px;
+    }
 }
 .card {
     grid-column: span 4;
@@ -13,6 +16,9 @@
     overflow: hidden;
     @include tablet-landscape {
         grid-column: span 6;
+    }
+    @include phone {
+        grid-column: span 12;
     }
     &:hover {
         transform: translateY(-2px);

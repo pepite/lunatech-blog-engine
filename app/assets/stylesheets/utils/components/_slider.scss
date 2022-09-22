@@ -3,6 +3,9 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 32px;
     z-index: 1;
+    @include phone {
+        display: none;
+    }
     &__group {
         display: flex;
         flex-direction: column;

@@ -4,4 +4,7 @@
     @include tablet-landscape {
         padding: 0 64px;
     }
+    @include phone {
+        padding: 0 24px;
+    }
 }

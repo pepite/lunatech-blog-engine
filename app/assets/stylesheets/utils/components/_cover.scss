@@ -6,6 +6,10 @@
     height: 784px;
     overflow: hidden;
     position: relative;
+    @include phone {
+        padding: 0 24px;
+        height: 500px;
+    }
     &__part {
         z-index: 1
     }
@@ -13,11 +17,18 @@
         font-size: 32px;
         color: white;
         opacity: .5;
+        @include phone {
+            font-size: 24px;
+        }
     }
     &__title {
         font-size: 96px;
         font-weight: 500;
         line-height: 112px;
         color: white;
+        @include phone {
+            font-size: 56px;
+            line-height: 64px;
+        }
     }
 }

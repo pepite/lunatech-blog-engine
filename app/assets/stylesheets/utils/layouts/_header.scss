@@ -8,6 +8,10 @@
     @include tablet-landscape {
         padding: 0 32px;
     }
+    @include phone {
+        padding: 0 24px;
+        height: 64px;
+    }
     &__menu {
         @include flexbox;
         width: 100%;

@@ -1,6 +1,9 @@
 .circle-group {
     position: absolute;
     left: 58%;
+    @include phone {
+        left: 118%;
+    }
     &__xs {
         border: 1px solid white;
         width: 176px;
