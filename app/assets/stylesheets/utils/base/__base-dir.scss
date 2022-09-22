@@ -4,9 +4,9 @@ Files inside this folder can contain global styles used in the project.
 */
 
 //Import Base files
+@import "responsive";
 @import "fonts";
 @import "general";
 @import "grid";
 @import "reset";
-@import "responsive";
 @import "wrapper";

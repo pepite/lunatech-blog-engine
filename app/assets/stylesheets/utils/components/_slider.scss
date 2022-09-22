@@ -48,6 +48,24 @@
         }
     }
 }
+.slider .slider__group:first-child .slider__person:first-child {background: #37BFFA;}
+.slider .slider__group:first-child .slider__person:nth-child(2) {background: #FFC0CB;}
+.slider .slider__group:first-child .slider__person:nth-child(3) {background: #FFDA1A;}
+.slider .slider__group:first-child .slider__person:nth-child(4) {background: #5E18CF;}
+.slider .slider__group:first-child .slider__person:nth-child(5) {background: #37BFFA;}
+.slider .slider__group:first-child .slider__person:nth-child(6) {background: #FFC0CB;}
+.slider .slider__group:first-child .slider__person:nth-child(7) {background: #FFDA1A;}
+.slider .slider__group:first-child .slider__person:nth-child(8) {background: #5E18CF;}
+
+.slider .slider__group:last-child .slider__person:first-child {background: #5E18CF;}
+.slider .slider__group:last-child .slider__person:nth-child(2) {background: #37BFFA;}
+.slider .slider__group:last-child .slider__person:nth-child(3) {background: #FFC0CB;}
+.slider .slider__group:last-child .slider__person:nth-child(4) {background: #FFDA1A;}
+.slider .slider__group:last-child .slider__person:nth-child(5) {background: #5E18CF;}
+.slider .slider__group:last-child .slider__person:nth-child(6) {background: #FFDA1A;}
+.slider .slider__group:last-child .slider__person:nth-child(7) {background: #FFC0CB;}
+.slider .slider__group:last-child .slider__person:nth-child(8) {background: #37BFFA;}
+
 @keyframes scroll {
     0% {
         transform: translateY(0);

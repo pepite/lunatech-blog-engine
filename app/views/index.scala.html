@@ -42,8 +42,13 @@
             <h2>Latest articles</h2>
             <p class="subtitle">Our most recent posts</p>
             <div class="grid">
-                <div class="articles">
+                <div class="featured">
+                    @posts.maxByOption(_.publicationDate).map { post => @displayPost(post) }
+                </div>
+                <div class="last">
 
+
+                    @posts.sortBy(_.publicationDate).dropRight(1).takeRight(3).map { post => @displayPost(post) }
                 </div>
             </div>
         </div>
@@ -105,16 +110,18 @@
 
             function displayPost(post) {
                 const tagLinks = post.tags.map(tag => `<p class="tag">${tag}</p>`);
-                var authorImg = "";
-                if (post.author_img === "null") {
-                    authorImg =
+                var authorInfos = "";
+                if (post.author_infos === "null") {
+                    authorInfos =
                         `
-                            <img class="card__avatar" src="${jsRoutes.controllers.Assets.versioned("images/" + post.lang + ".png").url}">
+                            <img class="author__avatar" src="${jsRoutes.controllers.Assets.versioned("images/elty.jpg")}">
+                            <p class="author__text">Elty</p>
                         `
                 } else {
-                    authorImg =
+                    authorInfos =
                         `
-                            <img class="card__avatar" src="${post.author_img}" alt="author image" nopin="nopin">
+                            <img class="author__avatar" src="${post.author_img}" alt="author image" nopin="nopin">
+                            <p class="author__text">${post.author}</p> 
                         `
                 }
                 return `<a class="card" href="${post.slug}">
@@ -122,9 +129,10 @@
                             <img src="${post.image_url}" onerror="this.src='https://lunatech.cdn.prismic.io/lunatech/c01fd6de48c3cdb8bda7247b0b94b84b14f3a488_kevin-horvat-1354011-unsplash.jpg';" alt=""/>
                         </div>
                         <div class="card__infos">
-                            <div class="flexbox">
-                                ${authorImg}
-                                <p class="card__author">${post.author}<span></span>${post.publication_date})<span></span></p> 
+                            <div class="author">
+                                ${authorInfos}
+                                <span></span>
+                                <p class="author__datet">${post.publication_date}</p> 
                             </div>
                             <p class="card__title">${post.title}</p>
                             <div class="flexbox ff-wrap">
