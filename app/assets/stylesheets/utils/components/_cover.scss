@@ -6,9 +6,12 @@
     height: 784px;
     overflow: hidden;
     position: relative;
+    @include tablet-landscape {
+        padding: 0 64px;
+        height: 500px;
+    }
     @include phone {
         padding: 0 24px;
-        height: 500px;
     }
     &__part {
         z-index: 1
@@ -17,6 +20,12 @@
         font-size: 32px;
         color: white;
         opacity: .5;
+        @include tablet-landscape {
+            font-size: 28px;
+        }
+        @include tablet-portrait {
+            font-size: 26px;
+        }
         @include phone {
             font-size: 24px;
         }
@@ -26,6 +35,14 @@
         font-weight: 500;
         line-height: 112px;
         color: white;
+        @include tablet-landscape {
+            font-size: 64px;
+            line-height: 80px;
+        }
+        @include tablet-portrait {
+            font-size: 54px;
+            line-height: 64px;
+        }
         @include phone {
             font-size: 56px;
             line-height: 64px;
