@@ -1,10 +1,7 @@
 .wrapper {
     max-width: 1216px;
     margin: 0 auto;
-    padding: 0 24px;
-    @include tablet-landscape {
-        padding: 0 64px;
-    }
+    padding: 0 32px;
     @include phone {
         padding: 0 24px;
     }

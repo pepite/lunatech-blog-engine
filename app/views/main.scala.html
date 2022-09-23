@@ -3,8 +3,8 @@
 <html lang="en">
     @head(title = "Lunatech's engineer blog", extraHeader = extraHeader)
     <body>
-        @header()
-        <main id="target">
+        <div class="test50">
+            @header()
             <!-- Cover -->
             <div class="cover">
                 <div class="cover__part">
@@ -39,12 +39,15 @@
                 </div>
 
                 <div class="circle-group">
-                    <span class="circle circle-group__xs"></span>
+                    <span class="circle circletest circle-group__xs"></span>
                     <span class="circle circle-group__sm"></span>
                     <span class="circle circle-group__md"></span>
-                    <span class="circle circle-group__lg"></span>
+                    <span class="circle circletest circle-group__lg"></span>
                 </div>
             </div>
+        </div>
+        
+        <main id="target">
             <!-- Posts list -->
             @content
         </main>

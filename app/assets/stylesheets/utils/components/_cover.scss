@@ -1,11 +1,13 @@
 .cover {
     @include flexbox;
     justify-content: space-between;
-    background: black;
     padding: 0 128px;
     height: 784px;
     overflow: hidden;
     position: relative;
+    background: linear-gradient(-45deg, #000000, #272727, #000000, #292929);
+    background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
     @include tablet-landscape {
         padding: 0 64px;
         height: 500px;
@@ -48,4 +50,16 @@
             line-height: 64px;
         }
     }
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
 }

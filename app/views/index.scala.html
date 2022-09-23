@@ -46,8 +46,6 @@
                     @posts.maxByOption(_.publicationDate).map { post => @displayPost(post) }
                 </div>
                 <div class="last">
-
-
                     @posts.sortBy(_.publicationDate).dropRight(1).takeRight(3).map { post => @displayPost(post) }
                 </div>
             </div>
@@ -59,13 +57,51 @@
             <h2>All blog posts</h2>
             <p class="subtitle">Our different categories</p>
 
+            <div class="tag-slider">
+                @posts.flatMap(_.tags.getOrElse(Array.empty)).toSet.map {(tag:String) =>
+                    <a class="tag" href="@routes.HomeController.byTags(tag)">@tag</a>
+                }
+            </div>
+            
+            <div class="layout">
+                <div id="menu-slider-container">
+                    <ul id="menu-slider">
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                        <li><a href="#" class="menu-slider-link">Link</a></li>
+                    </ul>    
+                </div>
+                    <div id="menu-slider-prev">&laquo;</div>
+                    <div id="menu-slider-next">&raquo;</div>
+                </div>
+            
+            
+
+
+
+
+
+
+
+            
+
             <div id="card-list" class="card-list">
                 @posts.map { post => @displayPost(post) }
             </div>
 
             @if(blogsPerPage != -1) {
-                <div class="flexbox jc-c mgt-32">
-                    <button class="btn btn__secondary" id="load">Load more</button>
+                <div class="flexbox jc-c mgt-64">
+                    <button class="btn btn__red" id="load">Load more</button>
                 </div>
             }
 
@@ -159,6 +195,54 @@
 
             // hook the scroll handler to scroll event
             addEvent(btn, "click", loadContent);
+        });
+    </script>
+
+    <script>
+        $(function() {
+            var w=$(window);
+            var sliderContainer = $("#menu-slider-container");
+            var sliderUl = $("#menu-slider");
+            var sliderLi = sliderUl.children("li");
+            var sliderNext = $("#menu-slider-next");
+            var sliderPrev = $("#menu-slider-prev");
+            var sliderLiWidth = sliderLi.eq(0).width();
+
+            sliderUl.width(sliderLi.length * sliderLiWidth);
+                
+            if (sliderUl.width() > sliderContainer.width()) {
+                sliderNext.fadeIn();
+            }
+            
+            sliderNext.on("click", function() {
+                var x = parseInt(sliderUl.css("marginLeft"));
+                var ulWidth = sliderUl.width();
+                if (ulWidth + x >= sliderContainer.width()) {
+                    x -= sliderLiWidth * 4;
+                    if (ulWidth + x < sliderContainer.width()) { x = sliderContainer.width() - ulWidth - 10; }
+                    sliderUl.stop().animate({ marginLeft: x }, 800);
+                    sliderPrev.fadeIn();
+                    console.log(parseInt(sliderUl.css("marginLeft"))*-1, ulWidth - sliderContainer.width());
+                }
+
+                if (parseInt(sliderUl.css("marginLeft"))*-1 >= ulWidth - sliderContainer.width()*2) {
+                    sliderNext.fadeOut();
+                }
+            });
+                
+            sliderPrev.on("click", function() {
+                var x = parseInt(sliderUl.css("marginLeft"));
+                var ulWidth = sliderUl.width();
+                if (x <= 0) { 
+                    x += sliderLiWidth * 4;
+                    if (x > 0) { x = 0; }
+                    sliderUl.stop().animate({ marginLeft: x }, 800);
+                    sliderNext.fadeIn();
+                    if (x == 0) {
+                        sliderPrev.fadeOut();
+                    }
+                }
+            });
         });
     </script>
 }

@@ -1,6 +1,6 @@
 .circle-group {
     position: absolute;
-    left: 58%;
+    left: 63%;
     @include phone {
         left: 118%;
     }
@@ -11,9 +11,17 @@
         opacity: .25;
     }
     &__sm {
-        border: 1px solid #EA212E;
         width: 280px;
         height: 280px;
+        &:before {
+            position: absolute;
+            content: '';
+            height: 100%; 
+            width: 100%; 
+            border: 1px dashed #EA212E;
+            border-radius: inherit;
+            animation: spin 30s linear infinite;
+        }
     }
     &__md {
         border: 1px solid white;
@@ -22,10 +30,18 @@
         opacity: .5;
     }
     &__lg {
-        border: 1px solid white;
         width: 544px;
         height: 544px;
         opacity: .75;
+        &:before {
+            position: absolute;
+            content: '';
+            height: 100%; 
+            width: 100%; 
+            border: 1px dashed white;
+            border-radius: inherit;
+            animation: spin 50s linear infinite;
+        }
     }
 }
 .circle {
@@ -35,4 +51,9 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+@keyframes spin { 
+    100% { 
+      transform: rotateZ(360deg); 
+    }
 }
