@@ -1,6 +1,9 @@
 .circle-group {
     position: absolute;
     left: 63%;
+    @include tablet-landscape {
+        left: 94%;
+    }
     @include phone {
         left: 118%;
     }
