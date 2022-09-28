@@ -42,4 +42,7 @@
     border-radius: 4px;
     border: 1px solid #e7e7e7;
     padding: 7px;
+    @include phone {
+        display: none;
+    }
 }

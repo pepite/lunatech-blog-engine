@@ -11,14 +11,8 @@
         flex-direction: column;
         animation: scroll 40s linear infinite;
         grid-gap: 32px;
-        &:hover {
-            /* animation-play-state: paused; */
-        }
         &:last-child {
             animation: scroll2 40s linear infinite;
-            &:hover {
-                /* animation-play-state: paused; */
-            }
         }
     }
     &__person {
