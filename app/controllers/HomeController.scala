@@ -119,7 +119,7 @@ class HomeController @Inject()(
     request.get().flatMap { r => {
       val post = Post(s"/${name}", s"https://raw.githubusercontent.com/${organization}/${repository}/${branch}/media/${name}/background.png", r.body)
       // TODO Change me
-      if (post.header.getDocumentTitle == null) {
+      if (post.title == null) {
         Future(Ok(views.html.notFound()))
       } else {
         cache.get(post.authorName) match {
